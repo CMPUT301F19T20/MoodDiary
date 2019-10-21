@@ -1,6 +1,6 @@
 package com.example.mooddiary;
 
-public class moodevent {
+public class MoodEvent {
     private String date;
     private String time;
     private String socialSituation;
@@ -9,6 +9,18 @@ public class moodevent {
     private String photo;
     private int color;
     private Mood mood;
+
+    public MoodEvent(String date, String time, String socialSituation, String location,
+                        String reason, String photo, int color, Mood mood) {
+        this.date = date;
+        this.time = time;
+        this.socialSituation = socialSituation;
+        this.location = location;
+        this.reason = reason;
+        this.photo = photo;
+        this.color = color;
+        this.mood = mood;
+    }
 
     public String getDate() {
         return date;
