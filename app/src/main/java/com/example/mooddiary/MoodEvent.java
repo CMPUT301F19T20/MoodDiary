@@ -1,6 +1,8 @@
 package com.example.mooddiary;
 
-public class MoodEvent {
+import java.io.Serializable;
+
+public class MoodEvent implements Serializable {
     private String date;
     private String time;
     private String socialSituation;

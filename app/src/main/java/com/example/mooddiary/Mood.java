@@ -1,27 +1,22 @@
 package com.example.mooddiary;
 
+import java.io.Serializable;
+
 /**
  * This is a class that store a Mood object
  */
-public class Mood {
+public class Mood implements Serializable {
 
     // color for each type of Mood
     private final static String HAPPY_COLOR = "#ff8080";
-
     private final static String ANGRY_COLOR = "#ba8dfd";
-
     private final static String SAD_COLOR = "#accfff";
-
     private final static String CONTENT_COLOR = "#ffba92";
-
     private final static String STRESSED_COLOR = "#c6f1d6";
-
     private final static String MEH_COLOR = "#d4f596";
 
     private int moodImage;
-
     private String mood;
-
     private String color;
 
     public Mood(String mood) {
