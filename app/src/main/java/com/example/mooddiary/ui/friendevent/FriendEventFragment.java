@@ -1,4 +1,4 @@
-package com.example.mooddiary.ui.slideshow;
+package com.example.mooddiary.ui.friendevent;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mooddiary.R;
 
-public class SlideshowFragment extends Fragment {
+public class FriendEventFragment extends Fragment {
 
-    private SlideshowViewModel slideshowViewModel;
+    private FriendEventViewModel friendEventViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        slideshowViewModel =
-                ViewModelProviders.of(this).get(SlideshowViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_slideshow, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
-        slideshowViewModel.getText().observe(this, new Observer<String>() {
+        friendEventViewModel =
+                ViewModelProviders.of(this).get(FriendEventViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_friend_event, container, false);
+        final TextView textView = root.findViewById(R.id.text_gallery);
+        friendEventViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);
