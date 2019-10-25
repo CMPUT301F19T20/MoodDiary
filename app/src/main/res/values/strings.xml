@@ -13,5 +13,28 @@
     <string name="menu_friend_map">Friends Map</string>
     <string name="menu_share">Friends</string>
     <string name="menu_send">Send Invitation</string>
+    <string name="date">date</string>
+    <string name="time">time</string>
+    <string name="socialSituation">socialSituation</string>
+    <string name="location">location</string>
+    <string name="reason">reason</string>
+    <string name="photo">photo</string>
+
+    <string-array name="moodList">
+        <item>happy</item>
+        <item>angry</item>
+        <item>sad</item>
+        <item>content</item>
+        <item>stressed</item>
+        <item>meh</item>
+    </string-array>
+
+    <string-array name="socialSituation">
+        <item>alone</item>
+        <item>with one other person</item>
+        <item>with two to several people</item>
+        <item>with a crowd</item>
+    </string-array>
+
 
 </resources>
