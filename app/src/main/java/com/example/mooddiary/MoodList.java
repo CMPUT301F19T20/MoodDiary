@@ -17,13 +17,13 @@ public class MoodList {
     private ArrayList<MoodEvent> worriedList;
 
     public MoodList() {
-        allMoodList = new ArrayList<MoodEvent>();
-        happyList = new ArrayList<MoodEvent>();
-        angryList = new ArrayList<MoodEvent>();
-        sadList = new ArrayList<MoodEvent>();
-        contentList = new ArrayList<MoodEvent>();
-        stressedList = new ArrayList<MoodEvent>();
-        worriedList = new ArrayList<MoodEvent>();
+        allMoodList = new ArrayList<>();
+        happyList = new ArrayList<>();
+        angryList = new ArrayList<>();
+        sadList = new ArrayList<>();
+        contentList = new ArrayList<>();
+        stressedList = new ArrayList<>();
+        worriedList = new ArrayList<>();
 
     }
 
@@ -46,15 +46,16 @@ public class MoodList {
             });
 //            Log.d("add", "sorted");
 //
-//            switch (mood.getMood().getMood()) {
-//                case "happy" : happyList.add(mood);
-//                case "angry" : angryList.add(mood);
-//                case "sad" : sadList.add(mood);
-//                case "content" : contentList.add(mood);
-//                case "stressed" : stressedList.add(mood);
-//                case "worried" : worriedList.add(mood);
-//                default : throw new IllegalArgumentException();
-//            }
+            String moodString = mood.getMood().getMood();
+            switch (moodString) {
+                case "happy" : happyList.add(mood); break;
+                case "angry" : angryList.add(mood); break;
+                case "sad" : sadList.add(mood); break;
+                case "content" : contentList.add(mood); break;
+                case "stressed" : stressedList.add(mood); break;
+                case "meh" : worriedList.add(mood); break;
+                default : throw new IllegalArgumentException();
+            }
 
 
 

@@ -1,9 +1,11 @@
 package com.example.mooddiary.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -15,19 +17,18 @@ import com.example.mooddiary.MoodAdapter;
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
+import com.example.mooddiary.ViewActivity;
 
 
 /**
  * This is Home fragment that shows a list of user's mood event
  */
 public class HomeFragment extends Fragment {
+    private final int VIEW_EDIT_REQUEST = 0;
 
     private HomeViewModel homeViewModel;
-
     private MoodList myMoodList = new MoodList();
-
     private ListView myMoodEventListView;
-
     private MoodAdapter moodAdapter;
 
     /**
@@ -57,7 +58,21 @@ public class HomeFragment extends Fragment {
 
         myMoodEventListView.setAdapter(moodAdapter);
 
+        myMoodEventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent i = new Intent(getActivity(), ViewActivity.class);
+                i.putExtra("moodevent",(MoodEvent)myMoodEventListView.getItemAtPosition(position));
+                startActivityForResult(i, VIEW_EDIT_REQUEST);
+            }
+        });
+
         return root;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+
     }
 
     /**
