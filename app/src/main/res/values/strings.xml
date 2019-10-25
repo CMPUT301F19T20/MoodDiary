@@ -8,9 +8,9 @@
     <string name="action_settings">Settings</string>
 
     <string name="menu_home">Home</string>
-    <string name="menu_gallery">Friends Mood Event</string>
-    <string name="menu_slideshow">My Map</string>
-    <string name="menu_tools">Friends Map</string>
+    <string name="menu_friend_event">Friends Mood Event</string>
+    <string name="menu_my_map">My Map</string>
+    <string name="menu_friend_map">Friends Map</string>
     <string name="menu_share">Friends</string>
     <string name="menu_send">Send Invitation</string>
 

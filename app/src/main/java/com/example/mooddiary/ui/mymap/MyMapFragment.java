@@ -1,4 +1,4 @@
-package com.example.mooddiary.ui.tools;
+package com.example.mooddiary.ui.mymap;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mooddiary.R;
 
-public class ToolsFragment extends Fragment {
+public class MyMapFragment extends Fragment {
 
-    private ToolsViewModel toolsViewModel;
+    private MyMapViewModel myMapViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        toolsViewModel =
-                ViewModelProviders.of(this).get(ToolsViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_tools, container, false);
-        final TextView textView = root.findViewById(R.id.text_tools);
-        toolsViewModel.getText().observe(this, new Observer<String>() {
+        myMapViewModel =
+                ViewModelProviders.of(this).get(MyMapViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_my_map, container, false);
+        final TextView textView = root.findViewById(R.id.text_slideshow);
+        myMapViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

@@ -1,16 +1,16 @@
-package com.example.mooddiary.ui.tools;
+package com.example.mooddiary.ui.mymap;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ToolsViewModel extends ViewModel {
+public class MyMapViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ToolsViewModel() {
+    public MyMapViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is tools fragment");
+        mText.setValue("This is my map fragment");
     }
 
     public LiveData<String> getText() {

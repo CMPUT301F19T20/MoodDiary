@@ -1,16 +1,16 @@
-package com.example.mooddiary.ui.slideshow;
+package com.example.mooddiary.ui.friendmap;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SlideshowViewModel extends ViewModel {
+public class FriendMapViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public SlideshowViewModel() {
+    public FriendMapViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+        mText.setValue("This is friend map fragment");
     }
 
     public LiveData<String> getText() {

@@ -1,16 +1,16 @@
-package com.example.mooddiary.ui.gallery;
+package com.example.mooddiary.ui.friendevent;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GalleryViewModel extends ViewModel {
+public class FriendEventViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public GalleryViewModel() {
+    public FriendEventViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is friend event fragment");
     }
 
     public LiveData<String> getText() {
