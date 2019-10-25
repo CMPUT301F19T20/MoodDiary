@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddMoodEventActivity">
+
+    <TextView
+        android:id="@+id/add_date_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="date"/>
+
+    <TextView
+        android:id="@+id/add_time_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="time"/>
+
+    <Spinner
+        android:id="@+id/add_mood_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/add_social_situation_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/add_location_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="location"/>
+
+    <EditText
+        android:id="@+id/add_textual_reason_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="textual reason"/>
+
+    <ImageView
+        android:id="@+id/add_image_reason"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/add_mood_event_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add"/>
+
+    <Button
+        android:id="@+id/cancel_add_mood_event_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"/>
+
+
+
+
+</LinearLayout>
