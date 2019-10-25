@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimary">#d15c6c</color>
+    <color name="colorPrimaryDark">#2B2826</color>
+    <color name="colorAccent">#EB7A97</color>
+
+    <color name="colorListBackground">#FBFBEF</color>
+
+    <color name="happy">#ff8080</color>
+    <color name="sad">#accfff</color>
+    <color name="stressed">#c6f1d6</color>
+    <color name="angry">#ba8dfd</color>
+    <color name="content">#ffba92</color>
+    <color name="meh">#d4f596</color>
+
+
+
 </resources>
