@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -36,6 +37,8 @@ public class ViewActivity extends AppCompatActivity {
         photo = findViewById(R.id.photo);
         edit = findViewById(R.id.Edit);
 
+        nonFocusable();
+
         Intent i = getIntent();
         MoodEvent m = (MoodEvent)i.getSerializableExtra("moodevent");
         date.setText(m.getDate());
@@ -46,6 +49,16 @@ public class ViewActivity extends AppCompatActivity {
         location.setText(m.getLocation());
         reason.setText(m.getReason());
 
+        edit.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    allFocusable();
+                } else {
+                    nonFocusable();
+                }
+            }
+        });
     }
 
     public void setSpinner(Spinner s, String text) {
@@ -56,5 +69,25 @@ public class ViewActivity extends AppCompatActivity {
                 s.setSelection(i);
             }
         }
+    }
+
+    public void allFocusable() {
+        date.setFocusableInTouchMode(true);
+        time.setFocusableInTouchMode(true);
+        mood.setFocusableInTouchMode(true);
+        socialSituation.setFocusableInTouchMode(true);
+        location.setFocusableInTouchMode(true);
+        reason.setFocusableInTouchMode(true);
+        photo.setFocusableInTouchMode(true);
+    }
+
+    public void nonFocusable() {
+        date.setFocusable(false);
+        time.setFocusable(false);
+        mood.setFocusable(false);
+        socialSituation.setFocusable(false);
+        location.setFocusable(false);
+        reason.setFocusable(false);
+        photo.setFocusable(false);
     }
 }
