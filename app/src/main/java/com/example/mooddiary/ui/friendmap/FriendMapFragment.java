@@ -1,4 +1,4 @@
-package com.example.mooddiary.ui.gallery;
+package com.example.mooddiary.ui.friendmap;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,17 +14,17 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mooddiary.R;
 
-public class GalleryFragment extends Fragment {
+public class FriendMapFragment extends Fragment {
 
-    private GalleryViewModel galleryViewModel;
+    private FriendMapViewModel friendMapViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        galleryViewModel =
-                ViewModelProviders.of(this).get(GalleryViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_gallery, container, false);
-        final TextView textView = root.findViewById(R.id.text_gallery);
-        galleryViewModel.getText().observe(this, new Observer<String>() {
+        friendMapViewModel =
+                ViewModelProviders.of(this).get(FriendMapViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_friend_map, container, false);
+        final TextView textView = root.findViewById(R.id.text_tools);
+        friendMapViewModel.getText().observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 textView.setText(s);

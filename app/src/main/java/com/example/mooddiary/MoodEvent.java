@@ -7,19 +7,17 @@ public class MoodEvent {
     private String location;
     private String reason;
     private String photo;
-    private int color;
     private Mood mood;
 
-    public MoodEvent(String date, String time, String socialSituation, String location,
-                        String reason, String photo, int color, Mood mood) {
+    public MoodEvent(String mood, String date, String time, String socialSituation, String location,
+                        String reason, String photo) {
         this.date = date;
         this.time = time;
         this.socialSituation = socialSituation;
         this.location = location;
         this.reason = reason;
         this.photo = photo;
-        this.color = color;
-        this.mood = mood;
+        this.mood = new Mood(mood);
     }
 
     public String getDate() {
@@ -68,14 +66,6 @@ public class MoodEvent {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 
     public Mood getMood() {
