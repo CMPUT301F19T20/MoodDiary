@@ -8,9 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.mooddiary.ui.home.HomeFragment;
-
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     private Button login;
     private Button signUp;
     private EditText nameInput;
@@ -37,7 +35,7 @@ public class Login extends AppCompatActivity {
         signUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(),SignUp.class);
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
                 startActivity(intent);
             }
         });
