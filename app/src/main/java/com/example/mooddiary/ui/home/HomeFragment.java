@@ -1,17 +1,22 @@
 package com.example.mooddiary.ui.home;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.mooddiary.MainActivity;
 import com.example.mooddiary.Mood;
 import com.example.mooddiary.MoodAdapter;
 import com.example.mooddiary.MoodEvent;
@@ -30,7 +35,7 @@ public class HomeFragment extends Fragment {
     private MoodList myMoodList = new MoodList();
     private ListView myMoodEventListView;
     private MoodAdapter moodAdapter;
-
+    private int deleteMoodEventIndex;
     /**
      * This creates the view for the list of user's mood events.
      * @param inflater
@@ -64,6 +69,36 @@ public class HomeFragment extends Fragment {
                 Intent i = new Intent(getActivity(), ViewActivity.class);
                 i.putExtra("moodevent",(MoodEvent)myMoodEventListView.getItemAtPosition(position));
                 startActivityForResult(i, VIEW_EDIT_REQUEST);
+            }
+        });
+
+        myMoodEventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                // deleteMoodEventIndex = i;
+                final MoodEvent moodevent = (MoodEvent)myMoodEventListView.getItemAtPosition(i);
+                Log.i("mood string",moodevent.getMood().getMood());
+                AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
+                dialog.setTitle("Delete a mood");
+                dialog.setMessage("Delete is unrecoverable. Are you sure?");
+                dialog.setCancelable(false);
+                dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        myMoodList.delete(moodevent);
+                        moodAdapter.notifyDataSetChanged();
+                        Toast.makeText(getActivity(),"Delete a mood",Toast.LENGTH_SHORT).show();;
+                    }
+                });
+                dialog.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(getActivity(),"Delete canceled",Toast.LENGTH_SHORT).show();;
+                    }
+                });
+                dialog.show();
+                return true;
+
             }
         });
 

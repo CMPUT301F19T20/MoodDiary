@@ -68,12 +68,12 @@ public class MoodList {
         if(allMoodList.contains(mood)) {
             allMoodList.remove(mood);
             switch (mood.getMood().getMood()){
-                case "happy" : happyList.remove(mood);
-                case "angry" : angryList.remove(mood);
-                case "sad" : sadList.remove(mood);
-                case "content" : contentList.remove(mood);
-                case "stressed" : stressedList.remove(mood);
-                case "worried" : worriedList.remove(mood);
+                case "happy" : happyList.remove(mood);break;
+                case "angry" : angryList.remove(mood);break;
+                case "sad" : sadList.remove(mood);break;
+                case "content" : contentList.remove(mood);break;
+                case "stressed" : stressedList.remove(mood);break;
+                case "worried" : worriedList.remove(mood);break;
                 default : throw new IllegalArgumentException();
             }
         } else {
