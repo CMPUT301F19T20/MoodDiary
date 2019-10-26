@@ -14,4 +14,11 @@
     <string name="menu_share">Friends</string>
     <string name="menu_send">Send Invitation</string>
 
+    <string name="username">Username</string>
+    <string name="login">login</string>
+    <string name="signup">Register</string>
+
+    <string name="newUser">Enter your username</string>
+    <string name="confirm">Confirm</string>
+
 </resources>
