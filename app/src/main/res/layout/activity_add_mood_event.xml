@@ -27,6 +27,19 @@
         android:id="@+id/add_social_situation_spinner"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <Button
+        android:id="@+id/add_photo_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="from camera"
+        />
+    <Button
+        android:id="@+id/add_photo_album"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="from album"
+        />
+
 
     <EditText
         android:id="@+id/add_location_edit"
