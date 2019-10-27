@@ -1,8 +1,7 @@
 package com.example.mooddiary;
 
-import android.graphics.drawable.Drawable;
-
 import java.io.Serializable;
+import java.util.Arrays;
 
 public class MoodEvent implements Serializable {
     private String date;
@@ -78,5 +77,21 @@ public class MoodEvent implements Serializable {
 
     public void setMood(Mood mood) {
         this.mood = mood;
+    }
+
+    @Override
+    public boolean equals(Object e) {
+        MoodEvent compare = (MoodEvent)e;
+        if(this.date.equals(compare.getDate()) &&
+                this.time.equals(compare.getTime()) &&
+                this.socialSituation.equals(compare.getSocialSituation()) &&
+                this.location.equals(compare.getLocation()) &&
+                this.reason.equals(compare.getReason()) &&
+                Arrays.equals(this.photo, compare.getPhoto()) &&
+                this.mood.equals(compare.getMood())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
