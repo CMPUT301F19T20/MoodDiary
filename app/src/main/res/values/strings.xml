@@ -44,5 +44,6 @@
 
     <string name="newUser">enter your username</string>
     <string name="confirm">Confirm</string>
+    <string name="save">Save</string>
 
 </resources>

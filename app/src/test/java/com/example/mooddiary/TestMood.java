@@ -44,7 +44,7 @@ public class TestMood {
     @Test
     public void testSetMood(){
         Mood mood = new Mood("happy");
-        assertThrows(IllegalArgumentException.class,()->{
+        assertThrows(IllegalArgumentException.class,() -> {
             mood.setMood("good");
         });
         mood.setMood("sad");

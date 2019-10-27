@@ -1,6 +1,11 @@
 package com.example.mooddiary.ui.home;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -18,6 +24,8 @@ import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
 import com.example.mooddiary.ViewActivity;
+
+import java.io.ByteArrayOutputStream;
 
 
 /**
@@ -81,23 +89,28 @@ public class HomeFragment extends Fragment {
      * This may be deleted later.
      */
     private void initMoodList() {
+        Drawable drawable = getResources().getDrawable(R.drawable.angry);
+        Bitmap bitmap= ((BitmapDrawable)drawable).getBitmap();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] d = baos.toByteArray();
         MoodEvent moodEvent1 =
-                new MoodEvent("happy", "Oct 24, 2019", "10:40", "alone", "", "", "");
+                new MoodEvent("happy", "Oct 24, 2019", "10:40", "alone", "", "", d);
 
         MoodEvent moodEvent2 =
-                new MoodEvent("sad", "Oct 23, 2019", "11:40", "alone", "", "", "");
+                new MoodEvent("sad", "Oct 23, 2019", "11:40", "alone", "", "", d);
 
         MoodEvent moodEvent3 =
-                new MoodEvent("meh", "Oct 25, 2019", "12:40", "alone", "", "", "");
+                new MoodEvent("meh", "Oct 25, 2019", "12:40", "alone", "", "", d);
 
         MoodEvent moodEvent4 =
-                new MoodEvent("stressed", "Oct 22, 2019", "10:40", "alone", "", "", "");
+                new MoodEvent("stressed", "Oct 22, 2019", "10:40", "alone", "", "", d);
 
         MoodEvent moodEvent5 =
-                new MoodEvent("angry", "Oct 27, 2019", "10:40", "alone", "", "", "");
+                new MoodEvent("angry", "Oct 27, 2019", "10:40", "alone", "", "", d);
 
         MoodEvent moodEvent6 =
-                new MoodEvent("content", "Oct 19, 2019", "10:40", "alone", "", "", "");
+                new MoodEvent("content", "Oct 19, 2019", "10:40", "alone", "", "", d);
 
         myMoodList.add(moodEvent2);
         myMoodList.add(moodEvent1);
