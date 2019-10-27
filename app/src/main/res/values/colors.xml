@@ -12,6 +12,10 @@
     <color name="angry">#ba8dfd</color>
     <color name="content">#ffba92</color>
     <color name="meh">#d4f596</color>
+    <color name="colorPink">#ed968e</color>
+    <color name="colorGray">#cccccc</color>
+    <color name="colorDarkGray">#999999</color>
+    <color name="colorWhite">#ffffff</color>
 
 
 
