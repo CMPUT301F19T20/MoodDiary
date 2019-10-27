@@ -46,8 +46,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
     // Initial attributes for choosing photo;
 
-    public static final int TAKE_PHOTO = 1;
-    public static final  int CHOOSE_PHOTO = 2;
+    private static final int TAKE_PHOTO = 1;
+    private static final  int CHOOSE_PHOTO = 2;
     private Uri imageUri;
 
     @Override

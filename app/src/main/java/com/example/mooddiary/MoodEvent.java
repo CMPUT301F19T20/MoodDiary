@@ -1,5 +1,7 @@
 package com.example.mooddiary;
 
+import android.graphics.drawable.Drawable;
+
 import java.io.Serializable;
 
 public class MoodEvent implements Serializable {
@@ -8,11 +10,11 @@ public class MoodEvent implements Serializable {
     private String socialSituation;
     private String location;
     private String reason;
-    private String photo;
+    private byte[] photo;
     private Mood mood;
 
     public MoodEvent(String mood, String date, String time, String socialSituation, String location,
-                        String reason, String photo) {
+                        String reason, byte[] photo) {
         this.date = date;
         this.time = time;
         this.socialSituation = socialSituation;
@@ -62,11 +64,11 @@ public class MoodEvent implements Serializable {
         this.reason = reason;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 

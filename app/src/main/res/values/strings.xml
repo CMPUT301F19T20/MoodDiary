@@ -43,5 +43,6 @@
 
     <string name="newUser">Enter your username</string>
     <string name="confirm">Confirm</string>
+    <string name="save">Save</string>
 
 </resources>
