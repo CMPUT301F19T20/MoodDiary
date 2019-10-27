@@ -36,5 +36,6 @@
         <item>with a crowd</item>
     </string-array>
 
+    <string name="moodIcons">choose a mood</string>
 
 </resources>
