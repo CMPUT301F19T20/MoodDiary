@@ -70,7 +70,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getActivity(), ViewActivity.class);
-                i.putExtra("moodevent",(MoodEvent)myMoodEventListView.getItemAtPosition(position));
+                i.putExtra("moodEvent",(MoodEvent)myMoodEventListView.getItemAtPosition(position));
                 startActivityForResult(i, VIEW_EDIT_REQUEST);
             }
         });
@@ -80,7 +80,10 @@ public class HomeFragment extends Fragment {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        MoodEvent originMoodEvent = (MoodEvent)data.getSerializableExtra("originMoodEvent");
+        MoodEvent editMoodEvent = (MoodEvent)data.getSerializableExtra("editMoodEvent");
+        myMoodList.edit(editMoodEvent, originMoodEvent);
+        moodAdapter.notifyDataSetChanged();
     }
 
     /**
