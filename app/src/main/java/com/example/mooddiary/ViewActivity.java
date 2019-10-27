@@ -77,7 +77,6 @@ public class ViewActivity extends AppCompatActivity implements View.OnClickListe
         date = findViewById(R.id.date);
         time = findViewById(R.id.time);
         mood = findViewById(R.id.mood);
-        moodIcon = findViewById(R.id.moodicon);
         socialSituation = findViewById(R.id.social);
         location = findViewById(R.id.location);
         reason = findViewById(R.id.reason);
@@ -97,7 +96,6 @@ public class ViewActivity extends AppCompatActivity implements View.OnClickListe
         date.setText(m.getDate());
         time.setText(m.getTime());
         setSpinner(mood, m.getMood());
-        moodIcon.setImageResource(m.getMood().getMoodImage());
         setSpinner(socialSituation, m.getSocialSituation());
         location.setText(m.getLocation());
         reason.setText(m.getReason());
@@ -163,7 +161,7 @@ public class ViewActivity extends AppCompatActivity implements View.OnClickListe
             public void onClick(View v) {
                 String editDate = date.getText().toString();
                 String editTime = time.getText().toString();
-                String editMood = mood.getSelectedItem().toString();
+                String editMood = ((MoodBean)mood.getSelectedItem()).getName();
                 String editSocialSituation = socialSituation.getSelectedItem().toString();
                 String editLocation = location.getText().toString();
                 String editReason = reason.getText().toString();
@@ -205,7 +203,7 @@ public class ViewActivity extends AppCompatActivity implements View.OnClickListe
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 switch (parent.getId()){
 
-                    case R.id.add_mood_spinner:
+                    case R.id.mood:
                         if(two_selected){
                             TextView txt_name = view.findViewById(R.id.name);
                             Toast.makeText(mContext,"choose a mood：" + txt_name.getText().toString(),
