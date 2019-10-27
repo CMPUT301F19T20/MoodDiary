@@ -25,7 +25,7 @@ public class MoodBean {
         this.icon = icon;
     }
 
-    public void seName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 }
