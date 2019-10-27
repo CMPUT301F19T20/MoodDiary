@@ -230,8 +230,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             TimePickerDialog dialog=new TimePickerDialog(this,this, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
             dialog.show();
         }
-
-
     }
     @Override
     /**
@@ -367,8 +365,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
 
     private void bindViews() {
-
-
         MoodSpinner  = findViewById(R.id.add_mood_spinner);
 
         mData.add(new MoodBean(R.drawable.angry,"angry"));
@@ -386,11 +382,9 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             }
         };
         MoodSpinner.setAdapter(mAdadpter);
-
-
         MoodSpinner.setOnItemSelectedListener(this);
-
     }
+
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){

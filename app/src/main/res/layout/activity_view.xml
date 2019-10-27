@@ -22,20 +22,13 @@
     <Spinner
         android:id="@+id/mood"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/moodList" />
-
-    <ImageView
-        android:id="@+id/moodicon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_menu_camera" />
+        android:layout_height="wrap_content" />
 
     <Spinner
         android:id="@+id/social"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:entries="@array/socialSituation" />
+        android:entries="@array/socialSituation"/>
 
     <EditText
         android:id="@+id/location"
