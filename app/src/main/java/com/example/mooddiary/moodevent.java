@@ -1,14 +1,26 @@
 package com.example.mooddiary;
 
-public class moodevent {
+import java.io.Serializable;
+
+public class MoodEvent implements Serializable {
     private String date;
     private String time;
     private String socialSituation;
     private String location;
     private String reason;
     private String photo;
-    private int color;
     private Mood mood;
+
+    public MoodEvent(String mood, String date, String time, String socialSituation, String location,
+                        String reason, String photo) {
+        this.date = date;
+        this.time = time;
+        this.socialSituation = socialSituation;
+        this.location = location;
+        this.reason = reason;
+        this.photo = photo;
+        this.mood = new Mood(mood);
+    }
 
     public String getDate() {
         return date;
@@ -56,14 +68,6 @@ public class moodevent {
 
     public void setPhoto(String photo) {
         this.photo = photo;
-    }
-
-    public int getColor() {
-        return color;
-    }
-
-    public void setColor(int color) {
-        this.color = color;
     }
 
     public Mood getMood() {

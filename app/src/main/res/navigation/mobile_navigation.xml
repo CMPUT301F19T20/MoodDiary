@@ -12,22 +12,22 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.mooddiary.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_friend_event"
+        android:name="com.example.mooddiary.ui.friendevent.FriendEventFragment"
+        android:label="@string/menu_friend_event"
+        tools:layout="@layout/fragment_friend_event" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.mooddiary.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_my_map"
+        android:name="com.example.mooddiary.ui.mymap.MyMapFragment"
+        android:label="@string/menu_my_map"
+        tools:layout="@layout/fragment_my_map" />
 
     <fragment
-        android:id="@+id/nav_tools"
-        android:name="com.example.mooddiary.ui.tools.ToolsFragment"
-        android:label="@string/menu_tools"
-        tools:layout="@layout/fragment_tools" />
+        android:id="@+id/nav_friend_map"
+        android:name="com.example.mooddiary.ui.friendmap.FriendMapFragment"
+        android:label="@string/menu_friend_map"
+        tools:layout="@layout/fragment_friend_map" />
 
     <fragment
         android:id="@+id/nav_share"
