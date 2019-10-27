@@ -38,4 +38,11 @@
 
     <string name="moodIcons">choose a mood</string>
 
+    <string name="username">Username</string>
+    <string name="login">login</string>
+    <string name="signup">Register</string>
+
+    <string name="newUser">Enter your username</string>
+    <string name="confirm">Confirm</string>
+
 </resources>
