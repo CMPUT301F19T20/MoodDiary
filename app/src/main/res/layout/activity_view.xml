@@ -1,10 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".ViewActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Switch
+            android:id="@+id/Edit"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:text="Edit"
+            tools:layout_editor_absoluteX="146dp"
+            tools:layout_editor_absoluteY="300dp" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/moodicon"
+            android:layout_margin="10dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitXY"
+            />
+
+        <EditText
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/date"
+            android:layout_marginBottom="10dp"
+            android:layout_gravity="bottom"
+            android:inputType="textPersonName"
+            android:text="Name"
+            />
+
+        <EditText
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/time"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:inputType="textPersonName"
+            android:text="Name"
+            />
+
+
+    </LinearLayout>
+
 
     <EditText
         android:id="@+id/reason"
@@ -13,7 +70,6 @@
         android:ems="10"
         android:hint="@string/reason"
         android:inputType="textPersonName"
-        android:text="Name"
         tools:layout_editor_absoluteX="95dp"
         tools:layout_editor_absoluteY="255dp" />
 
@@ -28,21 +84,12 @@
         tools:layout_editor_absoluteX="98dp"
         tools:layout_editor_absoluteY="210dp" />
 
-    <EditText
-        android:id="@+id/time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/time"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="96dp"
-        tools:layout_editor_absoluteY="90dp" />
+
 
     <Spinner
         android:id="@+id/mood"
-        android:layout_width="285dp"
-        android:layout_height="43dp"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
         android:entries="@array/moodList"
         android:spinnerMode="dropdown"
         tools:layout_editor_absoluteX="125dp"
@@ -50,45 +97,24 @@
 
     <Spinner
         android:id="@+id/social"
-        android:layout_width="409dp"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:entries="@array/socialSituation"
         tools:layout_editor_absoluteX="1dp"
         tools:layout_editor_absoluteY="186dp" />
 
-    <EditText
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/date"
-        android:inputType="textPersonName"
-        android:text="Name"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="45dp" />
+
 
     <ImageView
         android:id="@+id/photo"
         android:layout_width="158dp"
         android:layout_height="154dp"
-        app:srcCompat="@drawable/ic_menu_friends_event"
+        android:src="@drawable/ic_menu_friends_event"
         tools:layout_editor_absoluteX="126dp"
         tools:layout_editor_absoluteY="327dp" />
 
-    <ImageView
-        android:id="@+id/moodicon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_menu_camera"
-        tools:layout_editor_absoluteX="37dp"
-        tools:layout_editor_absoluteY="152dp" />
 
-    <Switch
-        android:id="@+id/Edit"
-        android:layout_width="99dp"
-        android:layout_height="27dp"
-        android:text="Edit"
-        tools:layout_editor_absoluteX="146dp"
-        tools:layout_editor_absoluteY="300dp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</LinearLayout>
