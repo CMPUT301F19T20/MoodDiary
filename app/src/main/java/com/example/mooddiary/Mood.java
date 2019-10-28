@@ -98,4 +98,10 @@ public class Mood implements Serializable {
             default : throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        Mood m = (Mood) o;
+        return this.mood.equals(m.getMood());
+    }
 }
