@@ -7,69 +7,49 @@
     android:orientation="vertical"
     tools:context=".ViewActivity">
 
-    <EditText
-        android:id="@+id/date"
+    <TextView
+        android:id="@+id/view_date_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/date" />
 
-    <EditText
-        android:id="@+id/time"
+    <TextView
+        android:id="@+id/view_time_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/time" />
 
-    <Spinner
-        android:id="@+id/mood"
+    <TextView
+        android:id="@+id/view_mood_type_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <Spinner
-        android:id="@+id/social"
+    <ImageView
+        android:id="@+id/view_mood_image"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:entries="@array/SocialSituation"/>
+        android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/location"
+    <TextView
+        android:id="@+id/view_location_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/location" />
+        android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/reason"
+    <TextView
+        android:id="@+id/view_reason_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
     <ImageView
-        android:id="@+id/photo"
+        android:id="@+id/view_photo_image"
         android:layout_width="200sp"
         android:layout_height="200sp"
         app:srcCompat="@drawable/ic_menu_friends_event" />
-    <Button
-        android:id="@+id/camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FROM CAMERA" />
-    <Button
-        android:id="@+id/album"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="FROM ALBUM"/>
-
-    <Switch
-        android:id="@+id/Edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Edit" />
 
     <Button
-        android:id="@+id/save"
+        android:id="@+id/view_edit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save"/>
-
-
+        android:text="@string/view_edit_button"/>
 
 
 

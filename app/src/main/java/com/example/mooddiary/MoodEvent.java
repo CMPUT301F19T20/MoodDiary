@@ -1,5 +1,7 @@
 package com.example.mooddiary;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.Arrays;
 
@@ -12,8 +14,9 @@ public class MoodEvent implements Serializable {
     private byte[] photo;
     private Mood mood;
 
+
     public MoodEvent(String mood, String date, String time, String socialSituation, String location,
-                        String reason, byte[] photo) {
+                     String reason, byte[] photo) {
         this.date = date;
         this.time = time;
         this.socialSituation = socialSituation;
@@ -72,6 +75,7 @@ public class MoodEvent implements Serializable {
     }
 
     public Mood getMood() {
+//        Log.d("test", "enter first getMood");
         return mood;
     }
 
