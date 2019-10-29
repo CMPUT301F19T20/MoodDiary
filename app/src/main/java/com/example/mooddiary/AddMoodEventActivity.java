@@ -29,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -43,14 +44,14 @@ import java.util.Calendar;
 
 public class AddMoodEventActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private Button Add;
-    private Button Cancel;
-    private Button PhotoFromCamera;
-    private Button PhotoFromAlbum;
+    private ImageButton Cancel;
+    private ImageButton PhotoFromCamera;
+    private ImageButton PhotoFromAlbum;
     private TextView Date;
     private TextView Time;
     private Spinner MoodSpinner;
     private Spinner SocialSituationSpinner;
-    private EditText Location;
+    private TextView Location;
     private EditText Reason;
     private ImageView Image;
     private Context mContext;
@@ -77,10 +78,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_mood_event);
         // Initial attributes for choosing photo;
-
-
-
-
         // find all attributes
         Add = findViewById(R.id.add_mood_event_button);
         Cancel = findViewById(R.id.cancel_add_mood_event_button);
@@ -145,7 +142,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             public void onItemSelected(AdapterView<?> parent, View view,
                                        int pos, long id) {
 
-                String[] socialsituation = getResources().getStringArray(R.array.socialSituation);
+                String[] socialsituation = getResources().getStringArray(R.array.SocialSituation);
                 Toast.makeText(AddMoodEventActivity.this, "your choice is :"+socialsituation[pos], Toast.LENGTH_SHORT).show();
                 SocialSituationSpinnerResult = socialsituation[pos];
 //                Location.setText(SocialSituationSpinnerResult);
