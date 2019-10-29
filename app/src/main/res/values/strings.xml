@@ -55,4 +55,6 @@
     <string name="confirm">Confirm</string>
     <string name="save">Save</string>
 
+    <!--ViewActivity-->
+    <string name="view_edit_button">Edit</string>
 </resources>

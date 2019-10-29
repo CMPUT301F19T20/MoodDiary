@@ -1,5 +1,7 @@
 package com.example.mooddiary;
 
+import android.util.Log;
+
 import java.io.Serializable;
 
 /**
@@ -31,6 +33,7 @@ public class Mood implements Serializable {
      *      Return the type of mood.
      */
     public String getMood() {
+//        Log.d("test", "second getMood");
         return mood;
     }
 

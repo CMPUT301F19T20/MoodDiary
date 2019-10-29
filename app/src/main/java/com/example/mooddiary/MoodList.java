@@ -28,35 +28,43 @@ public class MoodList {
     }
 
     public void add(MoodEvent mood){
-
         if(allMoodList.contains(mood)){
 
             throw new IllegalArgumentException();
 
         } else {
 
-            //Log.d("add", "will add");
             allMoodList.add(mood);
-            //Log.d("add", "added");
             Collections.sort(allMoodList, new Comparator<MoodEvent>() {
                 @Override
                 public int compare(MoodEvent moodevent, MoodEvent t1) {
                     return t1.getDate().compareTo(moodevent.getDate());
                 }
             });
-//            Log.d("add", "sorted");
-//
+
             String moodString = mood.getMood().getMood();
             switch (moodString) {
-                case "happy" : happyList.add(mood); break;
-                case "angry" : angryList.add(mood); break;
-                case "sad" : sadList.add(mood); break;
-                case "content" : contentList.add(mood); break;
-                case "stressed" : stressedList.add(mood); break;
-                case "meh" : worriedList.add(mood); break;
-                default : throw new IllegalArgumentException();
+                case "happy" :
+                    happyList.add(mood);
+                    break;
+                case "angry" :
+                    angryList.add(mood);
+                    break;
+                case "sad" :
+                    sadList.add(mood);
+                    break;
+                case "content" :
+                    contentList.add(mood);
+                    break;
+                case "stressed" :
+                    stressedList.add(mood);
+                    break;
+                case "meh" :
+                    worriedList.add(mood);
+                    break;
+                default :
+                    throw new IllegalArgumentException();
             }
-
 
 
 
@@ -66,7 +74,7 @@ public class MoodList {
 
     public void delete(MoodEvent mood){
         if(allMoodList.contains(mood)) {
-            allMoodList.remove(mood);
+        allMoodList.remove(mood);
             switch (mood.getMood().getMood()){
                 case "happy" : happyList.remove(mood); break;
                 case "angry" : angryList.remove(mood); break;

@@ -173,15 +173,15 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         intent.setType("image/*");
         startActivityForResult(intent,CHOOSE_PHOTO);
     }
-    /**
-     * get the result of intent
-     * @param requestCode
-     *      request code from intent
-     * @param resultCode
-     *      result code from intent
-     * @param data
-     *      data is image
 
+    /**
+     * This deals with the data requested from other activities.
+     * @param requestCode
+     *      This is originally supplied to startActivityForResult(), allowing to identify who this result came from.
+     * @param resultCode
+     *      This is returned by the child activity through its setResult().
+     * @param data
+     *       This is an intent returning result data.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -235,7 +235,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     }
     @Override
     /**
-     * dispaly the data from date picker
+     * This displays the data from date picker
      * @param datePicker
      *      get the data from date picker
      * @param year
@@ -250,13 +250,13 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         Date.setText(desc);
     }
     /**
-     * dispaly the data from date picker
+     * This displays the data from time picker
      * @param timePicker
-     *      get the date from time picker
+     *      This is the date from time picker
      * @param hourOfDay
-     *      get the hour from date picker
+     *      This is the hour from time picker
      * @param minute
-     *      get the minute from date picker
+     *      This is the minute from time picker
      */
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
@@ -289,12 +289,9 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         }
     }
     /**
-     * to display the image
+     * This displays the image
      * @param imagePath
-     *
-     * the image path from album
-     *
-     *
+     *      This is the image path from album
      */
 
     private void displayImage(String imagePath){

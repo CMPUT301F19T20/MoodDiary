@@ -2,11 +2,10 @@ package com.example.mooddiary.ui.home;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.example.mooddiary.Mood;
 import com.example.mooddiary.MoodAdapter;
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
@@ -26,6 +23,8 @@ import com.example.mooddiary.R;
 import com.example.mooddiary.ViewActivity;
 
 import java.io.ByteArrayOutputStream;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -78,12 +77,33 @@ public class HomeFragment extends Fragment {
         return root;
     }
 
+    /**
+     * This deals with the data requested from other activities.
+     * @param requestCode
+     *      This is originally supplied to startActivityForResult(), allowing to identify who this result came from.
+     * @param resultCode
+     *      This is returned by the child activity through its setResult().
+     * @param data
+     *       This is an intent returning result data.
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        MoodEvent originMoodEvent = (MoodEvent)data.getSerializableExtra("originMoodEvent");
-        MoodEvent editMoodEvent = (MoodEvent)data.getSerializableExtra("editMoodEvent");
-        myMoodList.edit(editMoodEvent, originMoodEvent);
-        moodAdapter.notifyDataSetChanged();
+        Log.d("test", "enter home fragment result1");
+        switch (requestCode) {
+            case VIEW_EDIT_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    boolean ifEdited = (boolean) data.getBooleanExtra("if_edited", false);
+                    if (ifEdited) {
+                        MoodEvent originalMoodEvent = (MoodEvent)data.getSerializableExtra("original_mood_event");
+                        MoodEvent editMoodEvent = (MoodEvent)data.getSerializableExtra("edited_mood_event_return");
+                        myMoodList.edit(editMoodEvent, originalMoodEvent);
+                        moodAdapter.notifyDataSetChanged();
+                    }
+                }
+                break;
+            default:
+        }
+
     }
 
     /**
