@@ -38,7 +38,7 @@
         <item>meh</item>
     </string-array>
 
-    <string-array name="socialSituation">
+    <string-array name="SocialSituation">
         <item>alone</item>
         <item>with one other person</item>
         <item>with two to several people</item>
