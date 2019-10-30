@@ -42,6 +42,8 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -50,6 +52,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class AddMoodEventActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
+
+
     private Button addButton;
     private ImageButton cancelButton;
     private ImageButton photoFromCameraButton;
