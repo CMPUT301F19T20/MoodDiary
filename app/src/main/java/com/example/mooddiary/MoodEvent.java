@@ -1,16 +1,22 @@
 package com.example.mooddiary;
 
-public class MoodEvent {
+import android.util.Log;
+
+import java.io.Serializable;
+import java.util.Arrays;
+
+public class MoodEvent implements Serializable {
     private String date;
     private String time;
     private String socialSituation;
     private String location;
     private String reason;
-    private String photo;
+    private byte[] photo;
     private Mood mood;
 
+
     public MoodEvent(String mood, String date, String time, String socialSituation, String location,
-                        String reason, String photo) {
+                     String reason, byte[] photo) {
         this.date = date;
         this.time = time;
         this.socialSituation = socialSituation;
@@ -60,19 +66,36 @@ public class MoodEvent {
         this.reason = reason;
     }
 
-    public String getPhoto() {
+    public byte[] getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(byte[] photo) {
         this.photo = photo;
     }
 
     public Mood getMood() {
+//        Log.d("test", "enter first getMood");
         return mood;
     }
 
     public void setMood(Mood mood) {
         this.mood = mood;
+    }
+
+    @Override
+    public boolean equals(Object e) {
+        MoodEvent compare = (MoodEvent)e;
+        if(this.date.equals(compare.getDate()) &&
+                this.time.equals(compare.getTime()) &&
+                this.socialSituation.equals(compare.getSocialSituation()) &&
+                this.location.equals(compare.getLocation()) &&
+                this.reason.equals(compare.getReason()) &&
+                Arrays.equals(this.photo, compare.getPhoto()) &&
+                this.mood.equals(compare.getMood())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

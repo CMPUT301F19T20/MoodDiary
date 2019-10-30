@@ -13,5 +13,51 @@
     <string name="menu_friend_map">Friends Map</string>
     <string name="menu_share">Friends</string>
     <string name="menu_send">Send Invitation</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="welcome">"Welcome !"</string>
+    <string name="invalid_username">Not a valid username</string>
+    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="login_failed">"Login failed"</string>
+    <string name="date">date</string>
+    <string name="time">time</string>
+    <string name="socialSituation">socialSituation</string>
+    <string name="location">location</string>
+    <string name="reason">reason</string>
+    <string name="photo">photo</string>
 
+    <string-array name="moodList">
+        <item>happy</item>
+        <item>angry</item>
+        <item>sad</item>
+        <item>content</item>
+        <item>stressed</item>
+        <item>meh</item>
+    </string-array>
+
+    <string-array name="SocialSituation">
+        <item>secret</item>
+        <item>alone</item>
+        <item>with one other person</item>
+        <item>with two to several people</item>
+        <item>with a crowd</item>
+    </string-array>
+
+    <string name="moodIcons">choose a mood</string>
+
+    <string name="username">username</string>
+    <string name="login">Login</string>
+    <string name="signup">Sign up</string>
+
+    <string name="newUser">enter your username</string>
+    <string name="confirm">Confirm</string>
+    <string name="save">Save</string>
+
+    <!--ViewActivity-->
+    <string name="view_edit_button">Edit</string>
+
+    <string name="search_query_hint">Search a mood</string>
 </resources>

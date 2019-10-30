@@ -14,48 +14,57 @@ public class MoodList {
     private ArrayList<MoodEvent> sadList;
     private ArrayList<MoodEvent> contentList;
     private ArrayList<MoodEvent> stressedList;
-    private ArrayList<MoodEvent> worriedList;
+    private ArrayList<MoodEvent> mehList;
 
     public MoodList() {
-        allMoodList = new ArrayList<MoodEvent>();
-        happyList = new ArrayList<MoodEvent>();
-        angryList = new ArrayList<MoodEvent>();
-        sadList = new ArrayList<MoodEvent>();
-        contentList = new ArrayList<MoodEvent>();
-        stressedList = new ArrayList<MoodEvent>();
-        worriedList = new ArrayList<MoodEvent>();
+        allMoodList = new ArrayList<>();
+        happyList = new ArrayList<>();
+        angryList = new ArrayList<>();
+        sadList = new ArrayList<>();
+        contentList = new ArrayList<>();
+        stressedList = new ArrayList<>();
+        mehList = new ArrayList<>();
 
     }
 
     public void add(MoodEvent mood){
-
         if(allMoodList.contains(mood)){
 
             throw new IllegalArgumentException();
 
         } else {
 
-            //Log.d("add", "will add");
-            allMoodList.add(mood);
-            //Log.d("add", "added");
+                allMoodList.add(mood);
             Collections.sort(allMoodList, new Comparator<MoodEvent>() {
                 @Override
                 public int compare(MoodEvent moodevent, MoodEvent t1) {
                     return t1.getDate().compareTo(moodevent.getDate());
                 }
             });
-//            Log.d("add", "sorted");
-//
-//            switch (mood.getMood().getMood()) {
-//                case "happy" : happyList.add(mood);
-//                case "angry" : angryList.add(mood);
-//                case "sad" : sadList.add(mood);
-//                case "content" : contentList.add(mood);
-//                case "stressed" : stressedList.add(mood);
-//                case "worried" : worriedList.add(mood);
-//                default : throw new IllegalArgumentException();
-//            }
 
+            String moodString = mood.getMood().getMood();
+            switch (moodString) {
+                case "happy" :
+                    happyList.add(mood);
+                    break;
+                case "angry" :
+                    angryList.add(mood);
+                    break;
+                case "sad" :
+                    sadList.add(mood);
+                    break;
+                case "content" :
+                    contentList.add(mood);
+                    break;
+                case "stressed" :
+                    stressedList.add(mood);
+                    break;
+                case "meh" :
+                    mehList.add(mood);
+                    break;
+                default :
+                    throw new IllegalArgumentException();
+            }
 
 
 
@@ -67,12 +76,12 @@ public class MoodList {
         if(allMoodList.contains(mood)) {
             allMoodList.remove(mood);
             switch (mood.getMood().getMood()){
-                case "happy" : happyList.remove(mood);
-                case "angry" : angryList.remove(mood);
-                case "sad" : sadList.remove(mood);
-                case "content" : contentList.remove(mood);
-                case "stressed" : stressedList.remove(mood);
-                case "worried" : worriedList.remove(mood);
+                case "happy" : happyList.remove(mood); break;
+                case "angry" : angryList.remove(mood); break;
+                case "sad" : sadList.remove(mood); break;
+                case "content" : contentList.remove(mood); break;
+                case "stressed" : stressedList.remove(mood); break;
+                case "meh" : mehList.remove(mood); break;
                 default : throw new IllegalArgumentException();
             }
         } else {
@@ -81,6 +90,7 @@ public class MoodList {
     }
 
     public void edit(MoodEvent newMood, MoodEvent originMood){
+
         delete(originMood);
         add(newMood);
     }
@@ -110,6 +120,7 @@ public class MoodList {
     }
 
     public ArrayList<MoodEvent> getWorriedList() {
-        return worriedList;
+        return mehList;
     }
+
 }

@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#d15c6c</color>
-    <color name="colorPrimaryDark">#2B2826</color>
-    <color name="colorAccent">#EB7A97</color>
+    <color name="colorPrimary">#ed968e</color>
+    <color name="colorPrimaryDark">#775E5D</color>
+    <color name="colorAccent">#D8524A </color>
 
-    <color name="colorListBackground">#FBFBEF</color>
+    <color name="colorListBackground">#ffffff</color>
 
+
+    <!--emotion color-->
     <color name="happy">#ff8080</color>
     <color name="sad">#accfff</color>
     <color name="stressed">#c6f1d6</color>
     <color name="angry">#ba8dfd</color>
     <color name="content">#ffba92</color>
     <color name="meh">#d4f596</color>
+
+    <!--UI color-->
+    <color name="colorPink">#ed968e</color>
+    <color name="colorGray">#cccccc</color>
+    <color name="colorDarkGray">#999999</color>
+    <color name="colorWhite">#ffffff</color>
 
 
 
