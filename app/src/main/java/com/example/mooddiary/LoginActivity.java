@@ -13,6 +13,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private Button signUp;
     private EditText nameInput;
+    private String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +30,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userName = nameInput.getText().toString();
                 Intent intent = new Intent (getApplicationContext(), MainActivity.class);
                 intent.putExtra("EXTRA", "openFragment");
                 startActivity(intent);

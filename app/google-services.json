@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "322843626893",
+    "firebase_url": "https://mooddiary-8bb7d.firebaseio.com",
+    "project_id": "mooddiary-8bb7d",
+    "storage_bucket": "mooddiary-8bb7d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322843626893:android:1fe6214fb30b832c5a01c4",
+        "android_client_info": {
+          "package_name": "com.example.mooddiary"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322843626893-co3kuuhjrjg2q8gr72mohfl13kn84ooe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCY4zKkkxcvlNnJg5vy88J1ODPGLS-P8ow"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322843626893-co3kuuhjrjg2q8gr72mohfl13kn84ooe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
