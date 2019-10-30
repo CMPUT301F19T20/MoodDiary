@@ -14,7 +14,7 @@ public class MoodList {
     private ArrayList<MoodEvent> sadList;
     private ArrayList<MoodEvent> contentList;
     private ArrayList<MoodEvent> stressedList;
-    private ArrayList<MoodEvent> worriedList;
+    private ArrayList<MoodEvent> mehList;
 
     public MoodList() {
         allMoodList = new ArrayList<>();
@@ -23,7 +23,7 @@ public class MoodList {
         sadList = new ArrayList<>();
         contentList = new ArrayList<>();
         stressedList = new ArrayList<>();
-        worriedList = new ArrayList<>();
+        mehList = new ArrayList<>();
 
     }
 
@@ -34,7 +34,7 @@ public class MoodList {
 
         } else {
 
-            allMoodList.add(mood);
+                allMoodList.add(mood);
             Collections.sort(allMoodList, new Comparator<MoodEvent>() {
                 @Override
                 public int compare(MoodEvent moodevent, MoodEvent t1) {
@@ -60,7 +60,7 @@ public class MoodList {
                     stressedList.add(mood);
                     break;
                 case "meh" :
-                    worriedList.add(mood);
+                    mehList.add(mood);
                     break;
                 default :
                     throw new IllegalArgumentException();
@@ -74,14 +74,14 @@ public class MoodList {
 
     public void delete(MoodEvent mood){
         if(allMoodList.contains(mood)) {
-        allMoodList.remove(mood);
+            allMoodList.remove(mood);
             switch (mood.getMood().getMood()){
                 case "happy" : happyList.remove(mood); break;
                 case "angry" : angryList.remove(mood); break;
                 case "sad" : sadList.remove(mood); break;
                 case "content" : contentList.remove(mood); break;
                 case "stressed" : stressedList.remove(mood); break;
-                case "worried" : worriedList.remove(mood); break;
+                case "meh" : mehList.remove(mood); break;
                 default : throw new IllegalArgumentException();
             }
         } else {
@@ -90,6 +90,7 @@ public class MoodList {
     }
 
     public void edit(MoodEvent newMood, MoodEvent originMood){
+
         delete(originMood);
         add(newMood);
     }
@@ -119,6 +120,7 @@ public class MoodList {
     }
 
     public ArrayList<MoodEvent> getWorriedList() {
-        return worriedList;
+        return mehList;
     }
+
 }

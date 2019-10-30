@@ -39,6 +39,7 @@
     </string-array>
 
     <string-array name="SocialSituation">
+        <item>secret</item>
         <item>alone</item>
         <item>with one other person</item>
         <item>with two to several people</item>
@@ -57,4 +58,6 @@
 
     <!--ViewActivity-->
     <string name="view_edit_button">Edit</string>
+
+    <string name="search_query_hint">Search a mood</string>
 </resources>

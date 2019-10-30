@@ -2,7 +2,10 @@ package com.example.mooddiary;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -25,7 +28,7 @@ public class ViewActivity extends AppCompatActivity {
 
     private TextView viewMoodTypeText;
 
-    private ImageView viewMoodImage;
+    private TextView viewSocialSituationText;
 
     private ImageView viewPhotoImage;
 
@@ -34,6 +37,8 @@ public class ViewActivity extends AppCompatActivity {
     private MoodEvent moodEvent;
 
     private MoodEvent editedMoodEvent;
+
+    private int position;
 
     private boolean ifEdited = false;
 
@@ -50,30 +55,39 @@ public class ViewActivity extends AppCompatActivity {
 
         viewDateText = (TextView) findViewById(R.id.view_date_text);
         viewTimeText = (TextView) findViewById(R.id.view_time_text);
+        viewSocialSituationText = (TextView) findViewById(R.id.view_social_situation_text);
         viewLocationText = (TextView) findViewById(R.id.view_location_text);
         viewMoodTypeText = (TextView) findViewById(R.id.view_mood_type_text);
         viewReasonText = (TextView) findViewById(R.id.view_reason_text);
-        viewMoodImage = (ImageView) findViewById(R.id.view_mood_image);
         viewPhotoImage = (ImageView) findViewById(R.id.view_photo_image);
         viewEditButton = (Button) findViewById(R.id.view_edit_button);
 
         Intent intent = getIntent();
 
         moodEvent = (MoodEvent) intent.getSerializableExtra("moodEvent");
+        editedMoodEvent = (MoodEvent) intent.getSerializableExtra("moodEvent");
+        position = intent.getIntExtra("moodEvent_index", 0);
 
-        viewDateText.setText(moodEvent.getDate());
-        viewTimeText.setText(moodEvent.getTime());
-        viewReasonText.setText((moodEvent.getReason()));
-        viewMoodTypeText.setText(moodEvent.getMood().getMood());
-        viewLocationText.setText(moodEvent.getLocation());
-        viewMoodImage.setImageResource(moodEvent.getMood().getMoodImage());
+        viewDateText.setText(editedMoodEvent.getDate());
+        viewTimeText.setText(editedMoodEvent.getTime());
+        viewReasonText.setText((editedMoodEvent.getReason()));
+        viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
+        viewLocationText.setText(editedMoodEvent.getLocation());
+        viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
+        if (editedMoodEvent.getPhoto() != null) {
+            Bitmap bitmap = BitmapFactory.decodeByteArray(editedMoodEvent.getPhoto(), 0, editedMoodEvent.getPhoto().length);
+            viewPhotoImage.setImageBitmap(bitmap);
+        }
 
         viewEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Log.d("intent", "click edit");
                 Intent intent_edit = new Intent(ViewActivity.this, AddMoodEventActivity.class);
-                intent_edit.putExtra("mood_event_edit", moodEvent);
+                intent_edit.putExtra("mood_event_edit", editedMoodEvent);
+                //Log.d("intent", "put extra edit mood event");
                 startActivityForResult(intent_edit, VIEW_TO_ADD_EDIT_REQUEST);
+                //Log.d("intent", "start add success");
             }
         });
 
@@ -91,17 +105,22 @@ public class ViewActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.d("intent","enter view 1");
         switch (requestCode) {
             case VIEW_TO_ADD_EDIT_REQUEST:
                 if (resultCode == RESULT_OK) {
                     ifEdited = true;
                     editedMoodEvent = (MoodEvent) data.getSerializableExtra("edited_mood_event");
-                    viewDateText.setText(moodEvent.getDate());
-                    viewTimeText.setText(moodEvent.getTime());
-                    viewReasonText.setText((moodEvent.getReason()));
-                    viewMoodTypeText.setText(moodEvent.getMood().getMood());
-                    viewLocationText.setText(moodEvent.getLocation());
-                    viewMoodImage.setImageResource(moodEvent.getMood().getMoodImage());
+                    viewDateText.setText(editedMoodEvent.getDate());
+                    viewTimeText.setText(editedMoodEvent.getTime());
+                    viewReasonText.setText((editedMoodEvent.getReason()));
+                    viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
+                    viewLocationText.setText(editedMoodEvent.getLocation());
+                    viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
+                    if (editedMoodEvent.getPhoto() != null) {
+                        Bitmap bitmap = BitmapFactory.decodeByteArray(editedMoodEvent.getPhoto(), 0, editedMoodEvent.getPhoto().length);
+                        viewPhotoImage.setImageBitmap(bitmap);
+                    }
                 }
                 break;
             default:

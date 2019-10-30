@@ -260,7 +260,7 @@
                     android:paddingLeft="3dp"
                     android:textSize="20sp"
                     android:background="@null"
-                    android:text="What happened?"
+                    android:hint="What happened?"
                     android:textColor="@color/colorDarkGray">
                 </EditText>
 
@@ -301,7 +301,7 @@
 
                 <ImageButton
                     android:id="@+id/add_photo_camera"
-                    android:paddingLeft="130dp"
+                    android:paddingLeft="80dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/camera"
@@ -321,7 +321,7 @@
             <ImageView
                 android:id="@+id/add_image_reason"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="100dp">
 
             </ImageView>
         </LinearLayout>
