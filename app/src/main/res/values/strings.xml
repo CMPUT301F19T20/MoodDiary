@@ -48,13 +48,29 @@
 
     <string name="moodIcons">choose a mood</string>
 
+    <!--Welcome&Login&Sign up activity-->
+    <string name="login_String">Welcome Back!</string>
+    <string name="signup_String">Hi there :)</string>
+    <string name="noAccount">"Don't have an account?"</string>
+    <string name="hasAccount">Already have an account?</string>
     <string name="username">username</string>
+    <string name="newUser">enter your username</string>
     <string name="login">Login</string>
     <string name="signup">Sign up</string>
-
-    <string name="newUser">enter your username</string>
     <string name="confirm">Confirm</string>
-    <string name="save">Save</string>
+    <string name="welcome_String1">Hi! Welcome to Mood Diary</string>
+    <string name="welcome_String2">"Let's fill in all your feelings"</string>
+
+    <!--Add activity-->
+    <string name="add_String">How do you feel today?</string>
+    <string name="myMood">My mood is</string>
+    <string name="chooseDate">Choose the date</string>
+    <string name="chooseTime">Choose the time</string>
+    <string name="chooseScocial">With whom?</string>
+    <string name="chooseLocation">Choose the location</string>
+    <string name="uploadPhoto">Upload a photo</string>
+    <string name="addDiary">Finish your diary</string>
+
 
     <!--ViewActivity-->
     <string name="view_edit_button">Edit</string>
