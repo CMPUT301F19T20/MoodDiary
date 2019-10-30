@@ -13,7 +13,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button login;
     private Button signUp;
     private EditText nameInput;
-    private String userName;
+    static public String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

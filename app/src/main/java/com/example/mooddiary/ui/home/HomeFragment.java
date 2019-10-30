@@ -19,11 +19,14 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.MoodAdapter;
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
+import com.example.mooddiary.User;
 import com.example.mooddiary.ViewActivity;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
 
@@ -34,9 +37,10 @@ import static android.app.Activity.RESULT_OK;
  * This is Home fragment that shows a list of user's mood event
  */
 public class HomeFragment extends Fragment {
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final int VIEW_EDIT_REQUEST = 0;
     private static final int HOME_TO_ADD_REQUEST = 10;
-
+    public User user = new User(LoginActivity.userName);
     private HomeViewModel homeViewModel;
     private MoodList myMoodList = new MoodList();
     private ListView myMoodEventListView;
@@ -154,7 +158,10 @@ public class HomeFragment extends Fragment {
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
+                    db.collection("users").document(LoginActivity.userName).set(user);
                     myMoodList.add(moodEventAdded);
+                    user.setMoodList(myMoodList);
+                    db.collection("users").document(LoginActivity.userName).set(user);
                     moodAdapter.notifyDataSetChanged();
                 }
             default:

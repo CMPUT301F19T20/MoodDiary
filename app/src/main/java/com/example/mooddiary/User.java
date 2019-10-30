@@ -10,8 +10,9 @@ import java.util.ArrayList;
 
 public class User {
     private String username;
+    private MoodList moodList = new MoodList();
     private ArrayList<String> friends;
-
+    public User(){}
     public User(String username){
         this.username = username;
         friends = new ArrayList<String>();
@@ -24,6 +25,8 @@ public class User {
     public void setUsername(){
         this.username = username;
     }
+
+    public void setMoodList(MoodList moodList){this.moodList= moodList;}
 
     public ArrayList<String> getFriends(){
         return this.friends;
