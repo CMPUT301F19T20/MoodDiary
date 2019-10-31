@@ -11,12 +11,12 @@ public class MoodEvent implements Serializable {
     private String socialSituation;
     private String location;
     private String reason;
-    private byte[] photo;
+    private String photo;
     private Mood mood;
 
 
     public MoodEvent(String mood, String date, String time, String socialSituation, String location,
-                     String reason, byte[] photo) {
+                     String reason, String photo) {
         this.date = date;
         this.time = time;
         this.socialSituation = socialSituation;
@@ -66,11 +66,11 @@ public class MoodEvent implements Serializable {
         this.reason = reason;
     }
 
-    public byte[] getPhoto() {
+    public String getPhoto() {
         return photo;
     }
 
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
 
@@ -91,7 +91,7 @@ public class MoodEvent implements Serializable {
                 this.socialSituation.equals(compare.getSocialSituation()) &&
                 this.location.equals(compare.getLocation()) &&
                 this.reason.equals(compare.getReason()) &&
-                Arrays.equals(this.photo, compare.getPhoto()) &&
+                this.photo.equals(compare.getPhoto()) &&
                 this.mood.equals(compare.getMood())) {
             return true;
         } else {

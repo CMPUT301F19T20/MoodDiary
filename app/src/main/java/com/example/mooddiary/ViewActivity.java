@@ -14,6 +14,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.mooddiary.ui.home.HomeFragment;
+
 public class ViewActivity extends AppCompatActivity {
 
     private final int VIEW_TO_ADD_EDIT_REQUEST = 5;
@@ -74,8 +76,10 @@ public class ViewActivity extends AppCompatActivity {
         viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
         viewLocationText.setText(editedMoodEvent.getLocation());
         viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
-        if (editedMoodEvent.getPhoto() != null) {
-            Bitmap bitmap = BitmapFactory.decodeByteArray(editedMoodEvent.getPhoto(), 0, editedMoodEvent.getPhoto().length);
+
+
+        if (!editedMoodEvent.getPhoto().equals("")) {
+            Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
             viewPhotoImage.setImageBitmap(bitmap);
         }
 
@@ -117,8 +121,8 @@ public class ViewActivity extends AppCompatActivity {
                     viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
                     viewLocationText.setText(editedMoodEvent.getLocation());
                     viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
-                    if (editedMoodEvent.getPhoto() != null) {
-                        Bitmap bitmap = BitmapFactory.decodeByteArray(editedMoodEvent.getPhoto(), 0, editedMoodEvent.getPhoto().length);
+                    if (!editedMoodEvent.getPhoto().equals("")) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
                         viewPhotoImage.setImageBitmap(bitmap);
                     }
                 }
