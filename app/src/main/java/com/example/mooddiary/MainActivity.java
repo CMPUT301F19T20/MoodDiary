@@ -9,8 +9,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -26,6 +29,7 @@ import android.view.Menu;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private final static int HOME_TO_ADD_REQUEST = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, AddMoodEventActivity.class);
-                startActivity(intent);
+                intent.putExtra("action_add", true);
+                startActivityForResult(intent, HOME_TO_ADD_REQUEST);
             }
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -63,5 +68,15 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        Fragment homeFragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
+        homeFragment.onActivityResult(requestCode, resultCode, data);
+
+
     }
 }
