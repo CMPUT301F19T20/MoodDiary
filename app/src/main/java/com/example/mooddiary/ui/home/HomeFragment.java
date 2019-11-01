@@ -26,7 +26,12 @@ import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
 import com.example.mooddiary.User;
 import com.example.mooddiary.ViewActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
 
@@ -46,6 +51,8 @@ public class HomeFragment extends Fragment {
     private ListView myMoodEventListView;
     private MoodAdapter moodAdapter;
     private boolean actionAddReturn;
+    public DocumentReference docRef = db.collection("users").document(LoginActivity.userName);
+
 
     /**
      * This creates the view for the list of user's mood events.
@@ -58,6 +65,7 @@ public class HomeFragment extends Fragment {
      * @return
      *      Return the view for the fragment UI
      */
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -88,7 +96,7 @@ public class HomeFragment extends Fragment {
         myMoodEventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MoodEvent deleteMood = (MoodEvent)myMoodEventListView.getItemAtPosition(i);
+                final MoodEvent deleteMood = (MoodEvent)myMoodEventListView.getItemAtPosition(i);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 dialog.setTitle("Delete a mood");
                 dialog.setMessage("Delete is unrecovrable. Are you sure?");
@@ -158,7 +166,6 @@ public class HomeFragment extends Fragment {
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
-                    db.collection("users").document(LoginActivity.userName).set(user);
                     myMoodList.add(moodEventAdded);
                     user.setMoodList(myMoodList);
                     db.collection("users").document(LoginActivity.userName).set(user);
