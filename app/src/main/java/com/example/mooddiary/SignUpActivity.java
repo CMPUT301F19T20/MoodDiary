@@ -1,19 +1,40 @@
 package com.example.mooddiary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 public class SignUpActivity extends AppCompatActivity {
     private EditText newUser;
     private Button confirm;
     private Button login;
+    private String userName;
+    private FirebaseFirestore db;
+    public static final String TAG = SignUpActivity.class.getSimpleName();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +44,9 @@ public class SignUpActivity extends AppCompatActivity {
         confirm = findViewById(R.id.confirm);
         newUser = findViewById(R.id.newUser);
         login = findViewById(R.id.login);
+        db = FirebaseFirestore.getInstance();
+
+
         initButton();
         Intent intent = getIntent();
     }
@@ -31,6 +55,25 @@ public class SignUpActivity extends AppCompatActivity {
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                userName = newUser.getText().toString();
+                User user = new User(userName);
+                db.collection("users").document(userName)
+                        .set(user)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(SignUpActivity.this,"New User signed up",Toast.LENGTH_SHORT).show();
+                                Log.d(TAG, "DocumentSnapshot successfully written!");
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(SignUpActivity.this,"Fail to signed up",Toast.LENGTH_SHORT).show();
+                                Log.w(TAG,"Error adding document",e);
+                            }
+                        });
+
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
                 startActivity(intent);
             }

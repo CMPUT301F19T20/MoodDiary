@@ -158,7 +158,7 @@ public class HomeFragment extends Fragment {
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
-                    db.collection("users").document(LoginActivity.userName).set(user);
+                    //db.collection("users").document(LoginActivity.userName).set(user);
                     myMoodList.add(moodEventAdded);
                     user.setMoodList(myMoodList);
                     db.collection("users").document(LoginActivity.userName).set(user);
