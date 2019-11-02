@@ -74,7 +74,6 @@
 
     <!--ViewActivity-->
     <string name="view_edit_button">Edit</string>
-
-    <string name="search_query_hint">Search a mood</string>
     <string name="title_activity_maps">Map</string>
+
 </resources>

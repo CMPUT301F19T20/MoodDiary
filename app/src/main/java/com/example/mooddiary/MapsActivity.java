@@ -2,6 +2,10 @@ package com.example.mooddiary;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Context;
+import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -11,9 +15,18 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private ArrayList<MoodEvent> myMoods = new ArrayList<>();
+    private ArrayList<MoodEvent> friendMoods = new ArrayList<>();
+    private ArrayList<MoodEvent> myMapMoods = new ArrayList<>();
+    private ArrayList<MoodEvent> friendMapMoods = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +36,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        Intent intent = getIntent();
+        String map = intent.getStringExtra("map");
+        if (map.equals("mymap")){
+            testMoodList();
+            getMyMapMoods(myMoods);
+            setFriendMapMarker();
+        }
+        else if(map.equals("friendmap")){
+            getFriendMapMoods(friendMoods);
+            setFriendMapMarker();
+        }
     }
 
 
@@ -44,4 +68,84 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
     }
+
+    /**
+     * Getting the latitude and longitude of a location string by geocoder
+     * May throw IOException if the locationName does not exist
+     * @param context
+     * @param locationName
+     * @return
+     */
+    public LatLng getLocationLatLng(Context context, String locationName) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng l1 = null;
+
+        try {
+            address = coder.getFromLocationName(locationName, 5);
+            if (address == null) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            l1 = new LatLng(location.getLatitude(), location.getLongitude());
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return l1;
+    }
+
+    /**
+     * get a list of mood events with a string of location of the user
+     * @param myMoodList
+     */
+    public void getMyMapMoods(ArrayList<MoodEvent> myMoodList){
+        for (int i = 0; i< myMoodList.size();i++){
+            if (myMoodList.get(i).getLocation()==null)
+                myMoodList.add(myMoodList.get(i));
+        }
+    }
+
+    /**
+     * get a list of mood events with a string of location of the user's friends
+     * @param friendMoodList
+     */
+    public void getFriendMapMoods(ArrayList<MoodEvent> friendMoodList){
+        for (int i = 0; i< friendMoodList.size();i++){
+            if (friendMoodList.get(i).getLocation()==null)
+                friendMoodList.add(friendMoodList.get(i));
+        }
+    }
+
+    /**
+     * set the location point markers of the user on the map
+     */
+    public void setMyMapMarker(){
+        for (MoodEvent moodEvent:myMapMoods){
+            String locationName = moodEvent.getLocation();
+            LatLng markPoint = getLocationLatLng(getApplicationContext(),locationName);
+            mMap.addMarker(new MarkerOptions().position(markPoint).title("new mood added"));
+        }
+    }
+
+    public void setFriendMapMarker(){
+        for (MoodEvent moodEvent:friendMapMoods){
+            String locationName = moodEvent.getLocation();
+            LatLng markPoint = getLocationLatLng(getApplicationContext(),locationName);
+            mMap.addMarker(new MarkerOptions().position(markPoint).title("new mood added"));
+        }
+    }
+
+    public void testMoodList(){
+        MoodEvent moodEvent = new MoodEvent("happy","2000-09-20","13:33","alone","111 Street NorthWest","ate well",null);
+        MoodEvent moodEvent2 = new MoodEvent("content","2000-09-25","13:33","alone","290 Bremner Blvd, Toronto, ON","ate well",null);
+        MoodEvent moodEvent1 = new MoodEvent("sad","2000-09-21","13:33","alone","Manhattan, NY 10036, United States","ate well",null);
+
+        myMoods.add(moodEvent);
+        myMoods.add(moodEvent1);
+        myMoods.add(moodEvent2);
+    }
 }
+
