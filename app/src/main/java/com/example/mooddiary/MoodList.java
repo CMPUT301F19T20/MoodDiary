@@ -1,8 +1,10 @@
 package com.example.mooddiary;
 
+import android.annotation.TargetApi;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -30,19 +32,9 @@ public class MoodList implements Serializable {
 
     public void add(MoodEvent mood){
         if(allMoodList.contains(mood)){
-
             throw new IllegalArgumentException();
-
         } else {
-
-                allMoodList.add(mood);
-            Collections.sort(allMoodList, new Comparator<MoodEvent>() {
-                @Override
-                public int compare(MoodEvent moodevent, MoodEvent t1) {
-                    return t1.getDate().compareTo(moodevent.getDate());
-                }
-            });
-
+            allMoodList.add(mood);
             String moodString = mood.getMood().getMood();
             switch (moodString) {
                 case "happy" :
@@ -100,28 +92,46 @@ public class MoodList implements Serializable {
         return allMoodList.get(position);
     }
 
-    public ArrayList<MoodEvent> getAllMoodList() {return allMoodList;}
-
-    public ArrayList<MoodEvent> getHappyList() {return happyList;}
-
-    public ArrayList<MoodEvent> getAngryList() {
-        return angryList;
-    }
-
-    public ArrayList<MoodEvent> getSadList() {
-        return sadList;
-    }
-
-    public ArrayList<MoodEvent> getContentList() {
-        return contentList;
-    }
-
-    public ArrayList<MoodEvent> getStressedList() {
-        return stressedList;
-    }
-
-    public ArrayList<MoodEvent> getMehList() {
-        return mehList;
+    public ArrayList<MoodEvent> getMoodList(String type) {
+        ArrayList<MoodEvent> sortList;
+        switch(type) {
+            case "all" :
+                sortList = allMoodList;
+                break;
+            case "happy" :
+                sortList = happyList;
+                break;
+            case "angry" :
+                sortList = angryList;
+                break;
+            case "sad" :
+                sortList = sadList;
+                break;
+            case "content" :
+                sortList = contentList;
+                break;
+            case "stressed" :
+                sortList = stressedList;
+                break;
+            case "meh" :
+                sortList = mehList;
+                break;
+            default :
+                throw new IllegalArgumentException();
+        }
+        sortList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if(o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        return sortList;
     }
 
 }

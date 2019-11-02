@@ -395,7 +395,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
      *      get the day from date picker
      */
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
-        String desc=String.format("%d/%d/%d",year,month+1,dayOfMonth);
+        String desc=String.format("%04d/%02d/%02d",year,month+1,dayOfMonth);
         dateText.setText(desc);
         dateResult = desc;
     }

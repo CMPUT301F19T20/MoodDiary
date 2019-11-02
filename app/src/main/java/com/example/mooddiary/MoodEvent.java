@@ -3,24 +3,29 @@ package com.example.mooddiary;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Date;
 
 public class MoodEvent implements Serializable {
-    private String date;
-    private String time;
+    private Date date;
     private String socialSituation;
     private String location;
     private String reason;
     private String photo;
     private Mood mood;
 
+    private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+
     public MoodEvent() {
     }
 
     public MoodEvent(String mood, String date, String time, String socialSituation, String location,
                      String reason, String photo) {
-        this.date = date;
-        this.time = time;
+        try {
+            this.date = fmt.parse(date + " " + time);
+        } catch(Exception e) {}
         this.socialSituation = socialSituation;
         this.location = location;
         this.reason = reason;
@@ -28,20 +33,32 @@ public class MoodEvent implements Serializable {
         this.mood = new Mood(mood);
     }
 
+    public long getNumericDate() {
+        return date.getTime();
+    }
+
+    public String getDateAndTime() {
+        return fmt.format(date);
+    }
+
     public String getDate() {
-        return date;
+        return fmt.format(date).substring(0,10);
     }
 
     public void setDate(String date) {
-        this.date = date;
+        try {
+            this.date = fmt.parse(date + " " + getTime());
+        } catch(Exception e) {};
     }
 
     public String getTime() {
-        return time;
+        return fmt.format(date).substring(10);
     }
 
     public void setTime(String time) {
-        this.time = time;
+        try {
+            this.date = fmt.parse(getDate() + " " + time);
+        } catch(Exception e) {}
     }
 
     public String getSocialSituation() {
@@ -87,8 +104,7 @@ public class MoodEvent implements Serializable {
     @Override
     public boolean equals(Object e) {
         MoodEvent compare = (MoodEvent)e;
-        if(this.date.equals(compare.getDate()) &&
-                this.time.equals(compare.getTime()) &&
+        if(this.date.equals(compare.getDateAndTime()) &&
                 this.socialSituation.equals(compare.getSocialSituation()) &&
                 this.location.equals(compare.getLocation()) &&
                 this.reason.equals(compare.getReason()) &&
@@ -99,4 +115,5 @@ public class MoodEvent implements Serializable {
             return false;
         }
     }
+
 }
