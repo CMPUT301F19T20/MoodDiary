@@ -14,6 +14,8 @@ public class MoodEvent implements Serializable {
     private String photo;
     private Mood mood;
 
+    public MoodEvent() {
+    }
 
     public MoodEvent(String mood, String date, String time, String socialSituation, String location,
                      String reason, String photo) {

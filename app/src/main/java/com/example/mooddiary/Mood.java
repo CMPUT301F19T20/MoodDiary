@@ -21,6 +21,9 @@ public class Mood implements Serializable {
     private String mood;
     private String color;
 
+    public Mood() {
+    }
+
     public Mood(String mood) {
         this.mood = mood;
         this.moodImage = imageOfMood(mood);
