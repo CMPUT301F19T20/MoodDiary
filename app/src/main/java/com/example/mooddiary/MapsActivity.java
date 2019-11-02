@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -14,6 +15,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,11 +24,12 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ArrayList<MoodEvent> myMoods = new ArrayList<>();
+    private ArrayList<MoodEvent> myMoods  = new ArrayList<>();
     private ArrayList<MoodEvent> friendMoods = new ArrayList<>();
     private ArrayList<MoodEvent> myMapMoods = new ArrayList<>();
     private ArrayList<MoodEvent> friendMapMoods = new ArrayList<>();
-
+    String map = null;
+    FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +40,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         Intent intent = getIntent();
-        String map = intent.getStringExtra("map");
-        if (map.equals("mymap")){
-            testMoodList();
-            getMyMapMoods(myMoods);
-            setFriendMapMarker();
-        }
-        else if(map.equals("friendmap")){
-            getFriendMapMoods(friendMoods);
-            setFriendMapMarker();
-        }
-    }
+        this.map = intent.getStringExtra("map");
+        //myMoods = (ArrayList<MoodEvent>)intent.getSerializableExtra("usermoods");
+        //friendMoods = (ArrayList<MoodEvent>)intent.getSerializableExtra("friendmoods");
 
+    }
 
     /**
      * Manipulates the map once available.
@@ -67,6 +63,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LatLng sydney = new LatLng(-34, 151);
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        if (map.equals("mymap")){
+            testMoodList();
+            getMyMapMoods(myMoods);
+            setMyMapMarker();
+        }
+        else if(map.equals("friendmap")){
+            testMoodList();
+            getFriendMapMoods(friendMoods);
+            setFriendMapMarker();
+        }
     }
 
     /**
@@ -103,8 +109,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     public void getMyMapMoods(ArrayList<MoodEvent> myMoodList){
         for (int i = 0; i< myMoodList.size();i++){
-            if (myMoodList.get(i).getLocation()==null)
-                myMoodList.add(myMoodList.get(i));
+            if (myMoodList.get(i).getLocation()!=null)
+                myMapMoods.add(myMoodList.get(i));
         }
     }
 
@@ -114,8 +120,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     public void getFriendMapMoods(ArrayList<MoodEvent> friendMoodList){
         for (int i = 0; i< friendMoodList.size();i++){
-            if (friendMoodList.get(i).getLocation()==null)
-                friendMoodList.add(friendMoodList.get(i));
+            if (friendMoodList.get(i).getLocation()!=null)
+                friendMapMoods.add(friendMoodList.get(i));
         }
     }
 
@@ -139,13 +145,18 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void testMoodList(){
-        MoodEvent moodEvent = new MoodEvent("happy","2000-09-20","13:33","alone","111 Street NorthWest","ate well",null);
+        MoodEvent moodEvent = new MoodEvent("happy","2000-09-20","13:33","alone","111 Street NorthWest, Edmonton, AB","ate well",null);
         MoodEvent moodEvent2 = new MoodEvent("content","2000-09-25","13:33","alone","290 Bremner Blvd, Toronto, ON","ate well",null);
         MoodEvent moodEvent1 = new MoodEvent("sad","2000-09-21","13:33","alone","Manhattan, NY 10036, United States","ate well",null);
 
         myMoods.add(moodEvent);
         myMoods.add(moodEvent1);
         myMoods.add(moodEvent2);
+
+        friendMoods.add(moodEvent);
+        friendMoods.add(moodEvent1);
+        friendMoods.add(moodEvent2);
     }
+
 }
 
