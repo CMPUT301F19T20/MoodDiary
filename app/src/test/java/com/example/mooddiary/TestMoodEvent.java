@@ -2,9 +2,12 @@ package com.example.mooddiary;
 
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+
 import static org.junit.Assert.assertEquals;
 
 public class TestMoodEvent {
+
     @Test
     public void testGetDate() {
         MoodEvent moodEvent = new MoodEvent("happy", "Oct 24, 2019", "10:40", "alone", "", "", "");
@@ -83,8 +86,8 @@ public class TestMoodEvent {
     @Test
     public void testSetPhoto() {
         MoodEvent moodEvent = new MoodEvent("happy", "Oct 24, 2019", "10:40", "alone", "", "", "");
-        moodEvent.setPhoto("3");
-        assertEquals("3", moodEvent.getPhoto());
+        moodEvent.setPhoto("a");
+        assertEquals("a", moodEvent.getPhoto());
 
     }
 
