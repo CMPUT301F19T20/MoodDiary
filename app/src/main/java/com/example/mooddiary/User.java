@@ -10,12 +10,18 @@ import java.util.ArrayList;
 
 public class User {
     private String username;
-    private MoodList moodList = new MoodList();
+    private MoodList moodList;
     private ArrayList<String> friends;
-    public User(){}
+
+
+
+    public User(){
+        //public no-arg constructor needed
+    }
     public User(String username){
         this.username = username;
         friends = new ArrayList<String>();
+        moodList = new MoodList();
     }
 
     public String getUsername(){
@@ -27,6 +33,10 @@ public class User {
     }
 
     public void setMoodList(MoodList moodList){this.moodList= moodList;}
+
+    public MoodList getMoodList(){
+        return this.moodList;
+    }
 
     public ArrayList<String> getFriends(){
         return this.friends;
@@ -44,11 +54,6 @@ public class User {
 
     public void removeFriends(String username){
         this.friends.remove(username);
-    }
-
-
-    public MoodList getMoodList(){
-        return this.moodList;
     }
 
 

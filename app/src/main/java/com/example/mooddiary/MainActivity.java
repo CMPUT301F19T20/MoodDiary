@@ -76,7 +76,5 @@ public class MainActivity extends AppCompatActivity {
         Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         Fragment homeFragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
         homeFragment.onActivityResult(requestCode, resultCode, data);
-
-
     }
 }
