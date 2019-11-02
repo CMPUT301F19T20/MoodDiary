@@ -2,11 +2,12 @@ package com.example.mooddiary;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class MoodList {
+public class MoodList implements Serializable {
 
     private ArrayList<MoodEvent> allMoodList;
     private ArrayList<MoodEvent> happyList;
@@ -119,7 +120,7 @@ public class MoodList {
         return stressedList;
     }
 
-    public ArrayList<MoodEvent> getWorriedList() {
+    public ArrayList<MoodEvent> getMehList() {
         return mehList;
     }
 

@@ -19,15 +19,11 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.InputFilter;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -42,14 +38,23 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 public class AddMoodEventActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
+    private static final SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
+
     private Button addButton;
     private ImageButton cancelButton;
     private ImageButton photoFromCameraButton;
@@ -71,7 +76,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private String timeResult = "";
     private String locationResult = "";
     private String reasonResult = "";
-    private byte[] photoResult = null;
+    private String photoResult = "";
 
     private static final int TAKE_PHOTO = 1;
     private static final  int CHOOSE_PHOTO = 2;
@@ -138,8 +143,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             reasonEdit.setText(moodEventFromView.getReason());
             String socialSituation = moodEventFromView.getSocialSituation();
             Mood mood = moodEventFromView.getMood();
-            if (moodEventFromView.getPhoto() != null) {
-                Bitmap bitmap = BitmapFactory.decodeByteArray(moodEventFromView.getPhoto(), 0, moodEventFromView.getPhoto().length);
+            if (!moodEventFromView.getPhoto().equals("")) {
+                Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + moodEventFromView.getPhoto());
                 photoImage.setImageBitmap(bitmap);
             }
 
@@ -185,7 +190,16 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         photoFromCameraButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                File outputImage = new File(getExternalCacheDir(),"out_image.jpg");
+                File outputImage = new File(getFilesDir(),"out_image.jpg");
+
+//                try {
+//                        SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
+//                        String filename = LoginActivity.userName + simpleDate.format(new Date()) + ".png";
+//                        outputImage = new File(getFilesDir().toString() + "/" +filename);
+//                        outputImage.createNewFile();
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
 
                 try{
                     if (outputImage.exists()){
@@ -195,6 +209,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 } catch (IOException e){
                     e.printStackTrace();
                 }
+
                 if (Build.VERSION.SDK_INT >= 24){
                     imageUri = FileProvider.getUriForFile(AddMoodEventActivity.this,"com.example.mooddiary.fileprovider",outputImage);
                 }else{
@@ -255,8 +270,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
 
                 String [] checkNumberOfReasonWords = reasonResult.split(" ");
-                if (checkNumberOfReasonWords.length > 3 && reasonResult.length() > 20) {
-                    Toast.makeText(AddMoodEventActivity.this,"reason length less than 20 characters or 3 words",Toast.LENGTH_SHORT).show();
+                if (checkNumberOfReasonWords.length > 3 || reasonResult.length() > 20) {
+                    Toast.makeText(AddMoodEventActivity.this,"reason no more than 20 characters or 3 words",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -288,10 +303,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 finish();
             }
         });
-
-
-
-
     }
 
     /*
@@ -319,14 +330,19 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         switch (requestCode) {
             case TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
+                    //Bitmap bitmap = data.getExtras().getParcelable("data");
+                    //photoResult = imageUri.getPath();
+                    photoImage.setImageURI(imageUri);
+                    Bitmap bitmap = ((BitmapDrawable)photoImage.getDrawable()).getBitmap();
+
                     try {
-                        // show photo from camera
-                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(imageUri));
-                        photoImage.setImageBitmap(bitmap);
-                        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 10, baos);
-                        photoResult = baos.toByteArray();
-                    } catch (FileNotFoundException e) {
+                        photoResult = LoginActivity.userName + "_" + simpleDate.format(new Date()) + ".png";
+                        File addPhoto = new File(getExternalFilesDir("photo").toString() + "/" + photoResult);
+                        FileOutputStream out = new FileOutputStream(addPhoto);
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                        out.flush();
+                        out.close();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
@@ -432,9 +448,16 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         if(imagePath != null){
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             photoImage.setImageBitmap(bitmap);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-            photoResult = baos.toByteArray();
+            photoResult = LoginActivity.userName + "_" + simpleDate.format(new Date()) + ".png";
+            File editPhoto = new File(getExternalFilesDir("photo").toString() + "/" + photoResult);
+            try {
+                FileOutputStream out = new FileOutputStream(editPhoto);
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+                out.flush();
+                out.close();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
         }else {
             Toast.makeText(this,"failed to get image", Toast.LENGTH_SHORT).show();
         }
@@ -472,7 +495,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         displayImage(imagePath);
     }
 
-    /**
+    /**s
      * handleImageOnKitKat for version lower than 4.0
      * @param data
      *
@@ -527,7 +550,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             case R.id.add_mood_spinner:
                 if(two_selected){
                     TextView txt_name = view.findViewById(R.id.name);
-                    //Toast.makeText(mContext,"choose a mood：" + txt_name.getText().toString(), Toast.LENGTH_SHORT).show();
                     moodSpinnerResult = txt_name.getText().toString();
 
                 }else

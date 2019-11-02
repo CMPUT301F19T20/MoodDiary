@@ -1,12 +1,21 @@
 package com.example.mooddiary;
 
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+
 import org.junit.Test;
+
+import java.io.ByteArrayOutputStream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestMoodList {
+
+    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+
+    byte[] d = baos.toByteArray();
     @Test
     public void testAdd(){
         MoodList list = new MoodList();
@@ -19,6 +28,7 @@ public class TestMoodList {
     @Test
     public void testDelete(){
         MoodList list = new MoodList();
+
         MoodEvent moodEvent = new MoodEvent("happy", "Oct 24, 2019", "10:40", "alone", "", "", "");
         list.add(moodEvent);
         list.delete(moodEvent);
