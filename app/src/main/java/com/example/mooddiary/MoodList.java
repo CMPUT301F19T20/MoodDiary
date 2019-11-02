@@ -30,19 +30,9 @@ public class MoodList implements Serializable {
 
     public void add(MoodEvent mood){
         if(allMoodList.contains(mood)){
-
             throw new IllegalArgumentException();
-
         } else {
-
-                allMoodList.add(mood);
-            Collections.sort(allMoodList, new Comparator<MoodEvent>() {
-                @Override
-                public int compare(MoodEvent moodevent, MoodEvent t1) {
-                    return t1.getDate().compareTo(moodevent.getDate());
-                }
-            });
-
+            allMoodList.add(mood);
             String moodString = mood.getMood().getMood();
             switch (moodString) {
                 case "happy" :
@@ -100,28 +90,25 @@ public class MoodList implements Serializable {
         return allMoodList.get(position);
     }
 
-    public ArrayList<MoodEvent> getAllMoodList() {return allMoodList;}
-
-    public ArrayList<MoodEvent> getHappyList() {return happyList;}
-
-    public ArrayList<MoodEvent> getAngryList() {
-        return angryList;
-    }
-
-    public ArrayList<MoodEvent> getSadList() {
-        return sadList;
-    }
-
-    public ArrayList<MoodEvent> getContentList() {
-        return contentList;
-    }
-
-    public ArrayList<MoodEvent> getStressedList() {
-        return stressedList;
-    }
-
-    public ArrayList<MoodEvent> getMehList() {
-        return mehList;
+    public ArrayList<MoodEvent> getMoodList(String type) {
+        switch(type) {
+            case "all" :
+                return allMoodList;
+            case "happy" :
+                return happyList;
+            case "angry" :
+                return angryList;
+            case "sad" :
+                return sadList;
+            case "content" :
+                return contentList;
+            case "stressed" :
+                return stressedList;
+            case "meh" :
+                return mehList;
+            default :
+                throw new IllegalArgumentException();
+        }
     }
 
 }
