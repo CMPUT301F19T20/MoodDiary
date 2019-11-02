@@ -22,7 +22,7 @@ public class User {
         return this.username;
     }
 
-    public void setUsername(){
+    public void setUsername(String username){
         this.username = username;
     }
 
@@ -46,4 +46,11 @@ public class User {
         this.friends.remove(username);
     }
 
+
+    public MoodList getMoodList(){
+        return this.moodList;
+    }
+
+
 }
+
