@@ -120,7 +120,7 @@ public class MoodList implements Serializable {
         return stressedList;
     }
 
-    public ArrayList<MoodEvent> getWorriedList() {
+    public ArrayList<MoodEvent> getMehList() {
         return mehList;
     }
 

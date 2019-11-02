@@ -56,10 +56,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:layout_gravity="center"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp">
+                android:paddingBottom="20dp" >
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -82,8 +81,12 @@
                     android:text="@string/myMood">
                 </TextView>
 
-                <TextView android:id="@+id/txtHide" android:layout_width="20dp" android:layout_height="1dp"
+                <TextView
+                    android:id="@+id/txtHide"
+                    android:layout_width="20dp"
+                    android:layout_height="1dp"
                     android:layout_centerHorizontal="true" />
+
                 <Spinner
                     android:id="@+id/add_mood_spinner"
                     android:layout_width="wrap_content"
