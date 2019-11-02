@@ -1,8 +1,10 @@
 package com.example.mooddiary;
 
+import android.annotation.TargetApi;
 import android.util.Log;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -91,24 +93,45 @@ public class MoodList implements Serializable {
     }
 
     public ArrayList<MoodEvent> getMoodList(String type) {
+        ArrayList<MoodEvent> sortList;
         switch(type) {
             case "all" :
-                return allMoodList;
+                sortList = allMoodList;
+                break;
             case "happy" :
-                return happyList;
+                sortList = happyList;
+                break;
             case "angry" :
-                return angryList;
+                sortList = angryList;
+                break;
             case "sad" :
-                return sadList;
+                sortList = sadList;
+                break;
             case "content" :
-                return contentList;
+                sortList = contentList;
+                break;
             case "stressed" :
-                return stressedList;
+                sortList = stressedList;
+                break;
             case "meh" :
-                return mehList;
+                sortList = mehList;
+                break;
             default :
                 throw new IllegalArgumentException();
         }
+        sortList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if(o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        return sortList;
     }
 
 }

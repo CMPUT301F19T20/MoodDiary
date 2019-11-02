@@ -5,6 +5,7 @@ import android.util.Log;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 
 public class MoodEvent implements Serializable {
@@ -30,6 +31,10 @@ public class MoodEvent implements Serializable {
         this.reason = reason;
         this.photo = photo;
         this.mood = new Mood(mood);
+    }
+
+    public long getNumericDate() {
+        return date.getTime();
     }
 
     public String getDateAndTime() {
@@ -110,4 +115,5 @@ public class MoodEvent implements Serializable {
             return false;
         }
     }
+
 }
