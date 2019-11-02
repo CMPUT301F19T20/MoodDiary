@@ -26,6 +26,8 @@ import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
 import com.example.mooddiary.User;
 import com.example.mooddiary.ViewActivity;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
@@ -157,11 +159,11 @@ public class HomeFragment extends Fragment {
                 break;
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
+                    DocumentReference documentReference = db.collection("users").document(LoginActivity.userName);
+                    documentReference.update("moodList", FieldValue.arrayRemove(myMoodList));
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
-                    //db.collection("users").document(LoginActivity.userName).set(user);
                     myMoodList.add(moodEventAdded);
-                    user.setMoodList(myMoodList);
-                    db.collection("users").document(LoginActivity.userName).set(user);
+                    documentReference.update("moodList", FieldValue.arrayUnion(myMoodList));
                     moodAdapter.notifyDataSetChanged();
                 }
             default:
