@@ -46,13 +46,11 @@ public class User {
         this.friends.remove(username);
     }
 
-<<<<<<< Updated upstream
+
     public MoodList getMoodList(){
         return this.moodList;
     }
-=======
-    public MoodList getMoodList(){return this.moodList;}
->>>>>>> Stashed changes
+
 
 }
 
