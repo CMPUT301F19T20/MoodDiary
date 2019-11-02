@@ -61,4 +61,7 @@
 
     <string name="search_query_hint">Search a mood</string>
     <string name="title_activity_maps">Map</string>
+
+    <string name="mymap">See my moods</string>
+    <string name="friendmap">See friend moods</string>
 </resources>
