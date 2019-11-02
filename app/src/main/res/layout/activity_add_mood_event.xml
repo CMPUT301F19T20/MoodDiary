@@ -232,13 +232,13 @@
                     >
                 </ImageView>
 
-                <TextView
+                <EditText
                     android:id="@+id/add_location_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:text="@string/chooseLocation">
-                </TextView>
+                </EditText>
 
             </LinearLayout>
 
