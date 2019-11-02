@@ -22,10 +22,11 @@ import java.util.List;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
-    private ArrayList<MoodEvent> myMoods = new MoodList().getAllMoodList();
-    private ArrayList<MoodEvent> friendMoods = new MoodList().getAllMoodList();
+    private ArrayList<MoodEvent> myMoods = new ArrayList<>();
+    private ArrayList<MoodEvent> friendMoods = new ArrayList<>();
     private ArrayList<MoodEvent> myMapMoods = new ArrayList<>();
     private ArrayList<MoodEvent> friendMapMoods = new ArrayList<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         String map = intent.getStringExtra("map");
         if (map.equals("mymap")){
+            testMoodList();
             getMyMapMoods(myMoods);
             setFriendMapMarker();
         }
@@ -100,9 +102,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * @param myMoodList
      */
     public void getMyMapMoods(ArrayList<MoodEvent> myMoodList){
-        for (MoodEvent moodEvent : myMoodList){
-            if (!(moodEvent.getLocation()==null))
-                myMoodList.add(moodEvent);
+        for (int i = 0; i< myMoodList.size();i++){
+            if (myMoodList.get(i).getLocation()==null)
+                myMoodList.add(myMoodList.get(i));
         }
     }
 
@@ -111,9 +113,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * @param friendMoodList
      */
     public void getFriendMapMoods(ArrayList<MoodEvent> friendMoodList){
-        for (MoodEvent moodEvent:friendMoodList){
-            if (!(moodEvent.getLocation()==null))
-                friendMapMoods.add(moodEvent);
+        for (int i = 0; i< friendMoodList.size();i++){
+            if (friendMoodList.get(i).getLocation()==null)
+                friendMoodList.add(friendMoodList.get(i));
         }
     }
 
@@ -134,6 +136,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             LatLng markPoint = getLocationLatLng(getApplicationContext(),locationName);
             mMap.addMarker(new MarkerOptions().position(markPoint).title("new mood added"));
         }
+    }
+
+    public void testMoodList(){
+        MoodEvent moodEvent = new MoodEvent("happy","2000-09-20","13:33","alone","111 Street NorthWest","ate well",null);
+        MoodEvent moodEvent2 = new MoodEvent("content","2000-09-25","13:33","alone","290 Bremner Blvd, Toronto, ON","ate well",null);
+        MoodEvent moodEvent1 = new MoodEvent("sad","2000-09-21","13:33","alone","Manhattan, NY 10036, United States","ate well",null);
+
+        myMoods.add(moodEvent);
+        myMoods.add(moodEvent1);
+        myMoods.add(moodEvent2);
     }
 }
 
