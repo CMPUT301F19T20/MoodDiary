@@ -270,8 +270,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
 
                 String [] checkNumberOfReasonWords = reasonResult.split(" ");
-                if (checkNumberOfReasonWords.length > 3 && reasonResult.length() > 20) {
-                    Toast.makeText(AddMoodEventActivity.this,"reason length less than 20 characters or 3 words",Toast.LENGTH_SHORT).show();
+                if (checkNumberOfReasonWords.length > 3 || reasonResult.length() > 20) {
+                    Toast.makeText(AddMoodEventActivity.this,"reason no more than 20 characters or 3 words",Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -495,7 +495,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         displayImage(imagePath);
     }
 
-    /**
+    /**s
      * handleImageOnKitKat for version lower than 4.0
      * @param data
      *
@@ -550,7 +550,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             case R.id.add_mood_spinner:
                 if(two_selected){
                     TextView txt_name = view.findViewById(R.id.name);
-                    //Toast.makeText(mContext,"choose a mood：" + txt_name.getText().toString(), Toast.LENGTH_SHORT).show();
                     moodSpinnerResult = txt_name.getText().toString();
 
                 }else

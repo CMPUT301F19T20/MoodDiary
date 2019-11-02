@@ -119,7 +119,7 @@ public class MoodList {
         return stressedList;
     }
 
-    public ArrayList<MoodEvent> getWorriedList() {
+    public ArrayList<MoodEvent> getMehList() {
         return mehList;
     }
 

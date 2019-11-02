@@ -75,7 +75,6 @@ public class MoodEvent implements Serializable {
     }
 
     public Mood getMood() {
-//        Log.d("test", "enter first getMood");
         return mood;
     }
 
