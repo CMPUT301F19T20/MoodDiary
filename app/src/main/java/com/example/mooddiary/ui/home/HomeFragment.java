@@ -26,7 +26,12 @@ import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
 import com.example.mooddiary.User;
 import com.example.mooddiary.ViewActivity;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.ByteArrayOutputStream;
 
@@ -46,6 +51,8 @@ public class HomeFragment extends Fragment {
     private ListView myMoodEventListView;
     private MoodAdapter moodAdapter;
     private boolean actionAddReturn;
+    public DocumentReference docRef = db.collection("users").document(LoginActivity.userName);
+
 
     /**
      * This creates the view for the list of user's mood events.
@@ -58,6 +65,7 @@ public class HomeFragment extends Fragment {
      * @return
      *      Return the view for the fragment UI
      */
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -88,7 +96,7 @@ public class HomeFragment extends Fragment {
         myMoodEventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MoodEvent deleteMood = (MoodEvent)myMoodEventListView.getItemAtPosition(i);
+                final MoodEvent deleteMood = (MoodEvent)myMoodEventListView.getItemAtPosition(i);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 dialog.setTitle("Delete a mood");
                 dialog.setMessage("Delete is unrecovrable. Are you sure?");
@@ -158,7 +166,6 @@ public class HomeFragment extends Fragment {
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
-                    //db.collection("users").document(LoginActivity.userName).set(user);
                     myMoodList.add(moodEventAdded);
                     user.setMoodList(myMoodList);
                     db.collection("users").document(LoginActivity.userName).set(user);
@@ -175,28 +182,23 @@ public class HomeFragment extends Fragment {
      * This may be deleted later.
      */
     private void initMoodList() {
-        Drawable drawable = getResources().getDrawable(R.drawable.angry);
-        Bitmap bitmap= ((BitmapDrawable)drawable).getBitmap();
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] d = baos.toByteArray();
         MoodEvent moodEvent1 =
-                new MoodEvent("happy", "2019/10/27", "10:40", "with a crowd", "", "l", d);
+                new MoodEvent("happy", "2019/10/27", "10:40", "with a crowd", "", "l", "");
 
         MoodEvent moodEvent2 =
-                new MoodEvent("sad", "2019/10/23", "11:40", "alone", "", "love", d);
+                new MoodEvent("sad", "2019/10/23", "11:40", "alone", "", "love", "");
 
         MoodEvent moodEvent3 =
-                new MoodEvent("meh", "2019/10/25", "12:40", "alone", "", "", d);
+                new MoodEvent("meh", "2019/10/25", "12:40", "alone", "", "", "");
 
         MoodEvent moodEvent4 =
-                new MoodEvent("stressed", "2019/10/22", "10:40", "alone", "", "", d);
+                new MoodEvent("stressed", "2019/10/22", "10:40", "alone", "", "", "");
 
         MoodEvent moodEvent5 =
-                new MoodEvent("angry", "2019/10/21", "10:40", "alone", "", "", d);
+                new MoodEvent("angry", "2019/10/21", "10:40", "alone", "", "", "");
 
         MoodEvent moodEvent6 =
-                new MoodEvent("content", "2019/10/19", "10:40", "alone", "", "", d);
+                new MoodEvent("content", "2019/10/19", "10:40", "alone", "", "", "");
 
         myMoodList.add(moodEvent2);
         myMoodList.add(moodEvent1);
