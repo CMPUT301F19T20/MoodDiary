@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,11 +31,15 @@ public class ViewActivity extends AppCompatActivity {
 
     private TextView viewMoodTypeText;
 
+    private ImageView viewMoodTypeImage;
+
     private TextView viewSocialSituationText;
 
     private ImageView viewPhotoImage;
 
     private Button viewEditButton;
+
+    private ImageButton viewReturnButton;
 
     private MoodEvent moodEvent;
 
@@ -60,9 +65,11 @@ public class ViewActivity extends AppCompatActivity {
         viewSocialSituationText = (TextView) findViewById(R.id.view_social_situation_text);
         viewLocationText = (TextView) findViewById(R.id.view_location_text);
         viewMoodTypeText = (TextView) findViewById(R.id.view_mood_type_text);
+        viewMoodTypeImage = (ImageView) findViewById(R.id.view_mood_type_image);
         viewReasonText = (TextView) findViewById(R.id.view_reason_text);
         viewPhotoImage = (ImageView) findViewById(R.id.view_photo_image);
         viewEditButton = (Button) findViewById(R.id.view_edit_button);
+        viewReturnButton = (ImageButton) findViewById(R.id.view_return_button);
 
         Intent intent = getIntent();
 
@@ -74,6 +81,7 @@ public class ViewActivity extends AppCompatActivity {
         viewTimeText.setText(editedMoodEvent.getTime());
         viewReasonText.setText((editedMoodEvent.getReason()));
         viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
+        viewMoodTypeImage.setImageResource(editedMoodEvent.getMood().getMoodImage());
         viewLocationText.setText(editedMoodEvent.getLocation());
         viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
 
@@ -119,6 +127,7 @@ public class ViewActivity extends AppCompatActivity {
                     viewTimeText.setText(editedMoodEvent.getTime());
                     viewReasonText.setText((editedMoodEvent.getReason()));
                     viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
+                    viewMoodTypeImage = (ImageView) findViewById(R.id.view_mood_type_image);
                     viewLocationText.setText(editedMoodEvent.getLocation());
                     viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
                     if (!editedMoodEvent.getPhoto().equals("")) {
