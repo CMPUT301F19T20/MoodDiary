@@ -24,6 +24,7 @@ import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.MoodAdapter;
 import com.example.mooddiary.MoodBean;
 import com.example.mooddiary.MoodEvent;
+import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
 import com.example.mooddiary.User;
 import com.example.mooddiary.ViewActivity;
@@ -91,7 +92,7 @@ public class HomeFragment extends Fragment {
         myMoodEventListView = root.findViewById(R.id.my_mood_event_list_view);
 
 
-        initMoodList();
+        //initMoodList();
         /**final DocumentReference docRef1 = db.collection("users").document("chenge");
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
