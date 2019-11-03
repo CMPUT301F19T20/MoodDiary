@@ -11,13 +11,13 @@ import java.util.Comparator;
 
 public class MoodList implements Serializable {
 
-    private ArrayList<MoodEvent> allMoodList;
-    private ArrayList<MoodEvent> happyList;
-    private ArrayList<MoodEvent> angryList;
-    private ArrayList<MoodEvent> sadList;
-    private ArrayList<MoodEvent> contentList;
-    private ArrayList<MoodEvent> stressedList;
-    private ArrayList<MoodEvent> mehList;
+    public ArrayList<MoodEvent> allMoodList;
+    public ArrayList<MoodEvent> happyList;
+    public ArrayList<MoodEvent> angryList;
+    public ArrayList<MoodEvent> sadList;
+    public ArrayList<MoodEvent> contentList;
+    public ArrayList<MoodEvent> stressedList;
+    public ArrayList<MoodEvent> mehList;
 
     public MoodList() {
         allMoodList = new ArrayList<>();
@@ -91,6 +91,58 @@ public class MoodList implements Serializable {
     public MoodEvent ViewDetail(int position){
         return allMoodList.get(position);
     }
+
+    public ArrayList<MoodEvent> getAllMoodList() {return allMoodList;}
+
+    public ArrayList<MoodEvent> getHappyList() {return happyList;}
+
+    public ArrayList<MoodEvent> getAngryList() {
+        return angryList;
+    }
+
+    public ArrayList<MoodEvent> getSadList() {
+        return sadList;
+    }
+    public ArrayList<MoodEvent> getContentList() {
+        return contentList;
+    }
+
+    public ArrayList<MoodEvent> getStressedList() {
+        return stressedList;
+    }
+
+    public ArrayList<MoodEvent> getMehList() {
+        return mehList;
+    }
+
+    public void setAllMoodList(ArrayList<MoodEvent> allMoodList){
+        this.allMoodList = allMoodList;
+    }
+
+    public void setHappyList(ArrayList<MoodEvent> allMoodList){
+        this.happyList = happyList;
+    }
+    public void setAngryList(ArrayList<MoodEvent> allMoodList){
+        this.angryList = angryList;
+    }
+    public void setSadList(ArrayList<MoodEvent> allMoodList){
+        this.sadList = sadList;
+    }
+    public void setContentList(ArrayList<MoodEvent> allMoodList){
+        this.contentList = contentList;
+    }
+    public void setStressedList(ArrayList<MoodEvent> allMoodList){
+        this.stressedList = stressedList;
+    }
+    public void setMehList(ArrayList<MoodEvent> allMoodList){
+        this.mehList = mehList;
+    }
+
+
+
+
+
+
 
     public ArrayList<MoodEvent> getMoodList(String type) {
         ArrayList<MoodEvent> sortList;

@@ -23,6 +23,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -33,6 +34,9 @@ public class SignUpActivity extends AppCompatActivity {
     private Button login;
     private String userName;
     private FirebaseFirestore db;
+    public DocumentReference MoodRef;
+    public DocumentReference FriendsRef;
+
     public static final String TAG = SignUpActivity.class.getSimpleName();
 
 
@@ -56,9 +60,14 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 userName = newUser.getText().toString();
-                User user = new User(userName);
-                db.collection("users").document(userName)
-                        .set(user)
+                MoodList moodList = new MoodList();
+                ArrayList<String> friendsList = new ArrayList<>();
+                Map<String, Object> friendsData = new HashMap<>();
+                friendsData.put("FriendsList",friendsList);
+                MoodRef = db.collection("users").document("users").collection(userName).document("MoodList");
+                FriendsRef = db.collection("users").document("users").collection(userName).document("FriendsList");
+                FriendsRef.set(friendsData);
+                MoodRef.set(moodList)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
