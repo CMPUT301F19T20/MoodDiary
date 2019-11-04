@@ -11,13 +11,13 @@ import java.util.Comparator;
 
 public class MoodList implements Serializable {
 
-    private ArrayList<MoodEvent> allMoodList;
-    private ArrayList<MoodEvent> happyList;
-    private ArrayList<MoodEvent> angryList;
-    private ArrayList<MoodEvent> sadList;
-    private ArrayList<MoodEvent> contentList;
-    private ArrayList<MoodEvent> stressedList;
-    private ArrayList<MoodEvent> mehList;
+    public ArrayList<MoodEvent> allMoodList;
+    public ArrayList<MoodEvent> happyList;
+    public ArrayList<MoodEvent> angryList;
+    public ArrayList<MoodEvent> sadList;
+    public ArrayList<MoodEvent> contentList;
+    public ArrayList<MoodEvent> stressedList;
+    public ArrayList<MoodEvent> mehList;
 
     public MoodList() {
         allMoodList = new ArrayList<>();

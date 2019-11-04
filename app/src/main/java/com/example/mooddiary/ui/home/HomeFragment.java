@@ -38,8 +38,12 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -224,14 +228,17 @@ public class HomeFragment extends Fragment {
                 break;
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    DocumentReference documentReference = db.collection("users").document(LoginActivity.userName);
-                    documentReference.update("moodList", FieldValue.arrayRemove(myMoodList));
+                    //DocumentReference documentReference = db.collection("users").document(LoginActivity.userName);
+                    //documentReference.update("moodList", FieldValue.arrayRemove(myMoodList));
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
 
-                    documentReference.update("moodList", FieldValue.arrayUnion(myMoodList));
+                    //documentReference.update("moodList", FieldValue.arrayUnion(myMoodList));
                     homeViewModel.getMoodList().add(moodEventAdded);
                     user.setMoodList(homeViewModel.getMoodList());
-                    db.collection("users").document(LoginActivity.userName).set(user);
+                    db.collection("users").document(LoginActivity.userName).set( homeViewModel.getMoodList());
+                    Map<ArrayList, Object> friends = new HashMap<>();
+                    db.collection("users").document(LoginActivity.userName).set(friends, SetOptions.merge());
+
                     Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
                     moodAdapter.notifyDataSetChanged();
                 }
