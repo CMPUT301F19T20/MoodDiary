@@ -1,18 +1,37 @@
 package com.example.mooddiary.ui.home;
 
 import androidx.lifecycle.ViewModel;
+
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * This is a ViewModel holding data for HomeFragment
  */
 public class HomeViewModel extends ViewModel {
 
+
     private MoodList moodListHome;
+    final FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+
+    // Attach a listener to read the data at our posts reference
 
     public HomeViewModel() {
         moodListHome = new MoodList();
+
+       /* DatabaseReference ref = db.collection("users").document("chenge");
+
+        // Attach a listener to read the data at our posts reference
+        ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                System.out.println(documentSnapshot.toObject(User.class));
+                //moodAdapter =
+                //new MoodAdapter(getActivity(), R.layout.mood_list_item, user1.getMoodList().getAllMoodList());
+            }
+        });*/
         initMoodList();
     }
 
