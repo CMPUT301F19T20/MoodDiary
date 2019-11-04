@@ -70,9 +70,6 @@ public class HomeFragment extends Fragment {
     private int waitFilterIndex = 0;
     private int currentFilterIndex = 0;
     private boolean actionAddReturn;
-    public DocumentReference docRef = db.collection("users").document(LoginActivity.userName);
-
-    public User user1;
 
 
     /**
@@ -120,13 +117,6 @@ public class HomeFragment extends Fragment {
 
 
         });**/
-
-
-
-
-
-
-
 
 
         homeFilterButton = root.findViewById(R.id.home_filter_button);
@@ -208,37 +198,28 @@ public class HomeFragment extends Fragment {
                 if (resultCode == RESULT_OK) {
                     boolean ifEdited = (boolean) data.getBooleanExtra("if_edited", false);
                     if (ifEdited) {
+
+                        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                         MoodEvent originalMoodEvent =
                                 (MoodEvent) data.getSerializableExtra("original_mood_event");
                         MoodEvent editMoodEvent =
                                 (MoodEvent) data.getSerializableExtra("edited_mood_event_return");
-
 //                        int i = data.getIntExtra("mood_event_index_return", 0);
-                        myMoodList.edit(editMoodEvent, originalMoodEvent);
-//                        myMoodList.setMoodEventWithIndex(i, editMoodEvent);
-                        user.setMoodList(myMoodList);
-                        db.collection("users").document(LoginActivity.userName).set(user);
-
                         homeViewModel.getMoodList().edit(editMoodEvent, originalMoodEvent);
+                        MoodList moodList = homeViewModel.getMoodList();
+                        docRef.set(moodList);
                         Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
-
                         moodAdapter.notifyDataSetChanged();
                     }
                 }
                 break;
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    //DocumentReference documentReference = db.collection("users").document(LoginActivity.userName);
-                    //documentReference.update("moodList", FieldValue.arrayRemove(myMoodList));
+                    DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
-
-                    //documentReference.update("moodList", FieldValue.arrayUnion(myMoodList));
                     homeViewModel.getMoodList().add(moodEventAdded);
-                    user.setMoodList(homeViewModel.getMoodList());
-                    db.collection("users").document(LoginActivity.userName).set( homeViewModel.getMoodList());
-                    Map<ArrayList, Object> friends = new HashMap<>();
-                    db.collection("users").document(LoginActivity.userName).set(friends, SetOptions.merge());
-
+                    MoodList moodList = homeViewModel.getMoodList();
+                    docRef.set(moodList);
                     Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
                     moodAdapter.notifyDataSetChanged();
                 }
