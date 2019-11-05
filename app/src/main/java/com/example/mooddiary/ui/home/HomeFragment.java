@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -23,12 +24,26 @@ import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.MoodAdapter;
 import com.example.mooddiary.MoodBean;
 import com.example.mooddiary.MoodEvent;
+import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
 import com.example.mooddiary.User;
 import com.example.mooddiary.ViewActivity;
+import com.google.firebase.firestore.FieldValue;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -42,14 +57,20 @@ public class HomeFragment extends Fragment {
     private static final int HOME_TO_ADD_REQUEST = 10;
     public User user = new User(LoginActivity.userName);
     private HomeViewModel homeViewModel;
+
+    public MoodList myMoodList = new MoodList();
+
     private ListView myMoodEventListView;
     private ListView homeFilterListView;
     private ImageButton homeFilterButton;
     private MoodAdapter moodAdapter;
     private FilterAdapter filterAdapter;
     private MoodBean moodBeanFiltered;
+  
     private int waitFilterIndex = 0;
     private int currentFilterIndex = 0;
+    private boolean actionAddReturn;
+
 
     /**
      * This creates the view for the list of user's mood events.
@@ -62,6 +83,7 @@ public class HomeFragment extends Fragment {
      * @return
      *      Return the view for the fragment UI
      */
+
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         homeViewModel =
@@ -70,12 +92,38 @@ public class HomeFragment extends Fragment {
                 inflater.inflate(R.layout.fragment_home, container, false);
         myMoodEventListView = root.findViewById(R.id.my_mood_event_list_view);
 
+
+        //initMoodList();
+        /**final DocumentReference docRef1 = db.collection("users").document("chenge");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                System.out.println(documentSnapshot.toObject(User.class));
+                //moodAdapter =
+                        //new MoodAdapter(getActivity(), R.layout.mood_list_item, user1.getMoodList().getAllMoodList());
+            }
+        });
+
+       /** DocumentReference.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot snapshot,
+                                @Nullable FirebaseFirestoreException e) {
+                user1 = snapshot.toObject(User.class);
+
+
+                //moodAdapter = new MoodAdapter(getActivity(), R.layout.mood_list_item, user1.getMoodList().getAllMoodList());
+            }
+
+
+
+        });**/
+
+
         homeFilterButton = root.findViewById(R.id.home_filter_button);
-
         homeFilterListView = root.findViewById(R.id.home_filter_list_view);
-
+        myMoodEventListView = root.findViewById(R.id.my_mood_event_list_view);
         moodAdapter =
-                new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getAllMoodList());
+                new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("all"));
 
         myMoodEventListView.setAdapter(moodAdapter);
 
@@ -92,7 +140,7 @@ public class HomeFragment extends Fragment {
         myMoodEventListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                MoodEvent deleteMood = (MoodEvent)myMoodEventListView.getItemAtPosition(i);
+                final MoodEvent deleteMood = (MoodEvent)myMoodEventListView.getItemAtPosition(i);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 dialog.setTitle("Delete a mood");
                 dialog.setMessage("Delete is unrecovrable. Are you sure?");
@@ -100,7 +148,13 @@ public class HomeFragment extends Fragment {
                 dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
+
+                        myMoodList.delete(deleteMood);
+                        user.setMoodList(myMoodList);
+                        db.collection("users").document(LoginActivity.userName).set(user);
+
                         homeViewModel.getMoodList().delete(deleteMood);
+
                         moodAdapter.notifyDataSetChanged();
                     }
                 });
@@ -144,22 +198,31 @@ public class HomeFragment extends Fragment {
                 if (resultCode == RESULT_OK) {
                     boolean ifEdited = (boolean) data.getBooleanExtra("if_edited", false);
                     if (ifEdited) {
+
+                        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                         MoodEvent originalMoodEvent =
                                 (MoodEvent) data.getSerializableExtra("original_mood_event");
                         MoodEvent editMoodEvent =
                                 (MoodEvent) data.getSerializableExtra("edited_mood_event_return");
+//                        int i = data.getIntExtra("mood_event_index_return", 0);
                         homeViewModel.getMoodList().edit(editMoodEvent, originalMoodEvent);
+                        MoodList moodList = homeViewModel.getMoodList();
+                        docRef.set(moodList);
+                        Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
                         moodAdapter.notifyDataSetChanged();
                     }
                 }
                 break;
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
+                    DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
-                    db.collection("users").document(LoginActivity.userName).set(user);
                     homeViewModel.getMoodList().add(moodEventAdded);
                     user.setMoodList(homeViewModel.getMoodList());
                     db.collection("users").document(LoginActivity.userName).set(user);
+                    MoodList moodList = homeViewModel.getMoodList();
+                    docRef.set(moodList);
+                    Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
                     moodAdapter.notifyDataSetChanged();
                 }
             default:
@@ -181,7 +244,7 @@ public class HomeFragment extends Fragment {
         View view = LayoutInflater.from(activity).inflate(R.layout.fragment_filter, null);
         homeFilterListView = view.findViewById(R.id.home_filter_list_view);
         ArrayList<MoodBean> mData = new ArrayList<>();
-        mData.add(new MoodBean(R.drawable.mood,"no filter"));
+        mData.add(new MoodBean(R.drawable.mood,"all"));
         mData.add(new MoodBean(R.drawable.happy,"happy"));
         mData.add(new MoodBean(R.drawable.angry,"angry"));
         mData.add(new MoodBean(R.drawable.content,"content"));
@@ -226,49 +289,49 @@ public class HomeFragment extends Fragment {
      *      This is the mood selected to show
      */
     private void onMoodSelected(String mood) {
-        switch (mood) {
-            case "no filter":
-                moodAdapter =
-                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getAllMoodList());
-                myMoodEventListView.setAdapter(moodAdapter);
-                break;
-            case "happy" :
-                moodAdapter =
-                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getHappyList());
-                myMoodEventListView.setAdapter(moodAdapter);
-                break;
-            case "angry" :
-                moodAdapter =
-                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getAngryList());
-                myMoodEventListView.setAdapter(moodAdapter);
-                break;
-            case "sad" :
-                moodAdapter =
-                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getSadList());
-                myMoodEventListView.setAdapter(moodAdapter);
-                break;
-            case "content" :
-                moodAdapter =
-                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getContentList());
-                myMoodEventListView.setAdapter(moodAdapter);
-                break;
-            case "stressed" :
-                moodAdapter =
-                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getStressedList());
-                myMoodEventListView.setAdapter(moodAdapter);
-                break;
-            case "meh" :
-                moodAdapter =
-                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMehList());
-                myMoodEventListView.setAdapter(moodAdapter);
-                break;
-            default :
-                throw new IllegalArgumentException();
-        }
+        moodAdapter = new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList(mood));
+        myMoodEventListView.setAdapter(moodAdapter);
+//        switch (mood) {
+//            case "no filter":
+//                moodAdapter =
+//                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("all"));
+//                myMoodEventListView.setAdapter(moodAdapter);
+//                break;
+//            case "happy" :
+//                moodAdapter =
+//                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("happy"));
+//                myMoodEventListView.setAdapter(moodAdapter);
+//                break;
+//            case "angry" :
+//                moodAdapter =
+//                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("angry"));
+//                myMoodEventListView.setAdapter(moodAdapter);
+//                break;
+//            case "sad" :
+//                moodAdapter =
+//                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("sad"));
+//                myMoodEventListView.setAdapter(moodAdapter);
+//                break;
+//            case "content" :
+//                moodAdapter =
+//                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("content"));
+//                myMoodEventListView.setAdapter(moodAdapter);
+//                break;
+//            case "stressed" :
+//                moodAdapter =
+//                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("stress"));
+//                myMoodEventListView.setAdapter(moodAdapter);
+//                break;
+//            case "meh" :
+//                moodAdapter =
+//                        new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("meh"));
+//                myMoodEventListView.setAdapter(moodAdapter);
+//                break;
+//            default :
+//                throw new IllegalArgumentException();
+//        }
 
 
     }
-
-
 
 }

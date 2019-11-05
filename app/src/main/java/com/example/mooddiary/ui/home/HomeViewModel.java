@@ -1,16 +1,22 @@
 package com.example.mooddiary.ui.home;
 
 import androidx.lifecycle.ViewModel;
+
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * This is a ViewModel holding data for HomeFragment
  */
 public class HomeViewModel extends ViewModel {
 
-    private MoodList moodListHome;
 
+    private MoodList moodListHome;
+    final FirebaseDatabase db = FirebaseDatabase.getInstance();
+
+
+    // Attach a listener to read the data at our posts reference
     public MoodList getMoodList() {
         if (moodListHome == null) {
             moodListHome = new MoodList();
