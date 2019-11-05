@@ -11,12 +11,11 @@ public class HomeViewModel extends ViewModel {
 
     private MoodList moodListHome;
 
-    public HomeViewModel() {
-        moodListHome = new MoodList();
-        initMoodList();
-    }
-
     public MoodList getMoodList() {
+        if (moodListHome == null) {
+            moodListHome = new MoodList();
+            initMoodList();
+        }
         return moodListHome;
     }
 

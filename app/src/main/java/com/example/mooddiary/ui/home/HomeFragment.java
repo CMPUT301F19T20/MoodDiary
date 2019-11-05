@@ -149,7 +149,6 @@ public class HomeFragment extends Fragment {
                         MoodEvent editMoodEvent =
                                 (MoodEvent) data.getSerializableExtra("edited_mood_event_return");
                         homeViewModel.getMoodList().edit(editMoodEvent, originalMoodEvent);
-                        Log.d("view", String.valueOf(homeViewModel.getMoodList().getAllMoodList().size()));
                         moodAdapter.notifyDataSetChanged();
                     }
                 }
@@ -161,7 +160,6 @@ public class HomeFragment extends Fragment {
                     homeViewModel.getMoodList().add(moodEventAdded);
                     user.setMoodList(homeViewModel.getMoodList());
                     db.collection("users").document(LoginActivity.userName).set(user);
-                    Log.d("view", String.valueOf(homeViewModel.getMoodList().getAllMoodList().size()));
                     moodAdapter.notifyDataSetChanged();
                 }
             default:
