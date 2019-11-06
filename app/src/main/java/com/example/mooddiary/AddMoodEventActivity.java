@@ -310,8 +310,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         });
     }
 
-    /*
-      functions deal with photo part
+    /**
+      This deals with photo part
      */
     // function used in choose photo from album
     private void openAlbum() {
