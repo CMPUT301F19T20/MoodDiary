@@ -15,10 +15,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mooddiary.MapsActivity;
 import com.example.mooddiary.R;
+import com.example.mooddiary.ui.home.HomeViewModel;
 
 public class FriendMapFragment extends Fragment {
 
     private FriendMapViewModel friendMapViewModel;
+    
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -27,8 +29,10 @@ public class FriendMapFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_friend_map, container, false);
         final TextView textView = root.findViewById(R.id.text_tools);
 
+
         Intent intent = new Intent(getActivity(), MapsActivity.class);
         intent.putExtra("map","friendmap");
+
         startActivity(intent);
 
         return root;

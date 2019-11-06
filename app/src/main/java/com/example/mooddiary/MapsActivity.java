@@ -40,7 +40,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<MoodEvent> myMapMoods = new ArrayList<>();
     private ArrayList<MoodEvent> friendMapMoods = new ArrayList<>();
     String map = null;
-    FirebaseFirestore db;
     String TAG = "hhhh";
 
     @Override
