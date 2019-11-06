@@ -28,7 +28,12 @@ public class LoginActivity extends AppCompatActivity {
     static public String userName;
     private FirebaseFirestore db;
     public static final String TAG = LoginActivity.class.getSimpleName();
-
+    /**
+     * This creates the view of signup
+     * @param savedInstanceState
+     *      If the activity is being re-initialized after previously being shut down
+     *      then this Bundle contains the data it most recently supplied in.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,16 +8,19 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-
+/**
+ * MoodList class can manage each Moodevent
+ *
+ */
 public class MoodList implements Serializable {
 
-    public ArrayList<MoodEvent> allMoodList;
-    public ArrayList<MoodEvent> happyList;
-    public ArrayList<MoodEvent> angryList;
-    public ArrayList<MoodEvent> sadList;
-    public ArrayList<MoodEvent> contentList;
-    public ArrayList<MoodEvent> stressedList;
-    public ArrayList<MoodEvent> mehList;
+    private ArrayList<MoodEvent> allMoodList;
+    private ArrayList<MoodEvent> happyList;
+    private ArrayList<MoodEvent> angryList;
+    private ArrayList<MoodEvent> sadList;
+    private ArrayList<MoodEvent> contentList;
+    private ArrayList<MoodEvent> stressedList;
+    private ArrayList<MoodEvent> mehList;
 
     public MoodList() {
         allMoodList = new ArrayList<>();
@@ -29,6 +32,12 @@ public class MoodList implements Serializable {
         mehList = new ArrayList<>();
 
     }
+    /**
+     * This adds new moodevent to moodlist
+     *  add each new mood event to allmoodlist and to the mood list which it belongs to
+     * @param mood
+     *      This is a moodevent
+     */
 
     public void add(MoodEvent mood){
         if(allMoodList.contains(mood)){
@@ -64,7 +73,12 @@ public class MoodList implements Serializable {
         }
 
     }
-
+    /**
+     * This deletes moodevent from moodlist
+     *  delete mood event from allmoodlist and from the mood list which it belongs to
+     * @param mood
+     *      This is a moodevent
+     */
     public void delete(MoodEvent mood) {
         if(allMoodList.contains(mood)) {
             allMoodList.remove(mood);
@@ -82,11 +96,25 @@ public class MoodList implements Serializable {
         }
     }
 
+    /**
+     * This edits a moodevent
+     * @param newMood
+     *      this is a mood event to add
+     * @param originMood
+     *      this is a mood event to delete
+     */
     public void edit(MoodEvent newMood, MoodEvent originMood) {
         delete(originMood);
         add(newMood);
     }
 
+    /**
+     * This returns the mood event of all mood list at a specific position
+     * @param position
+     *       this is the position of the moodevent
+     * @return
+     *       Return the moodevent at position
+     */
     public MoodEvent ViewDetail(int position){
         return allMoodList.get(position);
     }
@@ -119,26 +147,33 @@ public class MoodList implements Serializable {
         this.allMoodList = allMoodList;
     }
 
-    public void setHappyList(ArrayList<MoodEvent> allMoodList){
+    public void setHappyList(ArrayList<MoodEvent> happyList){
         this.happyList = happyList;
     }
 
-    public void setAngryList(ArrayList<MoodEvent> allMoodList){ this.angryList = angryList; }
+    public void setAngryList(ArrayList<MoodEvent> angryList){ this.angryList = angryList; }
 
-    public void setSadList(ArrayList<MoodEvent> allMoodList){
+    public void setSadList(ArrayList<MoodEvent> sadList){
         this.sadList = sadList;
     }
 
-    public void setContentList(ArrayList<MoodEvent> allMoodList){
+    public void setContentList(ArrayList<MoodEvent> contentList){
         this.contentList = contentList;
     }
 
-    public void setStressedList(ArrayList<MoodEvent> allMoodList){ this.stressedList = stressedList; }
+    public void setStressedList(ArrayList<MoodEvent> stressedList){ this.stressedList = stressedList; }
 
-    public void setMehList(ArrayList<MoodEvent> allMoodList){
+    public void setMehList(ArrayList<MoodEvent> mehList){
         this.mehList = mehList;
     }
 
+    /**
+     * This return a mood list with all moodevent
+     * @param type
+     *        This is a kind of mood
+     * @return
+     *        Return a mood list with all moodevent
+     */
     public ArrayList<MoodEvent> getMoodList(String type) {
         ArrayList<MoodEvent> sortList;
         switch(type) {
@@ -182,6 +217,9 @@ public class MoodList implements Serializable {
         return sortList;
     }
 
+    /**
+     * This sortsMoodList by Time
+     */
     public void sortMoodList() {
         allMoodList.sort(new Comparator<MoodEvent>() {
             @Override
