@@ -89,7 +89,6 @@ public class ViewActivity extends AppCompatActivity {
                 imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        System.out.println("setphoto");
                         Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
                         viewPhotoImage.setImageBitmap(bitmap);
                     }
@@ -140,20 +139,19 @@ public class ViewActivity extends AppCompatActivity {
                     viewLocationText.setText(editedMoodEvent.getLocation());
                     viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
                     if (!editedMoodEvent.getPhoto().equals("")) {
-                        StorageReference imageRef = storageRef.child(editedMoodEvent.getPhoto());
-                        try{
-                            final File tempFile = File.createTempFile("tempPhoto","png");
-                            imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-                                @Override
-                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                    System.out.println("setphoto");
-                                    Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
-                                    viewPhotoImage.setImageBitmap(bitmap);
-                                }
-                            });
-                        } catch (Exception e) {}
-//                        Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
-//                        viewPhotoImage.setImageBitmap(bitmap);
+//                        StorageReference imageRef = storageRef.child(editedMoodEvent.getPhoto());
+//                        try{
+//                            final File tempFile = File.createTempFile("tempPhoto","png");
+//                            imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+//                                @Override
+//                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+//                                    Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
+//                                    viewPhotoImage.setImageBitmap(bitmap);
+//                                }
+//                            });
+//                        } catch (Exception e) {}
+                        Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
+                        viewPhotoImage.setImageBitmap(bitmap);
                     }
                 }
                 break;
