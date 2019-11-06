@@ -299,17 +299,19 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                     Toast.makeText(AddMoodEventActivity.this,"fields marked by * are required",Toast.LENGTH_SHORT).show();
                     successFlag = false;
                 }
+                try{
+                    Uri file = Uri.fromFile(new File(getExternalFilesDir("photo") + "/" + photoResult));
+                    StorageReference imageRef = storageRef.child(photoResult);
+                    UploadTask uploadTask = imageRef.putFile(file);
 
-                Uri file = Uri.fromFile(new File(getExternalFilesDir("photo") + "/" + photoResult));
-                StorageReference imageRef = storageRef.child(photoResult);
-                UploadTask uploadTask = imageRef.putFile(file);
+                    uploadTask.addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            successFlag = false;
+                        }
+                    });
+                }catch(Exception e) {}
 
-                uploadTask.addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        successFlag = false;
-                    }
-                });
 
                 if(!successFlag) { return; }
 

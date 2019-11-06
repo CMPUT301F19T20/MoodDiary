@@ -168,7 +168,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void setMyMapMarker(){
         for (MoodEvent moodEvent:myMapMoods) {
             String locationName = moodEvent.getLocation();
-            Log.d(TAG, "setMyMapMarker: "+locationName);
+            //Log.d(TAG, "setMyMapMarker: "+locationName);
             LatLng markPoint = getLocationLatLng(getApplicationContext(), locationName);
             String moodType = moodEvent.getMood().getMood();
             if(markPoint!=null){
