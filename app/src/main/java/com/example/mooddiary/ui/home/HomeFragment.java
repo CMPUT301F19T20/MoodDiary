@@ -148,11 +148,13 @@ public class HomeFragment extends Fragment {
                     public void onClick(DialogInterface dialogInterface, int i) {
                         DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                         homeViewModel.getMoodList().delete(deleteMood);
+                        MoodList moodList = homeViewModel.getMoodList();
                         docRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
                                 Log.d(TAG,"delete successful");                            }
                         });
+                        docRef.set(moodList);
                         //user.setMoodList(homeViewModel.getMoodList());
                         moodAdapter.notifyDataSetChanged();
                     }
