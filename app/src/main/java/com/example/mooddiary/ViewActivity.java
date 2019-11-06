@@ -125,7 +125,7 @@ public class ViewActivity extends AppCompatActivity {
                     viewTimeText.setText(editedMoodEvent.getTime());
                     viewReasonText.setText((editedMoodEvent.getReason()));
                     viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
-                    viewMoodTypeImage = (ImageView) findViewById(R.id.view_mood_type_image);
+                    viewMoodTypeImage.setImageResource(editedMoodEvent.getMood().getMoodImage());
                     viewLocationText.setText(editedMoodEvent.getLocation());
                     viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
                     if (!editedMoodEvent.getPhoto().equals("")) {
