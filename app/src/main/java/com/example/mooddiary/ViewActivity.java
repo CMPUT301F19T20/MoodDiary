@@ -15,32 +15,30 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
+import java.io.File;
+
 public class ViewActivity extends AppCompatActivity {
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
 
     private final int VIEW_TO_ADD_EDIT_REQUEST = 5;
 
     private TextView viewTimeText;
-
     private TextView viewDateText;
-
     private TextView viewReasonText;
-
     private TextView viewLocationText;
-
     private TextView viewMoodTypeText;
-
     private ImageView viewMoodTypeImage;
-
     private TextView viewSocialSituationText;
-
     private ImageView viewPhotoImage;
-
     private Button viewEditButton;
-
     private ImageButton viewReturnButton;
-
     private MoodEvent moodEvent;
-
     private MoodEvent editedMoodEvent;
 
     private int position;
@@ -85,8 +83,20 @@ public class ViewActivity extends AppCompatActivity {
 
 
         if (!editedMoodEvent.getPhoto().equals("")) {
-            Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
-            viewPhotoImage.setImageBitmap(bitmap);
+            StorageReference imageRef = storageRef.child(editedMoodEvent.getPhoto());
+            try{
+                final File tempFile = File.createTempFile("tempPhoto","png");
+                imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                        System.out.println("setphoto");
+                        Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
+                        viewPhotoImage.setImageBitmap(bitmap);
+                    }
+                });
+            } catch (Exception e) {}
+//            Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
+//            viewPhotoImage.setImageBitmap(bitmap);
         }
 
         viewEditButton.setOnClickListener(new View.OnClickListener() {
@@ -129,8 +139,20 @@ public class ViewActivity extends AppCompatActivity {
                     viewLocationText.setText(editedMoodEvent.getLocation());
                     viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
                     if (!editedMoodEvent.getPhoto().equals("")) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
-                        viewPhotoImage.setImageBitmap(bitmap);
+                        StorageReference imageRef = storageRef.child(editedMoodEvent.getPhoto());
+                        try{
+                            final File tempFile = File.createTempFile("tempPhoto","png");
+                            imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                @Override
+                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                    System.out.println("setphoto");
+                                    Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
+                                    viewPhotoImage.setImageBitmap(bitmap);
+                                }
+                            });
+                        } catch (Exception e) {}
+//                        Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
+//                        viewPhotoImage.setImageBitmap(bitmap);
                     }
                 }
                 break;
