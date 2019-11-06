@@ -16,10 +16,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mooddiary.MapsActivity;
 import com.example.mooddiary.R;
+import com.example.mooddiary.ui.home.HomeViewModel;
 
 public class MyMapFragment extends Fragment {
 
     private MyMapViewModel myMapViewModel;
+    private HomeViewModel viewModelFromHome;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -28,8 +30,12 @@ public class MyMapFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_map, container, false);
         final TextView textView = root.findViewById(R.id.text_slideshow);
 
+        viewModelFromHome = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+        //viewModelFromHome.getMoodList();
+
         Intent intent = new Intent(getActivity(),MapsActivity.class);
         intent.putExtra("map","mymap");
+        intent.putExtra("moodlist",viewModelFromHome.getMoodList().getAllMoodList());
         startActivity(intent);
 
 
