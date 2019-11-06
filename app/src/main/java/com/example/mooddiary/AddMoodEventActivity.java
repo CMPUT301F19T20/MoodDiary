@@ -433,6 +433,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
      *      get the day from date picker
      */
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+
         String desc=String.format("%04d/%02d/%02d",year,month+1,dayOfMonth);
         dateText.setText(desc);
         dateResult = desc;
@@ -448,7 +449,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
      */
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-        String desc=String.format("%02d:%02d",hourOfDay,minute);
+        Calendar calendar=Calendar.getInstance();
+        String desc=String.format("%02d:%02d:%02d",hourOfDay,minute,calendar.get(Calendar.SECOND));
         timeText.setText(desc);
         timeResult = desc;
     }
