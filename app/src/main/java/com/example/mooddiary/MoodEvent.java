@@ -5,9 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class MoodEvent implements Serializable {
-//    private Date date;
+
     private String date;
     private String time;
+//    private Date date;
+
     private String socialSituation;
     private String location;
     private String reason;
@@ -34,6 +36,7 @@ public class MoodEvent implements Serializable {
     }
 
     public long getNumericDate() {
+
         Date dateInFormatDate;
         try {
             dateInFormatDate = fmt.parse(date + " " + time);
@@ -48,7 +51,11 @@ public class MoodEvent implements Serializable {
 //        return fmt.format(date);
 //    }
 
+
+
     public String getDate() {
+
+
 //        return fmt.format(date).substring(0,10);
         return this.date;
     }
@@ -61,8 +68,11 @@ public class MoodEvent implements Serializable {
     }
 
     public String getTime() {
+
+
 //        return fmt.format(date).substring(10);
-        return time;
+        return this.time;
+
     }
 
     public void setTime(String time) {
@@ -114,7 +124,9 @@ public class MoodEvent implements Serializable {
 
     @Override
     public boolean equals(Object e) {
-        MoodEvent compare = (MoodEvent)e;
+
+        MoodEvent compare = (MoodEvent) e;
+
         if(this.date.equals(compare.getDate()) &&
                 this.time.equals(compare.getTime()) &&
                 this.socialSituation.equals(compare.getSocialSituation()) &&

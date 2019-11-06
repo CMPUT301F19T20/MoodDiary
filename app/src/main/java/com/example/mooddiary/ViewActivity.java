@@ -15,8 +15,6 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.mooddiary.ui.home.HomeFragment;
-
 public class ViewActivity extends AppCompatActivity {
 
     private final int VIEW_TO_ADD_EDIT_REQUEST = 5;
@@ -127,7 +125,7 @@ public class ViewActivity extends AppCompatActivity {
                     viewTimeText.setText(editedMoodEvent.getTime());
                     viewReasonText.setText((editedMoodEvent.getReason()));
                     viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
-                    viewMoodTypeImage = (ImageView) findViewById(R.id.view_mood_type_image);
+                    viewMoodTypeImage.setImageResource(editedMoodEvent.getMood().getMoodImage());
                     viewLocationText.setText(editedMoodEvent.getLocation());
                     viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
                     if (!editedMoodEvent.getPhoto().equals("")) {

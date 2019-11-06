@@ -1,6 +1,9 @@
 package com.example.mooddiary;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,14 +11,22 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
+import com.example.mooddiary.ui.home.HomeViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +41,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<MoodEvent> friendMapMoods = new ArrayList<>();
     String map = null;
     FirebaseFirestore db;
+    String TAG = "hhhh";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +53,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         Intent intent = getIntent();
         this.map = intent.getStringExtra("map");
-        //myMoods = (ArrayList<MoodEvent>)intent.getSerializableExtra("usermoods");
-        //friendMoods = (ArrayList<MoodEvent>)intent.getSerializableExtra("friendmoods");
+        this.myMoods = (ArrayList<MoodEvent>) intent.getSerializableExtra("moodlist");
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(MapsActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -64,12 +87,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         if (map.equals("mymap")){
-            testMoodList();
             getMyMapMoods(myMoods);
             setMyMapMarker();
         }
         else if(map.equals("friendmap")){
-            testMoodList();
             getFriendMapMoods(friendMoods);
             setFriendMapMarker();
         }
@@ -92,9 +113,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (address == null) {
                 return null;
             }
-
-            Address location = address.get(0);
-            l1 = new LatLng(location.getLatitude(), location.getLongitude());
+            if (!(address.isEmpty())){
+                Address location = address.get(0);
+                l1 = new LatLng(location.getLatitude(), location.getLongitude());
+            }
+            else{
+                Toast.makeText(MapsActivity.this, locationName+" is not a valid address, please " +
+                        "enter the correct address", Toast.LENGTH_SHORT).show();
+                return null;
+            }
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -129,34 +156,77 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * set the location point markers of the user on the map
      */
     public void setMyMapMarker(){
-        for (MoodEvent moodEvent:myMapMoods){
+        for (MoodEvent moodEvent:myMapMoods) {
             String locationName = moodEvent.getLocation();
-            LatLng markPoint = getLocationLatLng(getApplicationContext(),locationName);
-            mMap.addMarker(new MarkerOptions().position(markPoint).title("new mood added"));
+            Log.d(TAG, "setMyMapMarker: "+locationName);
+            LatLng markPoint = getLocationLatLng(getApplicationContext(), locationName);
+            String moodType = moodEvent.getMood().getMood();
+            if(markPoint!=null){
+                switch (moodType){
+                    case "happy":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.happy)));
+                        break;
+                    case "sad":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.sad)));
+                        break;
+                    case "content":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.content)));
+                        break;
+                    case "angry":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.angry)));
+                        break;
+                    case "stressed":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.stressed)));
+                    case  "meh":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.meh)));
+                }
+            }
         }
     }
 
+    /**
+     * set the location points markers of the user's friends locations
+     */
     public void setFriendMapMarker(){
-        for (MoodEvent moodEvent:friendMapMoods){
+        for (MoodEvent moodEvent:friendMapMoods) {
             String locationName = moodEvent.getLocation();
-            LatLng markPoint = getLocationLatLng(getApplicationContext(),locationName);
-            mMap.addMarker(new MarkerOptions().position(markPoint).title("new mood added"));
+            LatLng markPoint = getLocationLatLng(getApplicationContext(), locationName);
+            String moodType = moodEvent.getMood().getMood();
+            if (markPoint != null) {
+                switch (moodType) {
+                    case "happy":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.happy)));
+                        break;
+                    case "sad":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.sad)));
+                        break;
+                    case "content":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.content)));
+                        break;
+                    case "angry":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.angry)));
+                        break;
+                    case "stressed":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.stressed)));
+                    case "meh":
+                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                                BitmapDescriptorFactory.fromResource(R.drawable.meh)));
+                }
+            }
         }
     }
 
-    public void testMoodList(){
-        MoodEvent moodEvent = new MoodEvent("happy","2000-09-20","13:33","alone","111 Street NorthWest, Edmonton, AB","ate well",null);
-        MoodEvent moodEvent2 = new MoodEvent("content","2000-09-25","13:33","alone","290 Bremner Blvd, Toronto, ON","ate well",null);
-        MoodEvent moodEvent1 = new MoodEvent("sad","2000-09-21","13:33","alone","Manhattan, NY 10036, United States","ate well",null);
-
-        myMoods.add(moodEvent);
-        myMoods.add(moodEvent1);
-        myMoods.add(moodEvent2);
-
-        friendMoods.add(moodEvent);
-        friendMoods.add(moodEvent1);
-        friendMoods.add(moodEvent2);
-    }
 
 }
 

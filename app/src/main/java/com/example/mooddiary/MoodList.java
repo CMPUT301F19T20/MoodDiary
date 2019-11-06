@@ -60,7 +60,7 @@ public class MoodList implements Serializable {
 
     }
 
-    public void delete(MoodEvent mood){
+    public void delete(MoodEvent mood) {
         if(allMoodList.contains(mood)) {
             allMoodList.remove(mood);
             switch (mood.getMood().getMood()){
@@ -77,8 +77,7 @@ public class MoodList implements Serializable {
         }
     }
 
-    public void edit(MoodEvent newMood, MoodEvent originMood){
-
+    public void edit(MoodEvent newMood, MoodEvent originMood) {
         delete(originMood);
         add(newMood);
     }
@@ -98,6 +97,7 @@ public class MoodList implements Serializable {
     public ArrayList<MoodEvent> getSadList() {
         return sadList;
     }
+
     public ArrayList<MoodEvent> getContentList() {
         return contentList;
     }
@@ -117,30 +117,25 @@ public class MoodList implements Serializable {
     public void setHappyList(ArrayList<MoodEvent> allMoodList){
         this.happyList = happyList;
     }
-    public void setAngryList(ArrayList<MoodEvent> allMoodList){
-        this.angryList = angryList;
-    }
+
+    public void setAngryList(ArrayList<MoodEvent> allMoodList){ this.angryList = angryList; }
+
     public void setSadList(ArrayList<MoodEvent> allMoodList){
         this.sadList = sadList;
     }
+
     public void setContentList(ArrayList<MoodEvent> allMoodList){
         this.contentList = contentList;
     }
-    public void setStressedList(ArrayList<MoodEvent> allMoodList){
-        this.stressedList = stressedList;
-    }
+
+    public void setStressedList(ArrayList<MoodEvent> allMoodList){ this.stressedList = stressedList; }
+
     public void setMehList(ArrayList<MoodEvent> allMoodList){
         this.mehList = mehList;
     }
     public MoodEvent getEvent(int index){
         return allMoodList.get(index);
     }
-
-
-
-
-
-
 
     public ArrayList<MoodEvent> getMoodList(String type) {
         ArrayList<MoodEvent> sortList;
@@ -181,6 +176,7 @@ public class MoodList implements Serializable {
                 }
             }
         });
+        Collections.reverse(sortList);
         return sortList;
     }
     public void clear(){
@@ -191,6 +187,33 @@ public class MoodList implements Serializable {
         this.mehList.clear();
         this.contentList.clear();
         this.stressedList.clear();
+    }
+
+    public void sortMoodList() {
+        allMoodList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        Collections.reverse(allMoodList);
+
+    }
+
+    public void clearMoodList() {
+        this.allMoodList.clear();
+        this.angryList.clear();
+        this.happyList.clear();
+        this.contentList.clear();
+        this.sadList.clear();
+        this.stressedList.clear();
+        this.mehList.clear();
     }
 
 }
