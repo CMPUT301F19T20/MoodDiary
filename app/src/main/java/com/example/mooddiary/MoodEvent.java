@@ -11,17 +11,19 @@ import java.util.Date;
 public class MoodEvent implements Serializable {
     private String date;
     private String time;
-//    private Date date;
     private String socialSituation;
     private String location;
     private String reason;
     private String photo;
     private Mood mood;
-
+    /**
+     * This converts the format of Date
+     */
     private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm");
 
     public MoodEvent() {
     }
+
 
     public MoodEvent(String mood, String date, String time, String socialSituation, String location,
                      String reason, String photo) {
@@ -36,6 +38,11 @@ public class MoodEvent implements Serializable {
         this.photo = photo;
         this.mood = new Mood(mood);
     }
+
+    /**
+     * This converts the format of time
+     * @return
+     */
 
     public long getNumericDate() {
         Date dateInDateFormat;
@@ -113,6 +120,13 @@ public class MoodEvent implements Serializable {
         this.mood = mood;
     }
 
+    /**
+     * This is to check whether two moodevents are the same
+     * @param e
+     *      This is a moodevent
+     * @return
+     *      if the same return true, else false
+     */
     @Override
     public boolean equals(Object e) {
         MoodEvent compare = (MoodEvent) e;

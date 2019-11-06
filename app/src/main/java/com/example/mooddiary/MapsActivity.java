@@ -32,6 +32,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<MoodEvent> friendMapMoods = new ArrayList<>();
     String map = null;
     FirebaseFirestore db;
+    /**
+     * This creates the view of map
+     * @param savedInstanceState
+     *      If the activity is being re-initialized after previously being shut down
+     *      then this Bundle contains the data it most recently supplied in.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,8 +87,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * Getting the latitude and longitude of a location string by geocoder
      * May throw IOException if the locationName does not exist
      * @param context
+     *      This activity
      * @param locationName
+     *      This a location
      * @return
+     *       Returns the LatLng of location
      */
     public LatLng getLocationLatLng(Context context, String locationName) {
         Geocoder coder = new Geocoder(context);
@@ -114,6 +123,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * get a list of mood events with a string of location of the user
      * @param myMoodList
+     *        This is a moodlist of user mood
      */
     public void getMyMapMoods(ArrayList<MoodEvent> myMoodList){
         for (int i = 0; i< myMoodList.size();i++){
@@ -125,6 +135,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * get a list of mood events with a string of location of the user's friends
      * @param friendMoodList
+     *        This is the moodlist of user's friends
      */
     public void getFriendMapMoods(ArrayList<MoodEvent> friendMoodList){
         for (int i = 0; i< friendMoodList.size();i++){

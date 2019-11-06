@@ -92,7 +92,12 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private boolean isFromView = false;
     private MoodEvent moodEventFromView;
 
-
+    /**
+     * This creates the view of Main add activity
+     * @param savedInstanceState
+     *      If the activity is being re-initialized after previously being shut down
+     *      then this Bundle contains the data it most recently supplied in.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -417,10 +422,14 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     /**
      * get require permission from system to deal with opening album
      * @param requestCode
+     *      This requestCode from openAlbum
      *
      * @param permissions
+     *      This permission from user
      *
      * @param grantResults
+     *      This grantResults from user
+     *
      *
      */
     @Override
@@ -466,6 +475,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     /**
      * handleImageOnKitKat
      * @param data
+     *      This is data from picture
      *
      */
 
@@ -498,6 +508,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     /**s
      * handleImageOnKitKat for version lower than 4.0
      * @param data
+     *      This is data from picture
      *
      */
     private void handleImageBeforeKitKat(Intent data){
@@ -506,6 +517,16 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         displayImage(imagePath);
 
     }
+
+    /**
+     * This is to get ImagePath through uri
+     * @param uri
+     *      This is the uri of Image
+     * @param selection
+     *      This is the Image you select
+     * @return
+     *      return the Image path
+     */
 
     private String getImagePath(Uri uri, String selection){
         String path = null;
@@ -521,7 +542,9 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         return path;
     }
 
-
+    /**
+     * This is to initialize mood spinner
+     */
     private void bindViews() {
         moodSpinner  = findViewById(R.id.add_mood_spinner);
 
