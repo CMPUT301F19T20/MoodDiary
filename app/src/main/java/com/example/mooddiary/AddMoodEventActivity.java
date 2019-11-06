@@ -566,6 +566,17 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         moodSpinner.setOnItemSelectedListener(this);
     }
 
+    /**
+     * This to get the mood which you select
+     * @param parent
+     *      the mood you select
+     * @param view
+     *      the view you selct
+     * @param position
+     *      the position of your view
+     * @param id
+     *      the if of the view
+     */
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()){
