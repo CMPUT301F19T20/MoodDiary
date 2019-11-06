@@ -4,6 +4,7 @@ package com.example.mooddiary;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -37,8 +38,6 @@ public class ViewActivity extends AppCompatActivity {
 
     private Button viewEditButton;
 
-    private ImageButton viewReturnButton;
-
     private MoodEvent moodEvent;
 
     private MoodEvent editedMoodEvent;
@@ -67,7 +66,6 @@ public class ViewActivity extends AppCompatActivity {
         viewReasonText = (TextView) findViewById(R.id.view_reason_text);
         viewPhotoImage = (ImageView) findViewById(R.id.view_photo_image);
         viewEditButton = (Button) findViewById(R.id.view_edit_button);
-        viewReturnButton = (ImageButton) findViewById(R.id.view_return_button);
 
         Intent intent = getIntent();
 
@@ -80,6 +78,7 @@ public class ViewActivity extends AppCompatActivity {
         viewReasonText.setText((editedMoodEvent.getReason()));
         viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
         viewMoodTypeImage.setImageResource(editedMoodEvent.getMood().getMoodImage());
+        viewMoodTypeText.setTextColor(Color.parseColor(editedMoodEvent.getMood().getColor()));
         viewLocationText.setText(editedMoodEvent.getLocation());
         viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
 
@@ -125,7 +124,8 @@ public class ViewActivity extends AppCompatActivity {
                     viewTimeText.setText(editedMoodEvent.getTime());
                     viewReasonText.setText((editedMoodEvent.getReason()));
                     viewMoodTypeText.setText(editedMoodEvent.getMood().getMood());
-                    viewMoodTypeImage = (ImageView) findViewById(R.id.view_mood_type_image);
+                    viewMoodTypeText.setTextColor(Color.parseColor(editedMoodEvent.getMood().getColor()));
+                    viewMoodTypeImage.setImageResource(editedMoodEvent.getMood().getMoodImage());
                     viewLocationText.setText(editedMoodEvent.getLocation());
                     viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
                     if (!editedMoodEvent.getPhoto().equals("")) {
