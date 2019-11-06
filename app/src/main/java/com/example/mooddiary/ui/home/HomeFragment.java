@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.content.Context;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,6 +31,7 @@ import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
 import com.example.mooddiary.User;
 import com.example.mooddiary.ViewActivity;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -39,7 +43,11 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -53,6 +61,8 @@ import static android.app.Activity.RESULT_OK;
  */
 public class HomeFragment extends Fragment {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    FirebaseStorage storage = FirebaseStorage.getInstance();
+    StorageReference storageRef = storage.getReference();
     private static final int VIEW_EDIT_REQUEST = 0;
     private static final int HOME_TO_ADD_REQUEST = 10;
     public User user = new User(LoginActivity.userName);
@@ -205,6 +215,7 @@ public class HomeFragment extends Fragment {
                     db.collection("users").document(LoginActivity.userName).set(user);
                     MoodList moodList = homeViewModel.getMoodList();
                     docRef.set(moodList);
+
                     Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
                     moodAdapter.notifyDataSetChanged();
                 }
@@ -274,7 +285,6 @@ public class HomeFragment extends Fragment {
     private void onMoodSelected(String mood) {
         moodAdapter = new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList(mood));
         myMoodEventListView.setAdapter(moodAdapter);
-
     }
 
 }

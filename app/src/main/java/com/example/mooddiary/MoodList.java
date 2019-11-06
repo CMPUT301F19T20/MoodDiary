@@ -147,23 +147,23 @@ public class MoodList implements Serializable {
         this.allMoodList = allMoodList;
     }
 
-    public void setHappyList(ArrayList<MoodEvent> allMoodList){
+    public void setHappyList(ArrayList<MoodEvent> happyList){
         this.happyList = happyList;
     }
 
-    public void setAngryList(ArrayList<MoodEvent> allMoodList){ this.angryList = angryList; }
+    public void setAngryList(ArrayList<MoodEvent> angryList){ this.angryList = angryList; }
 
-    public void setSadList(ArrayList<MoodEvent> allMoodList){
+    public void setSadList(ArrayList<MoodEvent> sadList){
         this.sadList = sadList;
     }
 
-    public void setContentList(ArrayList<MoodEvent> allMoodList){
+    public void setContentList(ArrayList<MoodEvent> contentList){
         this.contentList = contentList;
     }
 
-    public void setStressedList(ArrayList<MoodEvent> allMoodList){ this.stressedList = stressedList; }
+    public void setStressedList(ArrayList<MoodEvent> stressedList){ this.stressedList = stressedList; }
 
-    public void setMehList(ArrayList<MoodEvent> allMoodList){
+    public void setMehList(ArrayList<MoodEvent> mehList){
         this.mehList = mehList;
     }
 
