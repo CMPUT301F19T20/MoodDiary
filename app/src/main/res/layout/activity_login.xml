@@ -45,7 +45,6 @@
             android:paddingBottom="20dp"
             android:textSize="20sp"
             android:textColor="#4d4d4d"
-            android:text="MoodDiary"
             android:theme="@style/EditTextStyle">
         </EditText>
 

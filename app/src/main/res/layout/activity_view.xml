@@ -7,31 +7,13 @@
     android:orientation="vertical"
     tools:context=".ViewActivity">
 
-    <!--return button-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingLeft="20dp"
-        android:paddingRight="20dp">
-
-        <ImageButton
-            android:id="@+id/view_return_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:paddingLeft="4dp"
-            android:paddingTop="35dp"
-            android:src="@drawable/cancel"></ImageButton>
-    </LinearLayout>
-
 
     <!--date&time-->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="20dp"
+        android:paddingTop="50dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -79,12 +61,14 @@
             android:textSize="20sp"></TextView>
 
     </RelativeLayout>
+
+
     <!--location-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="10dp"
+        android:paddingBottom="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -103,9 +87,73 @@
             android:layout_height="wrap_content"
             android:paddingBottom="6dp"
             android:text="Location"
+            android:singleLine="false"
             android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp"></TextView>
     </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:orientation="horizontal">
+
+
+        <ImageView
+
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/view_mood_type_image">
+
+        </ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:layout_toRightOf="@+id/view_mood_type_image"
+            android:textSize="25sp"
+            android:textAllCaps="true"
+            android:id="@+id/view_mood_type_text"
+            android:text="Happy">
+        </TextView>
+
+
+
+
+    </RelativeLayout>
+
+    <!--location-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/social"
+            >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/view_social_situation_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="20sp"></TextView>
+    </LinearLayout>
+
 
 
     <ScrollView
@@ -123,59 +171,7 @@
             android:paddingRight="20dp">
 
 
-            <!--picture-->
-            <ImageView
-                android:id="@+id/view_photo_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:scaleType="fitCenter"
-                android:padding="10dp">
 
-            </ImageView>
-
-
-            <!--mood and social state-->
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-
-                <ImageView
-
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:id="@+id/view_mood_type_image">
-
-                </ImageView>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginLeft="15dp"
-                    android:layout_toRightOf="@+id/view_mood_type_image"
-                    android:textSize="25sp"
-                    android:id="@+id/view_mood_type_text"
-                    android:text="Happy">
-                </TextView>
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/view_social_situation_text"
-                    android:layout_marginTop="11dp"
-                    android:layout_alignParentRight="true"
-                    android:textSize="20dp"
-                    android:text="Happy">
-
-
-                </TextView>
-
-
-            </RelativeLayout>
 
             <View
                 android:layout_width="fill_parent"
@@ -192,7 +188,21 @@
                 android:text="Happy">
 
 
+
             </TextView>
+
+            <!--picture-->
+            <ImageView
+                android:id="@+id/view_photo_image"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:scaleType="fitCenter"
+                android:padding="10dp">
+
+            </ImageView>
+
         </LinearLayout>
 
     </ScrollView>

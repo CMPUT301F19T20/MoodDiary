@@ -14,11 +14,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+
 import android.content.Context;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -29,16 +29,17 @@ import com.example.mooddiary.MoodBean;
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
-import com.example.mooddiary.User;
+import com.example.mooddiary.SignUpActivity;
 import com.example.mooddiary.ViewActivity;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 
 import com.google.firebase.firestore.FirebaseFirestore;
+
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -49,9 +50,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -65,7 +63,6 @@ public class HomeFragment extends Fragment {
     StorageReference storageRef = storage.getReference();
     private static final int VIEW_EDIT_REQUEST = 0;
     private static final int HOME_TO_ADD_REQUEST = 10;
-    public User user = new User(LoginActivity.userName);
     private HomeViewModel homeViewModel;
 
     private ListView myMoodEventListView;
@@ -78,6 +75,8 @@ public class HomeFragment extends Fragment {
     private int waitFilterIndex = 0;
     private int currentFilterIndex = 0;
     private boolean actionAddReturn;
+    public static final String TAG = HomeFragment.class.getSimpleName();
+
 
 
     /**
@@ -147,10 +146,14 @@ public class HomeFragment extends Fragment {
                 dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-
+                        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                         homeViewModel.getMoodList().delete(deleteMood);
-                        db.collection("users").document(LoginActivity.userName).set(user);
-                        user.setMoodList(homeViewModel.getMoodList());
+                        docRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Log.d(TAG,"delete successful");                            }
+                        });
+                        //user.setMoodList(homeViewModel.getMoodList());
                         moodAdapter.notifyDataSetChanged();
                     }
                 });
@@ -211,8 +214,8 @@ public class HomeFragment extends Fragment {
                     DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
                     homeViewModel.getMoodList().add(moodEventAdded);
-                    user.setMoodList(homeViewModel.getMoodList());
-                    db.collection("users").document(LoginActivity.userName).set(user);
+                    //user.setMoodList(homeViewModel.getMoodList());
+                    db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                     MoodList moodList = homeViewModel.getMoodList();
                     docRef.set(moodList);
 
