@@ -1,12 +1,7 @@
 package com.example.mooddiary;
 
-import android.annotation.TargetApi;
-import android.util.Log;
-
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 
 public class MoodList implements Serializable {
@@ -137,6 +132,9 @@ public class MoodList implements Serializable {
     public void setMehList(ArrayList<MoodEvent> allMoodList){
         this.mehList = mehList;
     }
+    public MoodEvent getEvent(int index){
+        return allMoodList.get(index);
+    }
 
 
 
@@ -184,6 +182,15 @@ public class MoodList implements Serializable {
             }
         });
         return sortList;
+    }
+    public void clear(){
+        this.allMoodList.clear();
+        this.angryList.clear();
+        this.happyList.clear();
+        this.sadList.clear();
+        this.mehList.clear();
+        this.contentList.clear();
+        this.stressedList.clear();
     }
 
 }

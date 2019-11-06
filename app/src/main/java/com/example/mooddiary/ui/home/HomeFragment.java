@@ -28,22 +28,13 @@ import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
 import com.example.mooddiary.User;
 import com.example.mooddiary.ViewActivity;
-import com.google.firebase.firestore.FieldValue;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
-
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -71,6 +62,39 @@ public class HomeFragment extends Fragment {
     private int currentFilterIndex = 0;
     private boolean actionAddReturn;
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        homeViewModel =
+                ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+        final DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+
+        Log.d("home", "start listener");
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                homeViewModel.getMoodList().clear();
+                MoodList moodList = documentSnapshot.toObject(MoodList.class);
+//                homeViewModel.setMoodListHome(moodList);
+                homeViewModel.getMoodList().setAllMoodList(moodList.getAllMoodList());
+                homeViewModel.getMoodList().setAngryList(moodList.getAngryList());
+                homeViewModel.getMoodList().setContentList(moodList.getContentList());
+                homeViewModel.getMoodList().setHappyList(moodList.getHappyList());
+                homeViewModel.getMoodList().setMehList(moodList.getMehList());
+                homeViewModel.getMoodList().setSadList(moodList.getSadList());
+                homeViewModel.getMoodList().setStressedList(moodList.getStressedList());
+                Log.d("home", "inside listener");
+                moodAdapter.notifyDataSetChanged();
+                Log.d("home", "finish listener");
+            }
+        });
+
+        moodAdapter =
+                new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getAllMoodList());
+
+
+
+    }
 
     /**
      * This creates the view for the list of user's mood events.
@@ -86,11 +110,12 @@ public class HomeFragment extends Fragment {
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        homeViewModel =
-                ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+//        homeViewModel =
+//                ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
         View root =
                 inflater.inflate(R.layout.fragment_home, container, false);
         myMoodEventListView = root.findViewById(R.id.my_mood_event_list_view);
+//        final DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
 
 
         //initMoodList();
@@ -122,10 +147,34 @@ public class HomeFragment extends Fragment {
         homeFilterButton = root.findViewById(R.id.home_filter_button);
         homeFilterListView = root.findViewById(R.id.home_filter_list_view);
         myMoodEventListView = root.findViewById(R.id.my_mood_event_list_view);
-        moodAdapter =
-                new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("all"));
 
+       /* DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+             public void onSuccess(DocumentSnapshot documentSnapshot) {
+                MoodList moodlist = documentSnapshot.toObject(MoodList.class);
+                moodAdapter =
+                        new MoodAdapter(getActivity(), R.layout.mood_list_item, moodlist.allMoodList);
+                myMoodEventListView.setAdapter(moodAdapter);
+
+
+                //setList(moodlist);
+
+                Log.d("Tag",String.valueOf(myMoodList.allMoodList.s);
+            }
+        });
+       // Log.d("Tag",String.valueOf(myMoodList.getMoodList("all").size()));
+       // MoodEvent moodEvent6 =
+              //  new MoodEvent("content", "2019/10/19", "10:40", "alone", "", "", "");
+        //myMoodList.add(moodEvent6);*/
+//        moodAdapter =
+//                new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getAllMoodList());
+        Log.d("home", "start set adapter");
         myMoodEventListView.setAdapter(moodAdapter);
+        Log.d("home", "after set adapter");
+
+        Log.d("home", String.valueOf(homeViewModel.getMoodList().getAllMoodList().size()));
+        Log.d("home", String.valueOf(homeViewModel.getMoodList().getHappyList().size()));
 
         myMoodEventListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -175,6 +224,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+//        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+//            @Override
+//            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+//                MoodList moodList = documentSnapshot.toObject(MoodList.class);
+//                homeViewModel.setMoodListHome(moodList);
+//                moodAdapter.notifyDataSetChanged();
+//
+//            }
+//        });
+
 
 
 
@@ -217,7 +276,9 @@ public class HomeFragment extends Fragment {
                 if (resultCode == RESULT_OK) {
                     DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
+                    Log.d("test_db", String.valueOf(homeViewModel.getMoodList().getAllMoodList().size()));
                     homeViewModel.getMoodList().add(moodEventAdded);
+
                     MoodList moodList = homeViewModel.getMoodList();
                     docRef.set(moodList);
                     Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
@@ -331,5 +392,6 @@ public class HomeFragment extends Fragment {
 
 
     }
+    public void setList(MoodList moodList){this.myMoodList = moodList;}
 
 }

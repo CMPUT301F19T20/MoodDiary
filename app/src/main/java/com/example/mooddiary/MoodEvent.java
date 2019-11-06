@@ -1,15 +1,13 @@
 package com.example.mooddiary;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 
 public class MoodEvent implements Serializable {
-    private Date date;
+//    private Date date;
+    private String date;
+    private String time;
     private String socialSituation;
     private String location;
     private String reason;
@@ -23,9 +21,11 @@ public class MoodEvent implements Serializable {
 
     public MoodEvent(String mood, String date, String time, String socialSituation, String location,
                      String reason, String photo) {
-        try {
-            this.date = fmt.parse(date + " " + time);
-        } catch(Exception e) {}
+//        try {
+//            this.date = fmt.parse(date + " " + time);
+//        } catch(Exception e) {}
+        this.date = date;
+        this.time = time;
         this.socialSituation = socialSituation;
         this.location = location;
         this.reason = reason;
@@ -34,31 +34,42 @@ public class MoodEvent implements Serializable {
     }
 
     public long getNumericDate() {
-        return date.getTime();
+        Date dateInFormatDate;
+        try {
+            dateInFormatDate = fmt.parse(date + " " + time);
+            return dateInFormatDate.getTime();
+        } catch(Exception e) {
+            return -1;
+        }
+//        return date.getTime();
     }
 
-    public String getDateAndTime() {
-        return fmt.format(date);
-    }
+//    public String getDateAndTime() {
+//        return fmt.format(date);
+//    }
 
     public String getDate() {
-        return fmt.format(date).substring(0,10);
+//        return fmt.format(date).substring(0,10);
+        return this.date;
     }
 
     public void setDate(String date) {
-        try {
-            this.date = fmt.parse(date + " " + getTime());
-        } catch(Exception e) {};
+//        try {
+//            this.date = fmt.parse(date + " " + getTime());
+//        } catch(Exception e) {};
+        this.date = date;
     }
 
     public String getTime() {
-        return fmt.format(date).substring(10);
+//        return fmt.format(date).substring(10);
+        return time;
     }
 
     public void setTime(String time) {
-        try {
-            this.date = fmt.parse(getDate() + " " + time);
-        } catch(Exception e) {}
+//        try {
+//            this.date = fmt.parse(getDate() + " " + time);
+//        } catch(Exception e) {}
+        this.time = time;
     }
 
     public String getSocialSituation() {
@@ -104,7 +115,8 @@ public class MoodEvent implements Serializable {
     @Override
     public boolean equals(Object e) {
         MoodEvent compare = (MoodEvent)e;
-        if(this.date.equals(compare.getDateAndTime()) &&
+        if(this.date.equals(compare.getDate()) &&
+                this.time.equals(compare.getTime()) &&
                 this.socialSituation.equals(compare.getSocialSituation()) &&
                 this.location.equals(compare.getLocation()) &&
                 this.reason.equals(compare.getReason()) &&

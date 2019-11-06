@@ -1,6 +1,7 @@
 package com.example.mooddiary;
 
-import android.view.View;
+import android.widget.EditText;
+import android.widget.Spinner;
 
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
@@ -14,7 +15,7 @@ import org.junit.Test;
 public class TestMainActivity {
     private Solo solo;
     @Rule
-    public ActivityTestRule<MainActivity> rule = new ActivityTestRule<>(MainActivity.class, true, true);
+    public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class, true, true);
 
 
     @Before
@@ -24,12 +25,31 @@ public class TestMainActivity {
 
 
     @Test
-    public void ToAddActivity(){
-        //Fragment fragment = solo.getCurrentActivity().getFragmentManager().findFragmentById()
-       // solo.assertCurrentActivity("Wong Activity", MainActivity.class);
-        View fab = rule.getActivity().findViewById(R.id.fab);
-        solo.clickOnView(fab);
+    public void checkToMianToAdd() {
+        solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
+        solo.clearEditText((EditText) solo.getView(R.id.username));
+        solo.enterText((EditText) solo.getView(R.id.username),"xinman");
+        solo.clickOnButton("Login");
+        solo.assertCurrentActivity("Wong Activity", MainActivity.class);
+        solo.clickOnView(solo.getView(R.id.fab));
         solo.assertCurrentActivity("Wong Activity", AddMoodEventActivity.class);
+        Spinner spinner = (Spinner) solo.getView(R.id.add_mood_spinner);
+        spinner.setSelection(1, true);
+        solo.clickOnText("Choose the data");
+        solo.setDatePicker(0, 2012, 2, 16);
+        solo.clickOnText("OK");
+        solo.clickOnText("Choose the time");
+        solo.setTimePicker(0, 10, 0);
+        solo.clickOnText("OK");
+        Spinner spinner2 = (Spinner) solo.getView(R.id.add_social_situation_spinner);
+        spinner.setSelection(1, true);
+        solo.enterText((EditText) solo.getView(R.id.add_textual_reason_edit),"no thing");
+        solo.clickOnButton(("Finish your diary"));
+        solo.waitForText("Edmonton", 1, 2000);
+        solo.assertCurrentActivity("Wong Activity", MainActivity.class);
+
+
+
 
     }
 

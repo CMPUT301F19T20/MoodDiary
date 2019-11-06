@@ -1,10 +1,16 @@
 package com.example.mooddiary.ui.home;
 
+import android.util.Log;
+
 import androidx.lifecycle.ViewModel;
 
+import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
-import com.google.firebase.database.FirebaseDatabase;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * This is a ViewModel holding data for HomeFragment
@@ -13,13 +19,16 @@ public class HomeViewModel extends ViewModel {
 
 
     private MoodList moodListHome;
-    final FirebaseDatabase db = FirebaseDatabase.getInstance();
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-
-    // Attach a listener to read the data at our posts reference
 
     public HomeViewModel() {
         moodListHome = new MoodList();
+    }
+    // Attach a listener to read the data at our posts reference
+
+//    public HomeViewModel() {
+//        moodListHome = new MoodList();
 
        /* DatabaseReference ref = db.collection("users").document("chenge");
 
@@ -32,10 +41,15 @@ public class HomeViewModel extends ViewModel {
                 //new MoodAdapter(getActivity(), R.layout.mood_list_item, user1.getMoodList().getAllMoodList());
             }
         });*/
-        initMoodList();
-    }
+
+//    }
+
 
     public MoodList getMoodList() {
+//        if (moodListHome == null) {
+//            moodListHome = new MoodList();
+//
+//        }
         return moodListHome;
     }
 
@@ -69,6 +83,32 @@ public class HomeViewModel extends ViewModel {
 //        moodListHome.add(moodEvent4);
 //        moodListHome.add(moodEvent5);
 //        moodListHome.add(moodEvent6);
+        Log.d("tag","111");
+
+    }
+    public void setMoodListHome(MoodList moodListHome){this.moodListHome = moodListHome;}
+
+    private void loadMoodListHome() {
+        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+              //  MoodList moodlist = documentSnapshot.toObject(MoodList.class);
+                MoodList mood = new MoodList();
+                Log.d("tag_db","111");
+                MoodEvent moodEvent6 =
+                        new MoodEvent("content", "2019/10/19", "10:40", "alone", "", "", "");
+                Log.d("tag_db","111");
+                mood.add(moodEvent6);
+                Log.d("tag_db","111");
+                moodListHome = mood;
+                Log.d("tag_db","111");
+
+                //setList(moodlist);
+
+            }
+        });
+
     }
 
 
