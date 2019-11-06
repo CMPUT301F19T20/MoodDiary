@@ -10,6 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+/**
+ * This is an adapter for displaying each mood in the spinner.
+ */
 
 public abstract class MsAdapter<T> extends BaseAdapter {
 
@@ -39,6 +42,17 @@ public abstract class MsAdapter<T> extends BaseAdapter {
     public long getItemId(int position) {
         return position;
     }
+    /**
+     * This gets a View that displays the data at the specified position in the data set.
+     * @param position
+     *      This is the position of the item within the adapter's data set of the item whose view we want.
+     * @param convertView
+     *      This is the old view to reuse, if possible.
+     * @param parent
+     *      This is the the parent that this view will eventually be attached to.
+     * @return
+     *      Return A View corresponding to the data at the specified position.
+     */
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -59,6 +73,16 @@ public abstract class MsAdapter<T> extends BaseAdapter {
         private View item;                  //store convertView
         private int position;
         private Context context;
+        /**
+         * This gets a View that displays the data at the specified position in the data set.
+         * @param context
+         *      This is the position of the current activity
+         * @param layoutRes
+         *      This is to show the layout if possible.
+         * @param parent
+         *      This is the the parent that this view will eventually be attached to.
+
+         */
 
 
         private ViewHolder(Context context, ViewGroup parent, int layoutRes) {
@@ -68,7 +92,16 @@ public abstract class MsAdapter<T> extends BaseAdapter {
             convertView.setTag(this);
             item = convertView;
         }
+        /**
+         * This gets a View that displays the data at the specified position in the data set.
+         * @param context
+         *      This is the position of the current activity
+         * @param convertView
+         *      This is the old view to reuse, if possible.
+         * @param parent
+         *      This is the the parent that this view will eventually be attached to.
 
+         */
 
         public static ViewHolder bind(Context context, View convertView, ViewGroup parent,
                                       int layoutRes, int position) {

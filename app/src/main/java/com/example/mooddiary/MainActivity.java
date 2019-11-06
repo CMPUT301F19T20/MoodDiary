@@ -30,6 +30,12 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private final static int HOME_TO_ADD_REQUEST = 10;
+    /**
+     * This creates the view of Main activity
+     * @param savedInstanceState
+     *      If the activity is being re-initialized after previously being shut down
+     *      then this Bundle contains the data it most recently supplied in.
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +76,15 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    /**
+     * This gets acitivity results of other fragments
+     * @param requestCode
+     *      requestCode from fragments
+     * @param resultCode
+     *      resultCode from fragments
+     * @param data
+     *      data from fragments
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

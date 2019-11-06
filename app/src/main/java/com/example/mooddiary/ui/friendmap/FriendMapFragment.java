@@ -19,7 +19,17 @@ import com.example.mooddiary.R;
 public class FriendMapFragment extends Fragment {
 
     private FriendMapViewModel friendMapViewModel;
-
+    /**
+     * This creates the view for the list of user's friend's map.
+     * @param inflater
+     *      This is a LayoutInflater object that can be used to inflate any views in the fragment.
+     * @param container
+     *      This can be null. If non-null, this is the parent view that the fragment's UI should be attached to.
+     * @param savedInstanceState
+     *      If non-null, this fragment is being re-constructed from a previous saved state as given here.
+     * @return
+     *      Return the view for the fragment UI
+     */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         friendMapViewModel =
