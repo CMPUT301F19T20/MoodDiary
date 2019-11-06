@@ -63,7 +63,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private TextView timeText;
     private Spinner moodSpinner;
     private Spinner socialSituationSpinner;
-    private TextView locationText;
+    private EditText locationText;
     private EditText reasonEdit;
     private ImageView photoImage;
     private Context mContext;
