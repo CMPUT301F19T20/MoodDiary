@@ -1,6 +1,9 @@
 package com.example.mooddiary;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.example.mooddiary.ui.home.HomeViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -17,7 +21,12 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -32,13 +41,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<MoodEvent> friendMapMoods = new ArrayList<>();
     String map = null;
     FirebaseFirestore db;
+  
     /**
      * This creates the view of map
      * @param savedInstanceState
      *      If the activity is being re-initialized after previously being shut down
      *      then this Bundle contains the data it most recently supplied in.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,9 +58,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         Intent intent = getIntent();
         this.map = intent.getStringExtra("map");
-        //myMoods = (ArrayList<MoodEvent>)intent.getSerializableExtra("usermoods");
-        //friendMoods = (ArrayList<MoodEvent>)intent.getSerializableExtra("friendmoods");
+        this.myMoods = (ArrayList<MoodEvent>) intent.getSerializableExtra("moodlist");
 
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        Intent intent = new Intent(MapsActivity.this,MainActivity.class);
+        startActivity(intent);
     }
 
     /**
@@ -72,12 +92,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         if (map.equals("mymap")){
-            testMoodList();
             getMyMapMoods(myMoods);
             setMyMapMarker();
         }
         else if(map.equals("friendmap")){
-            testMoodList();
             getFriendMapMoods(friendMoods);
             setFriendMapMarker();
         }
@@ -150,6 +168,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void setMyMapMarker(){
         for (MoodEvent moodEvent:myMapMoods) {
             String locationName = moodEvent.getLocation();
+            Log.d(TAG, "setMyMapMarker: "+locationName);
             LatLng markPoint = getLocationLatLng(getApplicationContext(), locationName);
             String moodType = moodEvent.getMood().getMood();
             if(markPoint!=null){
@@ -181,6 +200,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * set the location points markers of the user's friends locations
+     */
     public void setFriendMapMarker(){
         for (MoodEvent moodEvent:friendMapMoods) {
             String locationName = moodEvent.getLocation();
@@ -215,18 +237,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    public void testMoodList(){
-        MoodEvent moodEvent = new MoodEvent("happy","2000-09-20","13:33","alone","sbsbsbsbs","ate well",null);
-        MoodEvent moodEvent1 = new MoodEvent("happy","2000-09-20","13:33","alone","1124223431223 75Ave NorthWest","ate well",null);
-
-        myMoods.add(moodEvent);
-        myMoods.add(moodEvent1);
-
-
-
-        friendMoods.add(moodEvent);
-
-    }
 
 }
 
