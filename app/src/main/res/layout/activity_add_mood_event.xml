@@ -103,7 +103,7 @@
                 android:layout_height="3px"
                 android:background="@color/colorGray"  />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -113,9 +113,9 @@
                 android:paddingRight="20dp">
 
                 <ImageView
+                    android:id="@+id/dateicon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
                     android:src="@drawable/date"
                     >
                 </ImageView>
@@ -124,11 +124,22 @@
                     android:id="@+id/add_date_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/dateicon"
                     android:textSize="20sp"
                     android:text="@string/chooseDate">
                 </TextView>
 
-            </LinearLayout>
+
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:background="@android:color/transparent">
+                </TextView>
+
+            </RelativeLayout>
 
 
 
@@ -139,7 +150,7 @@
                 android:layout_height="3px"
                 android:background="@color/colorGray"  />
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -149,9 +160,9 @@
                 android:paddingRight="20dp">
 
                 <ImageView
+                    android:id="@+id/timeicon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="20dp"
                     android:src="@drawable/time"
                     >
                 </ImageView>
@@ -160,11 +171,21 @@
                     android:id="@+id/add_time_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/timeicon"
                     android:textSize="20sp"
                     android:text="@string/chooseTime">
                 </TextView>
 
-            </LinearLayout>
+                <TextView
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="*"
+                    android:background="@android:color/transparent">
+                </TextView>
+
+            </RelativeLayout>
 
 
             <!--social-->
