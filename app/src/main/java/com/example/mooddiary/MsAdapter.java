@@ -10,10 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+
 /**
  * This is an adapter for displaying each mood in the spinner.
  */
-
 public abstract class MsAdapter<T> extends BaseAdapter {
 
     private ArrayList<T> mData;
@@ -28,20 +28,40 @@ public abstract class MsAdapter<T> extends BaseAdapter {
         this.mLayoutRes = mLayoutRes;
     }
 
+    /**
+     * This returns the size of the data set
+     * @return
+     *      Return the size of the data set
+     */
     @Override
     public int getCount() {
         return mData != null ? mData.size() : 0;
     }
 
+    /**
+     * This returns the data at the specified position in the data set
+     * @param position
+     *      This is the position of the item within the adapter's data set
+     * @return
+     *      Return the data at the specified position in the data set
+     */
     @Override
     public T getItem(int position) {
         return mData.get(position);
     }
 
+    /**
+     *  This returns the id of the data at the specified position
+     * @param position
+     *      This is the position of the item within the adapter's data set
+     * @return
+     *      Return the id of the data at the specified position
+     */
     @Override
     public long getItemId(int position) {
         return position;
     }
+
     /**
      * This gets a View that displays the data at the specified position in the data set.
      * @param position
@@ -51,9 +71,8 @@ public abstract class MsAdapter<T> extends BaseAdapter {
      * @param parent
      *      This is the the parent that this view will eventually be attached to.
      * @return
-     *      Return A View corresponding to the data at the specified position.
+     *      Return a View corresponding to the data at the specified position.
      */
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder holder = ViewHolder.bind(parent.getContext(), convertView, parent, mLayoutRes
@@ -64,25 +83,15 @@ public abstract class MsAdapter<T> extends BaseAdapter {
 
     public abstract void bindView(ViewHolder holder, T obj);
 
-
-
-
+    /**
+     * This is a private class used to store views for reusing.
+     */
     public static class ViewHolder {
 
         private SparseArray<View> mViews;   //store the view of each item in listview
         private View item;                  //store convertView
         private int position;
         private Context context;
-        /**
-         * This gets a View that displays the data at the specified position in the data set.
-         * @param context
-         *      This is the position of the current activity
-         * @param layoutRes
-         *      This is to show the layout if possible.
-         * @param parent
-         *      This is the the parent that this view will eventually be attached to.
-
-         */
 
 
         private ViewHolder(Context context, ViewGroup parent, int layoutRes) {
@@ -92,17 +101,22 @@ public abstract class MsAdapter<T> extends BaseAdapter {
             convertView.setTag(this);
             item = convertView;
         }
+
         /**
-         * This gets a View that displays the data at the specified position in the data set.
+         * This binds ViewHolder to the adapter
          * @param context
-         *      This is the position of the current activity
+         *
          * @param convertView
          *      This is the old view to reuse, if possible.
          * @param parent
          *      This is the the parent that this view will eventually be attached to.
-
+         * @param layoutRes
+         *      This is id of the layout of each item in the listView
+         * @param position
+         *      This is the position of the item within the adapter's data set of the item whose view we want.
+         * @return
+         *      Return the ViewHolder
          */
-
         public static ViewHolder bind(Context context, View convertView, ViewGroup parent,
                                       int layoutRes, int position) {
             ViewHolder holder;
@@ -116,7 +130,13 @@ public abstract class MsAdapter<T> extends BaseAdapter {
             return holder;
         }
 
-
+        /**
+         * This gets a View that displays the data at the specified position in the data set.
+         * @param id
+         *      This is the position of the item within the adapter's data set of the item whose view we want.
+         * @return
+         *      Return a View corresponding to the data at the specified position.
+         */
         public <T extends View> T getView(int id) {
             T t = (T) mViews.get(id);
             if (t == null) {
@@ -126,23 +146,32 @@ public abstract class MsAdapter<T> extends BaseAdapter {
             return t;
         }
 
-
         /**
-         * get current item
+         * This returns a View corresponding to the data at the specified position.
+         * @return
+         *      Return a View corresponding to the data at the specified position.
          */
         public View getItemView() {
             return item;
         }
 
         /**
-         * get current position
+         * This returns the position of the item within the adapter's data set of the item whose view we want.
+         * @return
+         *      Return the position of the item within the adapter's data set of the item whose view we want.
          */
         public int getItemPosition() {
             return position;
         }
 
         /**
-         * set text
+         * This sets Text for TextView
+         * @param id
+         *      This is the position of the item within the adapter's data set of the item whose view we want.
+         * @param text
+         *      This is the text to be set
+         * @return
+         *      This returns the ViewHolder
          */
         public ViewHolder setText(int id, CharSequence text) {
             View view = getView(id);
@@ -153,7 +182,13 @@ public abstract class MsAdapter<T> extends BaseAdapter {
         }
 
         /**
-         * set image
+         * This sets image resource for ImageView
+         * @param id
+         *      This is the position of the item within the adapter's data set of the item whose view we want.
+         * @param drawableRes
+         *      This is the image to be set
+         * @return
+         *      This returns the ViewHolder
          */
         public ViewHolder setImageResource(int id, int drawableRes) {
             View view = getView(id);

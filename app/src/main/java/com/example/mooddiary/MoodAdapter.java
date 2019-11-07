@@ -58,8 +58,6 @@ public class MoodAdapter extends ArrayAdapter<MoodEvent> {
         viewHolder.timeText.setText(moodEvent.getTime());
         viewHolder.moodTypeText.setText(moodEvent.getMood().getMood());
         viewHolder.moodTypeText.setTextColor(Color.parseColor(moodEvent.getMood().getColor()));
-
-        Log.d("color", String.valueOf(moodEvent.getMood().getColor()));
         viewHolder.socialSituationText.setText(moodEvent.getSocialSituation());
         return view;
     }

@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
 
+/**
+ * This is a class to store data for MoodEvent
+ */
 public class MoodEvent implements Serializable {
     private String date;
     private String time;
@@ -16,6 +19,7 @@ public class MoodEvent implements Serializable {
     private String reason;
     private String photo;
     private Mood mood;
+
     /**
      * This converts the format of Date
      */
@@ -42,8 +46,9 @@ public class MoodEvent implements Serializable {
     /**
      * This converts the format of time
      * @return
+     *       Return the number of milliseconds since January 1, 1970, 00:00:00 GTM
+     *
      */
-
     public long getNumericDate() {
         Date dateInDateFormat;
         try {
@@ -55,28 +60,18 @@ public class MoodEvent implements Serializable {
     }
 
     public String getDate() {
-
-//        return fmt.format(date).substring(0,10);
         return this.date;
     }
 
     public void setDate(String date) {
-//        try {
-//            this.date = fmt.parse(date + " " + getTime());
-//        } catch(Exception e) {};
         this.date = date;
     }
 
     public String getTime() {
-
-//        return fmt.format(date).substring(10);
         return this.time;
     }
 
     public void setTime(String time) {
-//        try {
-//            this.date = fmt.parse(getDate() + " " + time);
-//        } catch(Exception e) {}
         this.time = time;
     }
 
@@ -121,11 +116,11 @@ public class MoodEvent implements Serializable {
     }
 
     /**
-     * This is to check whether two moodevents are the same
+     * This is to check whether two MoodEvents are the same
      * @param e
-     *      This is a moodevent
+     *      This is a MoodEvent to compare
      * @return
-     *      if the same return true, else false
+     *      Return true if same, false otherwise
      */
     @Override
     public boolean equals(Object e) {

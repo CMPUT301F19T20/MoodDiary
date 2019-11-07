@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * This is ViewModel holding data for FriendEventFragment
+ */
 public class FriendEventViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;

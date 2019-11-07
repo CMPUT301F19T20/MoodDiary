@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * This is ViewModel holding data for MyMapFragment
+ */
 public class MyMapViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;

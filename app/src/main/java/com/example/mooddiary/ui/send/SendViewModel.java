@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * This is a ViewModel holding data for SendFragment
+ */
 public class SendViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;

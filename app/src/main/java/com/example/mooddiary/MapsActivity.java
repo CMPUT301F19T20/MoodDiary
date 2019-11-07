@@ -32,6 +32,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This is an activity that shows a map which mood event marked
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
@@ -67,6 +70,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * This deals with back button clicking
+     */
     @Override
     public void onBackPressed() {
 
@@ -168,7 +174,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void setMyMapMarker(){
         for (MoodEvent moodEvent:myMapMoods) {
             String locationName = moodEvent.getLocation();
-            //Log.d(TAG, "setMyMapMarker: "+locationName);
             LatLng markPoint = getLocationLatLng(getApplicationContext(), locationName);
             String moodType = moodEvent.getMood().getMood();
             if(markPoint!=null){

@@ -14,11 +14,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mooddiary.R;
 
+/**
+ * This is FriendEventFragment which shows recent friends' mood event
+ */
 public class FriendEventFragment extends Fragment {
 
     private FriendEventViewModel friendEventViewModel;
     /**
-     * This creates the view for the list of user's friends mood events.
+     * This creates the view for the list of user's friends' friends mood events.
      * @param inflater
      *      This is a LayoutInflater object that can be used to inflate any views in the fragment.
      * @param container
