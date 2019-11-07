@@ -105,6 +105,13 @@ public class Mood implements Serializable {
         }
     }
 
+    /**
+     * This compares two Mood objects
+     * @param o
+     *      This is a Mood object to compare
+     * @return
+     *      Return true if two Mood objects are equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         Mood m = (Mood) o;

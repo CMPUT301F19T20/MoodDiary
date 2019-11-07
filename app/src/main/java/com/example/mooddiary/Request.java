@@ -1,5 +1,8 @@
 package com.example.mooddiary;
 
+/**
+ * This is a class to store a Request object
+ */
 public class Request {
 
     private String sender;

@@ -16,11 +16,15 @@ import androidx.lifecycle.ViewModelProviders;
 import com.example.mooddiary.MapsActivity;
 import com.example.mooddiary.R;
 
+/**
+ * This is a FriendMapFragment which shows user's friends' mood event map
+ */
 public class FriendMapFragment extends Fragment {
 
     private FriendMapViewModel friendMapViewModel;
+
     /**
-     * This creates the view for the list of user's friend's map.
+     * This creates the view for the list of user's friend's mood event map.
      * @param inflater
      *      This is a LayoutInflater object that can be used to inflate any views in the fragment.
      * @param container
@@ -35,7 +39,7 @@ public class FriendMapFragment extends Fragment {
         friendMapViewModel =
                 ViewModelProviders.of(this).get(FriendMapViewModel.class);
         View root = inflater.inflate(R.layout.fragment_friend_map, container, false);
-        final TextView textView = root.findViewById(R.id.text_tools);
+        final TextView textView = root.findViewById(R.id.friend_map);
 
         Intent intent = new Intent(getActivity(), MapsActivity.class);
         intent.putExtra("map","friendmap");

@@ -21,6 +21,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.SyncFailedException;
 
+/**
+ * This is an activity where the user login in
+ */
 public class LoginActivity extends AppCompatActivity {
     private Button login;
     private Button signUp;
@@ -28,13 +31,13 @@ public class LoginActivity extends AppCompatActivity {
     static public String userName;
     private FirebaseFirestore db;
     public static final String TAG = LoginActivity.class.getSimpleName();
+
     /**
      * This creates the view of signup
      * @param savedInstanceState
      *      If the activity is being re-initialized after previously being shut down
      *      then this Bundle contains the data it most recently supplied in.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +50,9 @@ public class LoginActivity extends AppCompatActivity {
         initButtons();
     }
 
+    /**
+     * This initializes Login and Sign up buttons
+     */
     public void initButtons(){
         login.setOnClickListener(new View.OnClickListener() {
             @Override

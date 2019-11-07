@@ -58,6 +58,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+/**
+ * This is an activity where user adds mood event
+ */
 public class AddMoodEventActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private static final SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -419,8 +422,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
-
-    @Override
     /**
      * This displays the data from date picker
      * @param datePicker
@@ -432,6 +433,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
      * @param dayOfMonth
      *      get the day from date picker
      */
+    @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
         String desc=String.format("%04d/%02d/%02d",year,month+1,dayOfMonth);
         dateText.setText(desc);
@@ -509,7 +511,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
      * handleImageOnKitKat
      * @param data
      *      This is data from picture
-     *
      */
 
     @TargetApi(19)
@@ -538,11 +539,10 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         displayImage(imagePath);
     }
 
-    /**s
+    /**
      * handleImageOnKitKat for version lower than 4.0
      * @param data
      *      This is data from picture
-     *
      */
     private void handleImageBeforeKitKat(Intent data){
         Uri uri = data.getData();

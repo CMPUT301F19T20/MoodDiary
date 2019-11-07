@@ -25,18 +25,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.TextView;
 
+/**
+ * This is an activity that holding HomeFragment, FriendEventFragment, FriendMapFragment,
+ * MyMapFragment, SendFragment, ShareFragment.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private final static int HOME_TO_ADD_REQUEST = 10;
+    private TextView usernameText;
+
     /**
      * This creates the view of Main activity
      * @param savedInstanceState
      *      If the activity is being re-initialized after previously being shut down
      *      then this Bundle contains the data it most recently supplied in.
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,10 +71,18 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-
+        View headerView = navigationView.getHeaderView(0);
+        usernameText = headerView.findViewById(R.id.username);
+        usernameText.setText(LoginActivity.userName);
     }
 
-
+    /**
+     *  This deals with the action of choosing to navigate Up within
+     *  application's activity hierarchy from the action bar by the user.
+     * @return
+     *      This is true if Up navigation completed successfully and MainActivity was finished,
+     *      false otherwise.
+     */
     @Override
     public boolean onSupportNavigateUp() {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);

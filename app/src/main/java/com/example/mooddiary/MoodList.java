@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 /**
- * MoodList class can manage each Moodevent
- *
+ * This is a class to manage a list of MoodEvent object
  */
 public class MoodList implements Serializable {
 
@@ -32,13 +31,13 @@ public class MoodList implements Serializable {
         mehList = new ArrayList<>();
 
     }
-    /**
-     * This adds new moodevent to moodlist
-     *  add each new mood event to allmoodlist and to the mood list which it belongs to
-     * @param mood
-     *      This is a moodevent
-     */
 
+    /**
+     * This adds new a mood event to mood list
+     *  add each new mood event to allMoodList and to the mood list which it belongs to
+     * @param mood
+     *      This is a MoodEvent
+     */
     public void add(MoodEvent mood){
         if(allMoodList.contains(mood)){
             throw new IllegalArgumentException();
@@ -73,11 +72,12 @@ public class MoodList implements Serializable {
         }
 
     }
+
     /**
-     * This deletes moodevent from moodlist
-     *  delete mood event from allmoodlist and from the mood list which it belongs to
+     * This deletes a mood event from mood list
+     *  delete mood event from allMoodList and from the mood list which it belongs to
      * @param mood
-     *      This is a moodevent
+     *      This is a MoodEvent
      */
     public void delete(MoodEvent mood) {
         if(allMoodList.contains(mood)) {
@@ -97,11 +97,11 @@ public class MoodList implements Serializable {
     }
 
     /**
-     * This edits a moodevent
+     * This edits a mood event
      * @param newMood
-     *      this is a mood event to add
+     *      this is the mood event edited
      * @param originMood
-     *      this is a mood event to delete
+     *      this is the original mood event to delete
      */
     public void edit(MoodEvent newMood, MoodEvent originMood) {
         delete(originMood);
@@ -111,9 +111,9 @@ public class MoodList implements Serializable {
     /**
      * This returns the mood event of all mood list at a specific position
      * @param position
-     *       this is the position of the moodevent
+     *       this is the position of the MoodEvent
      * @return
-     *       Return the moodevent at position
+     *       Return the MoodEvent at position
      */
     public MoodEvent ViewDetail(int position){
         return allMoodList.get(position);
@@ -168,11 +168,11 @@ public class MoodList implements Serializable {
     }
 
     /**
-     * This return a mood list with all moodevent
+     * This return a mood list that contains all mood events with a specific mood
      * @param type
-     *        This is a kind of mood
+     *        This is a kind of mood to filter
      * @return
-     *        Return a mood list with all moodevent
+     *        Return a mood list that contains all mood events with mood type "type"
      */
     public ArrayList<MoodEvent> getMoodList(String type) {
         ArrayList<MoodEvent> sortList;
@@ -218,7 +218,7 @@ public class MoodList implements Serializable {
     }
 
     /**
-     * This sortsMoodList by Time
+     * This sorts MoodList by Time
      */
     public void sortMoodList() {
         allMoodList.sort(new Comparator<MoodEvent>() {
@@ -237,6 +237,9 @@ public class MoodList implements Serializable {
 
     }
 
+    /**
+     * This clears MoodList
+     */
     public void clearMoodList() {
         this.allMoodList.clear();
         this.angryList.clear();

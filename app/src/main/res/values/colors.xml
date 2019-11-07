@@ -20,6 +20,7 @@
     <color name="colorGray">#cccccc</color>
     <color name="colorDarkGray">#999999</color>
     <color name="colorWhite">#ffffff</color>
+    <color name="colorLightPink">#f7c3c3</color>
 
     <!--filter color-->
     <color name="selectedColor">#FBF5EF</color>

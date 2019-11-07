@@ -18,13 +18,16 @@ import com.example.mooddiary.MapsActivity;
 import com.example.mooddiary.R;
 import com.example.mooddiary.ui.home.HomeViewModel;
 
+/**
+ * This is MyMapFragment which shows user's mood event map
+ */
 public class MyMapFragment extends Fragment {
 
     private MyMapViewModel myMapViewModel;
     private HomeViewModel viewModelFromHome;
   
     /**
-     * This creates the view for the list of user's map.
+     * This creates the view for the user's mood event map.
      * @param inflater
      *      This is a LayoutInflater object that can be used to inflate any views in the fragment.
      * @param container
@@ -42,7 +45,6 @@ public class MyMapFragment extends Fragment {
         final TextView textView = root.findViewById(R.id.text_slideshow);
 
         viewModelFromHome = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
-        //viewModelFromHome.getMoodList();
 
         Intent intent = new Intent(getActivity(),MapsActivity.class);
         intent.putExtra("map","mymap");

@@ -1,5 +1,8 @@
 package com.example.mooddiary;
 
+/**
+ * This is a class holding data for spinner and filter custom layout
+ */
 public class MoodBean {
 
     private int icon;

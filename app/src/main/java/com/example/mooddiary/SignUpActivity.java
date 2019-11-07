@@ -31,6 +31,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+/**
+ * This is an activity where user signs up
+ */
 public class SignUpActivity extends AppCompatActivity {
     private EditText newUser;
     private Button confirm;
@@ -43,7 +46,7 @@ public class SignUpActivity extends AppCompatActivity {
     public static final String TAG = SignUpActivity.class.getSimpleName();
 
     /**
-     * This creates the view of login
+     * This creates the Sign Up activity and its layout
      * @param savedInstanceState
      *      If the activity is being re-initialized after previously being shut down
      *      then this Bundle contains the data it most recently supplied in.
@@ -57,20 +60,18 @@ public class SignUpActivity extends AppCompatActivity {
         newUser = findViewById(R.id.newUser);
         login = findViewById(R.id.login);
         db = FirebaseFirestore.getInstance();
-
-
         initButton();
         Intent intent = getIntent();
     }
 
-
+    /**
+     * This initializes Confirm button
+     */
     public void initButton() {
 
         confirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-
                 boolean valid = true;
                 String usernamePat = "^([a-z0-9A-Z]{3,20})$";
                 if (!Pattern.matches(usernamePat, newUser.getText().toString())) {
