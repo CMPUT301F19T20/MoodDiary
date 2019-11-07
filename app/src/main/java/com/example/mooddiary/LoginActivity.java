@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.SyncFailedException;
+import java.util.regex.Pattern;
 
 public class LoginActivity extends AppCompatActivity {
     private Button login;
@@ -52,26 +53,34 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 userName = nameInput.getText().toString();
-                db.collection("users").document("users").collection(userName).document("MoodList").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                    @Override
-                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                        if(documentSnapshot.exists()){
-                            Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent (getApplicationContext(), MainActivity.class);
-                            intent.putExtra("EXTRA", "openFragment");
-                            startActivity(intent);
-                        }
-                        else{
-                            Toast.makeText(LoginActivity.this, "User doesn't exist", Toast.LENGTH_SHORT).show();
-                        }
+                String usernamePat = "^([a-z0-9A-Z]{3,20})$";
+                if (!Pattern.matches(usernamePat, nameInput.getText().toString())) {
+                    nameInput.setError("Username should more 3 and less than 20 characters with only letters or numbers");
+                    nameInput.setText("");
+                }
+                else{
+                    db.collection("users").document("users").collection(userName).document("MoodList").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                        @Override
+                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                            if(documentSnapshot.exists()){
+                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent (getApplicationContext(), MainActivity.class);
+                                intent.putExtra("EXTRA", "openFragment");
+                                startActivity(intent);
+                            }
+                            else{
+                                nameInput.setError("Username doesn't exist");
+                                nameInput.setText("");
+                            }
 
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                        }
+                    }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(LoginActivity.this, "Error!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
             }
         });
         signUp.setOnClickListener(new View.OnClickListener() {

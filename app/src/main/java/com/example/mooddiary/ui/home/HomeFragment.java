@@ -243,7 +243,7 @@ public class HomeFragment extends Fragment {
         View view = LayoutInflater.from(activity).inflate(R.layout.fragment_filter, null);
         homeFilterListView = view.findViewById(R.id.home_filter_list_view);
         ArrayList<MoodBean> mData = new ArrayList<>();
-        mData.add(new MoodBean(R.drawable.mood,"all"));
+        mData.add(new MoodBean(R.drawable.redheart,"all"));
         mData.add(new MoodBean(R.drawable.happy,"happy"));
         mData.add(new MoodBean(R.drawable.angry,"angry"));
         mData.add(new MoodBean(R.drawable.content,"content"));
