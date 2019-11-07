@@ -35,7 +35,7 @@ public class TestLoginActivity {
     public void checkToHome() {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.username));
-        solo.enterText((EditText) solo.getView(R.id.username),"chenge");
+        solo.enterText((EditText) solo.getView(R.id.username),"tester");
         solo.clickOnButton("Login");
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
     }

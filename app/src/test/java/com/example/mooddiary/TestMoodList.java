@@ -13,9 +13,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestMoodList {
 
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-    byte[] d = baos.toByteArray();
     @Test
     public void testAdd(){
         MoodList list = new MoodList();
@@ -45,7 +42,7 @@ public class TestMoodList {
         MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40", "alone", "", "", "");
         MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
         list.add(moodEvent);
-        list.edit(moodEvent,moodEvent2);
+        list.edit(moodEvent2,moodEvent);
         assertTrue(list.getMoodList("all").contains(moodEvent2));
     }
     @Test
@@ -61,6 +58,17 @@ public class TestMoodList {
         MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
 
         list.add(moodEvent2);
-        assertEquals(moodEvent2,list.getMoodList("stressed"));
+        assertEquals(moodEvent2,list.getMoodList("stressed").get(0));
+    }
+    @Test
+    public void testClear(){
+        MoodList list = new MoodList();
+        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40", "alone", "", "", "");
+
+        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
+        list.add(moodEvent);
+        list.add(moodEvent2);
+        list.clearMoodList();
+        assertEquals(0,list.getMoodList("all").size());
     }
 }
