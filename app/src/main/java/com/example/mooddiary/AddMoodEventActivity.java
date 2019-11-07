@@ -76,7 +76,9 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private ImageView photoImage;
     private Context mContext;
     private int moodNamePosition = -1 ; // if moodevent is null
+
     private boolean successFlag;
+    private boolean photoChangeFlag;
 
     // record the social situation which is chosen from social situation spinner
     private String socialSituationSpinnerResult = "alone";
@@ -125,7 +127,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         photoFromCameraButton = findViewById(R.id.add_photo_camera);
         photoFromAlbumButton = findViewById(R.id.add_photo_album);
 
-
+        photoChangeFlag = false;
 
         /*
           get intent from either Main Activity(Home Fragment) or View Activity
@@ -300,18 +302,19 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                     successFlag = false;
                 }
                 try{
-                    Uri file = Uri.fromFile(new File(getExternalFilesDir("photo") + "/" + photoResult));
-                    StorageReference imageRef = storageRef.child(photoResult);
-                    UploadTask uploadTask = imageRef.putFile(file);
+                    if(photoChangeFlag) {
+                        Uri file = Uri.fromFile(new File(getExternalFilesDir("photo") + "/" + photoResult));
+                        StorageReference imageRef = storageRef.child(photoResult);
+                        UploadTask uploadTask = imageRef.putFile(file);
 
-                    uploadTask.addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            successFlag = false;
-                        }
-                    });
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                successFlag = false;
+                            }
+                        });
+                    }
                 }catch(Exception e) {}
-
 
                 if(!successFlag) { return; }
 
@@ -378,6 +381,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                    photoChangeFlag = true;
                 }
                 break;
             case CHOOSE_PHOTO:
@@ -388,7 +392,9 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                     } else {
                         handleImageBeforeKitKat(data);
                     }
+                    photoChangeFlag = true;
                 }
+
                 break;
             default:
                 break;
