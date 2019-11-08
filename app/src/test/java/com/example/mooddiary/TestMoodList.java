@@ -71,4 +71,106 @@ public class TestMoodList {
         list.clearMoodList();
         assertEquals(0,list.getMoodList("all").size());
     }
+    @Test
+    public void testsortAllMoodList(){
+        MoodList list = new MoodList();
+        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/21", "10:40", "alone", "", "", "");
+
+        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent3 =new MoodEvent("stressed", "2019/10/22", "10:40", "alone", "", "", "");
+
+        list.add(moodEvent);
+        list.add(moodEvent2);
+        list.add(moodEvent3);
+        list.sortAllMoodList();
+        assertEquals(moodEvent,list.getMoodList("all").get(0));
+
+    }
+    @Test
+    public void testsortHappyList(){
+        MoodList list = new MoodList();
+        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/21", "10:40", "alone", "", "", "");
+
+        MoodEvent moodEvent2 =new MoodEvent("happy", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent3 =new MoodEvent("happy", "2019/10/22", "10:40", "alone", "", "", "");
+
+        list.add(moodEvent);
+        list.add(moodEvent2);
+        list.add(moodEvent3);
+        list.sortHappyList();
+        assertEquals(moodEvent2,list.getMoodList("happy").get(0));
+
+    }
+    @Test
+    public void testsortAngryList(){
+        MoodList list = new MoodList();
+        MoodEvent moodEvent = new MoodEvent("angry", "2019/10/21", "10:40", "alone", "", "", "");
+
+        MoodEvent moodEvent2 =new MoodEvent("angry", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent3 =new MoodEvent("angry", "2019/10/22", "10:40", "alone", "", "", "");
+
+        list.add(moodEvent);
+        list.add(moodEvent2);
+        list.add(moodEvent3);
+        list.sortAngryList();
+        assertEquals(moodEvent2,list.getMoodList("angry").get(0));
+
+    }
+    @Test
+    public void testsortStressedList(){
+        MoodList list = new MoodList();
+        MoodEvent moodEvent = new MoodEvent("stressed", "2019/10/21", "10:40", "alone", "", "", "");
+
+        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent3 =new MoodEvent("stressed", "2019/10/22", "10:40", "alone", "", "", "");
+
+        list.add(moodEvent);
+        list.add(moodEvent2);
+        list.add(moodEvent3);
+        list.sortStressedList();
+        assertEquals(moodEvent2,list.getMoodList("stressed").get(0));
+
+    }
+    @Test
+    public void testsortMehList(){
+        MoodList list = new MoodList();
+        MoodEvent moodEvent = new MoodEvent("meh", "2019/10/21", "10:40", "alone", "", "", "");
+
+        MoodEvent moodEvent2 =new MoodEvent("meh", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent3 =new MoodEvent("meh", "2019/10/22", "10:40", "alone", "", "", "");
+
+        list.add(moodEvent);
+        list.add(moodEvent2);
+        list.add(moodEvent3);
+        list.sortMehList();
+        assertEquals(moodEvent2,list.getMoodList("meh").get(0));
+    }
+    @Test
+    public void testsortContentList(){
+        MoodList list = new MoodList();
+        MoodEvent moodEvent = new MoodEvent("content", "2019/10/21", "10:40", "alone", "", "", "");
+
+        MoodEvent moodEvent2 =new MoodEvent("content", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent3 =new MoodEvent("content", "2019/10/22", "10:40", "alone", "", "", "");
+
+        list.add(moodEvent);
+        list.add(moodEvent2);
+        list.add(moodEvent3);
+        list.sortContentList();
+        assertEquals(moodEvent2,list.getMoodList("content").get(0));
+    }
+    @Test
+    public void testsortSadList(){
+        MoodList list = new MoodList();
+        MoodEvent moodEvent = new MoodEvent("sad", "2019/10/21", "10:40", "alone", "", "", "");
+
+        MoodEvent moodEvent2 =new MoodEvent("sad", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent3 =new MoodEvent("sad", "2019/10/22", "10:40", "alone", "", "", "");
+
+        list.add(moodEvent);
+        list.add(moodEvent2);
+        list.add(moodEvent3);
+        list.sortSadList();
+        assertEquals(moodEvent2,list.getMoodList("sad").get(0));
+    }
 }
