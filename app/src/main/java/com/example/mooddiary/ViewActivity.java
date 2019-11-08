@@ -157,7 +157,9 @@ public class ViewActivity extends AppCompatActivity {
 //                                }
 //                            });
 //                        } catch (Exception e) {}
-                        if(moodEvent.getPhoto().equals(editedMoodEvent.getPhoto())) {
+
+                        if(!moodEvent.getPhoto().equals(editedMoodEvent.getPhoto())) {
+                            viewDownloadingProgress.setVisibility(View.INVISIBLE);
                             photoChangeFlag = true;
                         }
                         Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
