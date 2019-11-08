@@ -10,10 +10,10 @@
     <!--emotion color-->
     <color name="happy">#ff8080</color>
     <color name="sad">#accfff</color>
-    <color name="stressed">#c6f1d6</color>
+    <color name="stressed">#51dacf</color>
     <color name="angry">#ba8dfd</color>
     <color name="content">#ffba92</color>
-    <color name="meh">#d4f596</color>
+    <color name="meh">#a7d129</color>
 
     <!--UI color-->
     <color name="colorPink">#ed968e</color>

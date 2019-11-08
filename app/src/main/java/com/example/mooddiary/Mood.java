@@ -14,8 +14,8 @@ public class Mood implements Serializable {
     private final static String ANGRY_COLOR = "#ba8dfd";
     private final static String SAD_COLOR = "#accfff";
     private final static String CONTENT_COLOR = "#ffba92";
-    private final static String STRESSED_COLOR = "#c6f1d6";
-    private final static String MEH_COLOR = "#d4f596";
+    private final static String STRESSED_COLOR = "#51dacf";
+    private final static String MEH_COLOR = "#a7d129";
 
     private int moodImage;
     private String mood;
