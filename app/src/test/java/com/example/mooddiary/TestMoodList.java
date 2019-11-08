@@ -16,7 +16,7 @@ public class TestMoodList {
     @Test
     public void testAdd(){
         MoodList list = new MoodList();
-        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40","10:40:02", "alone", "", "", "");
         list.add(moodEvent);
         assertThrows(IllegalArgumentException.class,()->{
             list.add(moodEvent);
@@ -26,12 +26,12 @@ public class TestMoodList {
     public void testDelete(){
         MoodList list = new MoodList();
 
-        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40","10:40:02", "alone", "", "", "");
         list.add(moodEvent);
         list.delete(moodEvent);
         assertEquals(0,list.getMoodList("all").size());
         list.add(moodEvent);
-        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40","10:40:02", "alone", "", "", "");
         list.add(moodEvent2);
         list.delete(moodEvent2);
         assertTrue(list.getMoodList("all").contains(moodEvent));
@@ -39,8 +39,8 @@ public class TestMoodList {
     @Test
     public void testEdit(){
         MoodList list = new MoodList();
-        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40", "alone", "", "", "");
-        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40","10:40:02", "alone", "", "", "");
+        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40","10:40:02", "alone", "", "", "");
         list.add(moodEvent);
         list.edit(moodEvent2,moodEvent);
         assertTrue(list.getMoodList("all").contains(moodEvent2));
@@ -55,7 +55,7 @@ public class TestMoodList {
     @Test
     public void testGetMoodList2(){
         MoodList list = new MoodList();
-        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40","10:40:02", "alone", "", "", "");
 
         list.add(moodEvent2);
         assertEquals(moodEvent2,list.getMoodList("stressed").get(0));
@@ -63,9 +63,9 @@ public class TestMoodList {
     @Test
     public void testClear(){
         MoodList list = new MoodList();
-        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent = new MoodEvent("happy", "2019/10/23", "10:40", "10:40:02","alone", "", "", "");
 
-        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "alone", "", "", "");
+        MoodEvent moodEvent2 =new MoodEvent("stressed", "2019/10/23", "10:40", "10:40:02","alone", "", "", "");
         list.add(moodEvent);
         list.add(moodEvent2);
         list.clearMoodList();

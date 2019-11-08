@@ -14,6 +14,7 @@ import java.util.Date;
 public class MoodEvent implements Serializable {
     private String date;
     private String time;
+    private String preciseTime;
     private String socialSituation;
     private String location;
     private String reason;
@@ -23,19 +24,20 @@ public class MoodEvent implements Serializable {
     /**
      * This converts the format of Date
      */
-    private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+    private static final SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 
     public MoodEvent() {
     }
 
 
-    public MoodEvent(String mood, String date, String time, String socialSituation, String location,
+    public MoodEvent(String mood, String date, String time,String preciseTime, String socialSituation, String location,
                      String reason, String photo) {
 //        try {
 //            this.date = fmt.parse(date + " " + time);
 //        } catch(Exception e) {}
         this.date = date;
         this.time = time;
+        this.preciseTime = preciseTime;
         this.socialSituation = socialSituation;
         this.location = location;
         this.reason = reason;
@@ -52,7 +54,7 @@ public class MoodEvent implements Serializable {
     public long getNumericDate() {
         Date dateInDateFormat;
         try {
-            dateInDateFormat = fmt.parse(this.date + " " + this.time);
+            dateInDateFormat = fmt.parse(this.date + " " + this.preciseTime);
             return dateInDateFormat.getTime();
         } catch(Exception e) {
             return -1;
@@ -74,6 +76,10 @@ public class MoodEvent implements Serializable {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public String getPreciseTime(){return this.preciseTime;}
+
+    public void setPreciseTime(String preciseTime){this.preciseTime = preciseTime;}
 
     public String getSocialSituation() {
         return socialSituation;
@@ -127,6 +133,7 @@ public class MoodEvent implements Serializable {
         MoodEvent compare = (MoodEvent) e;
         if(this.date.equals(compare.getDate()) &&
                 this.time.equals(compare.getTime()) &&
+                this.preciseTime.equals(compare.getPreciseTime())&&
                 this.socialSituation.equals(compare.getSocialSituation()) &&
                 this.location.equals(compare.getLocation()) &&
                 this.reason.equals(compare.getReason()) &&
