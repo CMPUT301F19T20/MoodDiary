@@ -88,6 +88,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private String moodSpinnerResult = "happy";
     private String dateResult = "";
     private String timeResult = "";
+    private String preciseTimeResult = "";
     private String locationResult = "";
     private String reasonResult = "";
     private String photoResult = "";
@@ -151,6 +152,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             // initialize return results in Add Activity
             dateResult = moodEventFromView.getDate();
             timeResult = moodEventFromView.getTime();
+            preciseTimeResult = moodEventFromView.getPreciseTime();
             moodSpinnerResult = moodEventFromView.getMood().getMood();
             socialSituationSpinnerResult = moodEventFromView.getSocialSituation();
             locationResult = moodEventFromView.getLocation();
@@ -322,7 +324,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 if(!successFlag) { return; }
 
                 MoodEvent moodEventResult =
-                        new MoodEvent(moodSpinnerResult, dateResult, timeResult, socialSituationSpinnerResult, locationResult, reasonResult, photoResult);
+                        new MoodEvent(moodSpinnerResult, dateResult, timeResult,preciseTimeResult, socialSituationSpinnerResult, locationResult, reasonResult, photoResult);
                 if (isFromView) {
                     Intent intent = new Intent();
                     intent.putExtra("edited_mood_event", moodEventResult);
@@ -452,8 +454,10 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
         Calendar calendar=Calendar.getInstance();
-        String desc=String.format("%02d:%02d:%02d",hourOfDay,minute,calendar.get(Calendar.SECOND));
+        String desc_precise=String.format("%02d:%02d:%02d",hourOfDay,minute,calendar.get(Calendar.SECOND));
+        String desc=String.format("%02d:%02d",hourOfDay,minute);
         timeText.setText(desc);
+        preciseTimeResult = desc_precise;
         timeResult = desc;
     }
     /**
