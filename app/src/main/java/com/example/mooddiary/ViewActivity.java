@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,10 +40,12 @@ public class ViewActivity extends AppCompatActivity {
     private Button viewEditButton;
     private MoodEvent moodEvent;
     private MoodEvent editedMoodEvent;
+    private ProgressBar viewDownloadingProgress;
 
     private int position;
 
     private boolean ifEdited = false;
+    private boolean photoChangeFlag;
 
     /**
      * This creates the view of details of a mood event.
@@ -64,6 +67,7 @@ public class ViewActivity extends AppCompatActivity {
         viewReasonText = (TextView) findViewById(R.id.view_reason_text);
         viewPhotoImage = (ImageView) findViewById(R.id.view_photo_image);
         viewEditButton = (Button) findViewById(R.id.view_edit_button);
+        viewDownloadingProgress = findViewById(R.id.view_downloading_progress);
 
         Intent intent = getIntent();
 
@@ -80,6 +84,7 @@ public class ViewActivity extends AppCompatActivity {
         viewLocationText.setText(editedMoodEvent.getLocation());
         viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
 
+        photoChangeFlag = false;
 
         if (!editedMoodEvent.getPhoto().equals("")) {
             StorageReference imageRef = storageRef.child(editedMoodEvent.getPhoto());
@@ -88,8 +93,11 @@ public class ViewActivity extends AppCompatActivity {
                 imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                     @Override
                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
-                        viewPhotoImage.setImageBitmap(bitmap);
+                        if(!photoChangeFlag) {
+                            viewDownloadingProgress.setVisibility(View.INVISIBLE);
+                            Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
+                            viewPhotoImage.setImageBitmap(bitmap);
+                        }
                     }
                 });
             } catch (Exception e) {}
@@ -149,6 +157,9 @@ public class ViewActivity extends AppCompatActivity {
 //                                }
 //                            });
 //                        } catch (Exception e) {}
+                        if(moodEvent.getPhoto().equals(editedMoodEvent.getPhoto())) {
+                            photoChangeFlag = true;
+                        }
                         Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
                         viewPhotoImage.setImageBitmap(bitmap);
                     }
