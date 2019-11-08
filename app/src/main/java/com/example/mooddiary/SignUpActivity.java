@@ -33,9 +33,9 @@ import java.util.regex.Pattern;
  * This is an activity where user signs up
  */
 public class SignUpActivity extends AppCompatActivity {
-    private EditText newUser;
-    private Button confirm;
-    private Button login;
+    private EditText newUsernameEdit;
+    private Button confirmButton;
+    private Button loginButton;
     private String userName;
     private FirebaseFirestore db;
     public DocumentReference MoodRef;
@@ -55,9 +55,9 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_sign_up);
-        confirm = findViewById(R.id.confirm);
-        newUser = findViewById(R.id.newUser);
-        login = findViewById(R.id.login);
+        confirmButton = findViewById(R.id.signup_confirm_button);
+        newUsernameEdit = findViewById(R.id.signup_new_username_edit);
+        loginButton = findViewById(R.id.signup_login_button);
         db = FirebaseFirestore.getInstance();
         initButton();
         Intent intent = getIntent();
@@ -67,24 +67,24 @@ public class SignUpActivity extends AppCompatActivity {
      * This initializes Confirm button
      */
     public void initButton() {
-        confirm.setOnClickListener(new View.OnClickListener() {
+        confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean valid = true;
                 String usernamePat = "^([a-z0-9A-Z]{3,20})$";
-                if (!Pattern.matches(usernamePat, newUser.getText().toString())) {
-                    newUser.setError("Username should more 3 and less than 20 characters with only letters or numbers");
-                    newUser.setText("");
+                if (!Pattern.matches(usernamePat, newUsernameEdit.getText().toString())) {
+                    newUsernameEdit.setError("Username should more 3 and less than 20 characters with only letters or numbers");
+                    newUsernameEdit.setText("");
                     valid = false;
                 }
                 if (valid) {
-                    userName = newUser.getText().toString();
+                    userName = newUsernameEdit.getText().toString();
                     db.collection("users").document("users").collection(userName).document("MoodList").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists()) {
-                                newUser.setError("Username already exist");
-                                newUser.setText("");
+                                newUsernameEdit.setError("Username already exist");
+                                newUsernameEdit.setText("");
                             } else {
                                 MoodList moodList = new MoodList();
                                 ArrayList<String> friendsList = new ArrayList<>();
@@ -117,7 +117,7 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
-        login.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

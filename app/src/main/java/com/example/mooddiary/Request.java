@@ -1,5 +1,7 @@
 package com.example.mooddiary;
 
+import com.google.firebase.firestore.DocumentReference;
+
 /**
  * This is a class to store a Request object
  */
@@ -8,13 +10,11 @@ public class Request {
     private String sender;
     private String receiver;
     private boolean confirmed;
-    private boolean agreed;
 
     public Request(String sender, String receiver) {
         this.sender = sender;
         this.receiver = receiver;
         this.confirmed = false;
-        this.agreed = false;
     }
 
     public String getSender() {
@@ -29,10 +29,6 @@ public class Request {
         return confirmed;
     }
 
-    public boolean isAgreed() {
-        return agreed;
-    }
-
     public void setSender(String sender) {
         this.sender = sender;
     }
@@ -41,11 +37,18 @@ public class Request {
         this.receiver = receiver;
     }
 
-    public void setIsConfirmed(boolean confirmed) {
-        this.confirmed = confirmed;
+    public void confirmRequest() {
+        this.confirmed = true;
     }
 
-    public void setIsAgreed(boolean agreed) {
-        this.agreed = agreed;
+    /**
+     * This sends a follow request to FireBase
+     * @param request
+     *      This is the request to send
+     * @param docRef
+     *      This is the document reference in the FireBase for request list
+     */
+    public static void send(Request request, DocumentReference docRef) {
+        docRef.set(request);
     }
 }

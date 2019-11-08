@@ -101,7 +101,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
     private boolean two_selected = false;
     private ArrayList<MoodBean> mData = null;
-    private MsAdapter mAdadpter = null;
+    private MsAdapter msAdapter = null;
 
     private boolean isFromView = false;
     private MoodEvent moodEventFromView;
@@ -590,14 +590,14 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         mData.add(new MoodBean(R.drawable.sad,"sad"));
         mData.add(new MoodBean(R.drawable.stressed,"stressed"));
 
-        mAdadpter = new MsAdapter<MoodBean>(mData,R.layout.spinner_item) {
+        msAdapter = new MsAdapter<MoodBean>(mData,R.layout.spinner_item) {
             @Override
             public void bindView(MsAdapter.ViewHolder holder, MoodBean obj) {
                 holder.setImageResource(R.id.icon,obj.getIcon());
                 holder.setText(R.id.name, obj.getName());
             }
         };
-        moodSpinner.setAdapter(mAdadpter);
+        moodSpinner.setAdapter(msAdapter);
         moodSpinner.setOnItemSelectedListener(this);
     }
 
@@ -627,11 +627,22 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         }
     }
 
+    /**
+     * Callback method to be invoked when the selection disappears from this view.
+     * This deals with nothing selected from mood spinner.
+     * @param parent
+     *      The AdapterView that now contains no selected item.
+     */
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
 
+    /**
+     * This detects the change of mood through spinner
+     * @param hasCapture
+     *      This indicates if there is a change
+     */
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
