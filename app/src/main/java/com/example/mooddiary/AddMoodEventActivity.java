@@ -33,6 +33,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -78,6 +79,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private EditText reasonEdit;
     private ImageView photoImage;
     private Context mContext;
+    private ProgressBar loadingImage;
     private int moodNamePosition = -1 ; // if moodevent is null
 
     private boolean successFlag;
@@ -130,6 +132,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         photoImage = findViewById(R.id.add_image_reason);
         photoFromCameraButton = findViewById(R.id.add_photo_camera);
         photoFromAlbumButton = findViewById(R.id.add_photo_album);
+        loadingImage = findViewById(R.id.add_downloading_progress);
 
         photoChangeFlag = false;
 
@@ -158,7 +161,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             locationResult = moodEventFromView.getLocation();
             reasonResult = moodEventFromView.getReason();
             photoResult = moodEventFromView.getPhoto();
-
+            loadingImage.setVisibility(View.VISIBLE);
             // initialize views in Add Activity
             dateText.setText(moodEventFromView.getDate());
             timeText.setText(moodEventFromView.getTime());
@@ -173,9 +176,11 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                     imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            System.out.println("setphoto");
-                            Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
-                            photoImage.setImageBitmap(bitmap);
+                            if(!photoChangeFlag) {
+                                loadingImage.setVisibility(View.INVISIBLE);
+                                Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
+                                photoImage.setImageBitmap(bitmap);
+                            }
                         }
                     });
                 } catch (Exception e) {}
@@ -383,6 +388,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
                         out.flush();
                         out.close();
+                        loadingImage.setVisibility(View.INVISIBLE);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -398,8 +404,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                         handleImageBeforeKitKat(data);
                     }
                     photoChangeFlag = true;
+                    loadingImage.setVisibility(View.INVISIBLE);
                 }
-
                 break;
             default:
                 break;
