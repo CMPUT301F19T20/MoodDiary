@@ -75,9 +75,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     @Override
     public void onBackPressed() {
-
-        Intent intent = new Intent(MapsActivity.this,MainActivity.class);
-        startActivity(intent);
+        finish();
     }
 
     /**
