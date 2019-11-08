@@ -1,5 +1,6 @@
 package com.example.mooddiary;
 
+import android.app.Activity;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -14,24 +15,43 @@ import org.junit.Rule;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
-
+/**
+ * Test class for SignUpActivity. All the UI tests are written here.Robotium test framework is used
+ */
 public class TestMainActivity {
     private Solo solo;
     @Rule
     public ActivityTestRule<LoginActivity> rule = new ActivityTestRule<>(LoginActivity.class, true, true);
-
+    /**
+     * Runs before all tests and creates solo instance.
+     * @throws Exception
+     */
 
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
     }
+    /**
+     * Gets the Activity
+     * @throws Exception
+     */
+    @Test
+    public void start() throws Exception {
+        Activity activity = rule.getActivity();
+    }
 
-
+    /**
+     * Check add in MainActivity
+     * Click add button then asserting the AddMoodEventActivity
+     * Set date and time then  enter information for new mood
+     * click Finish button
+     * waiting the new mood in MainActivity
+     */
 
     public void checkToMianToAdd() {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
-        solo.clearEditText((EditText) solo.getView(R.id.username));
-        solo.enterText((EditText) solo.getView(R.id.username),"tester");
+        solo.clearEditText((EditText) solo.getView(R.id.login_username_edit));
+        solo.enterText((EditText) solo.getView(R.id.login_username_edit),"tester");
         solo.clickOnButton("Login");
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.fab));
@@ -59,6 +79,13 @@ public class TestMainActivity {
 
 
     }
+
+    /**
+     * Check Edit in MainActivity
+     * Click one Mood in MainActivity
+     * Change some information in this mood
+     * Wait for new information in MainActivity
+     */
 
     public void checkEdit(){
 
@@ -90,6 +117,12 @@ public class TestMainActivity {
 
     }
 
+    /**
+     * Check Delete in MainActivity
+     * Long click in one mood in MainActivity
+     * Search for the no exit text
+     */
+
     public void checkDelete() {
 
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
@@ -101,7 +134,10 @@ public class TestMainActivity {
 
     }
 
-@Test
+    /**
+     * This is a test in order to run test in a order
+     */
+    @Test
     public void test(){
         checkToMianToAdd();
         checkEdit();
