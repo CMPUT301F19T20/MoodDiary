@@ -51,7 +51,7 @@ public class TestMood {
         assertEquals("sad",mood.getMood());
         assertEquals(R.drawable.sad,mood.getMoodImage());
     }
-@Test
+    @Test
     public void testGetColor(){
         Mood mood = new Mood("happy");
         assertEquals("#ff8080",mood.getColor());
@@ -62,9 +62,9 @@ public class TestMood {
         Mood mood4 = new Mood("content");
         assertEquals( "#ffba92",mood4.getColor());
         Mood mood5 = new Mood("stressed");
-        assertEquals( "#c6f1d6",mood5.getColor());
+        assertEquals( "#51dacf",mood5.getColor());
         Mood mood6 = new Mood("meh");
-        assertEquals( "#d4f596",mood6.getColor());
+        assertEquals( "#a7d129",mood6.getColor());
 }
 
 
