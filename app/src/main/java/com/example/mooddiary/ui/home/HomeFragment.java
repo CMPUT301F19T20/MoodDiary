@@ -118,7 +118,7 @@ public class HomeFragment extends Fragment {
                 for (MoodEvent moodEvent: moodList.getAllMoodList()) {
                     homeViewModel.getMoodList().add(moodEvent);
                 }
-                homeViewModel.getMoodList().sortMoodList();
+                homeViewModel.getMoodList().sortAllMoodList();
                 moodAdapter.notifyDataSetChanged();
 
             }
@@ -218,8 +218,6 @@ public class HomeFragment extends Fragment {
                     db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                     MoodList moodList = homeViewModel.getMoodList();
                     docRef.set(moodList);
-
-                    Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
                     moodAdapter.notifyDataSetChanged();
                 }
             default:
