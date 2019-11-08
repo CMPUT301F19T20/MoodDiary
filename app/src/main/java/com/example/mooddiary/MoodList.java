@@ -43,25 +43,32 @@ public class MoodList implements Serializable {
             throw new IllegalArgumentException();
         } else {
             allMoodList.add(mood);
+            sortAllMoodList();
             String moodString = mood.getMood().getMood();
             switch (moodString) {
                 case "happy" :
                     happyList.add(mood);
+                    sortHappyList();
                     break;
                 case "angry" :
                     angryList.add(mood);
+                    sortAngryList();
                     break;
                 case "sad" :
                     sadList.add(mood);
+                    sortSadList();
                     break;
                 case "content" :
                     contentList.add(mood);
+                    sortContentList();
                     break;
                 case "stressed" :
                     stressedList.add(mood);
+                    sortStressedList();
                     break;
                 case "meh" :
                     mehList.add(mood);
+                    sortMehList();
                     break;
                 default :
                     throw new IllegalArgumentException();
@@ -201,26 +208,26 @@ public class MoodList implements Serializable {
             default :
                 throw new IllegalArgumentException();
         }
-        sortList.sort(new Comparator<MoodEvent>() {
-            @Override
-            public int compare(MoodEvent o1, MoodEvent o2) {
-                if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if(o1.getNumericDate() < o2.getNumericDate()) {
-                    return -1;
-                } else {
-                    return 0;
-                }
-            }
-        });
-        Collections.reverse(sortList);
+//        sortList.sort(new Comparator<MoodEvent>() {
+//            @Override
+//            public int compare(MoodEvent o1, MoodEvent o2) {
+//                if(o1.getNumericDate() > o2.getNumericDate()) {
+//                    return 1;
+//                } else if(o1.getNumericDate() < o2.getNumericDate()) {
+//                    return -1;
+//                } else {
+//                    return 0;
+//                }
+//            }
+//        });
+//        Collections.reverse(sortList);
         return sortList;
     }
 
     /**
-     * This sorts MoodList by Time
+     * This sorts allMoodList by Time
      */
-    public void sortMoodList() {
+    public void sortAllMoodList() {
         allMoodList.sort(new Comparator<MoodEvent>() {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
@@ -233,8 +240,120 @@ public class MoodList implements Serializable {
                 }
             }
         });
-        Collections.reverse(allMoodList);
+    }
 
+    /**
+     * This sorts angryList by Time
+     */
+    public void sortAngryList() {
+        angryList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        Collections.reverse(angryList);
+    }
+
+    /**
+     * This sorts happyList by Time
+     */
+    public void sortHappyList() {
+        happyList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        Collections.reverse(happyList);
+    }
+
+    /**
+     * This sorts sadList by Time
+     */
+    public void sortSadList() {
+        sadList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        Collections.reverse(sadList);
+    }
+
+    /**
+     * This sorts mehList by Time
+     */
+    public void sortMehList() {
+        mehList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        Collections.reverse(mehList);
+    }
+
+    /**
+     * This sorts contentList by Time
+     */
+    public void sortContentList() {
+        contentList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        Collections.reverse(contentList);
+    }
+
+    /**
+     * This sorts stressedList by Time
+     */
+    public void sortStressedList() {
+        stressedList.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        Collections.reverse(stressedList);
     }
 
     /**
