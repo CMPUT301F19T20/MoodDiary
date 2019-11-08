@@ -187,6 +187,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
 //                Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + moodEventFromView.getPhoto());
 //                photoImage.setImageBitmap(bitmap);
+            } else {
+                loadingImage.setVisibility(View.INVISIBLE);
             }
 
             String moodName = mood.getMood();

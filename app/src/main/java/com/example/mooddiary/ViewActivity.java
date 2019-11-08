@@ -103,6 +103,8 @@ public class ViewActivity extends AppCompatActivity {
             } catch (Exception e) {}
 //            Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
 //            viewPhotoImage.setImageBitmap(bitmap);
+        } else {
+            viewDownloadingProgress.setVisibility(View.INVISIBLE);
         }
 
         viewEditButton.setOnClickListener(new View.OnClickListener() {
@@ -146,24 +148,14 @@ public class ViewActivity extends AppCompatActivity {
                     viewLocationText.setText(editedMoodEvent.getLocation());
                     viewSocialSituationText.setText(editedMoodEvent.getSocialSituation());
                     if (!editedMoodEvent.getPhoto().equals("")) {
-//                        StorageReference imageRef = storageRef.child(editedMoodEvent.getPhoto());
-//                        try{
-//                            final File tempFile = File.createTempFile("tempPhoto","png");
-//                            imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
-//                                @Override
-//                                public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-//                                    Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
-//                                    viewPhotoImage.setImageBitmap(bitmap);
-//                                }
-//                            });
-//                        } catch (Exception e) {}
-
                         if(!moodEvent.getPhoto().equals(editedMoodEvent.getPhoto())) {
                             viewDownloadingProgress.setVisibility(View.INVISIBLE);
                             photoChangeFlag = true;
                         }
                         Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + editedMoodEvent.getPhoto());
                         viewPhotoImage.setImageBitmap(bitmap);
+                    } else {
+                        viewDownloadingProgress.setVisibility(View.INVISIBLE);
                     }
                 }
                 break;
