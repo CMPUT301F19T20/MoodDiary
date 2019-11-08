@@ -26,9 +26,9 @@ import java.util.regex.Pattern;
  * This is an activity where the user login in
  */
 public class LoginActivity extends AppCompatActivity {
-    private Button login;
-    private Button signUp;
-    private EditText nameInput;
+    private Button loginButton;
+    private Button signUpButton;
+    private EditText loginUsernameEdit;
     static public String userName;
     private FirebaseFirestore db;
     public static final String TAG = LoginActivity.class.getSimpleName();
@@ -44,9 +44,9 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
-        login = findViewById(R.id.login);
-        signUp = findViewById(R.id.signup);
-        nameInput = findViewById(R.id.username);
+        loginButton = findViewById(R.id.login_login_button);
+        signUpButton = findViewById(R.id.login_signup_button);
+        loginUsernameEdit = findViewById(R.id.login_username_edit);
         db = FirebaseFirestore.getInstance();
         initButtons();
     }
@@ -55,14 +55,14 @@ public class LoginActivity extends AppCompatActivity {
      * This initializes Login and Sign up buttons
      */
     public void initButtons(){
-        login.setOnClickListener(new View.OnClickListener() {
+        loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                userName = nameInput.getText().toString();
+                userName = loginUsernameEdit.getText().toString();
                 String usernamePat = "^([a-z0-9A-Z]{3,20})$";
-                if (!Pattern.matches(usernamePat, nameInput.getText().toString())) {
-                    nameInput.setError("Username should more 3 and less than 20 characters with only letters or numbers");
-                    nameInput.setText("");
+                if (!Pattern.matches(usernamePat, loginUsernameEdit.getText().toString())) {
+                   loginUsernameEdit.setError("Username should more 3 and less than 20 characters with only letters or numbers");
+                    loginUsernameEdit.setText("");
                 }
                 else{
                     db.collection("users").document("users").collection(userName).document("MoodList").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -75,8 +75,8 @@ public class LoginActivity extends AppCompatActivity {
                                 startActivity(intent);
                             }
                             else{
-                                nameInput.setError("Username doesn't exist");
-                                nameInput.setText("");
+                                loginUsernameEdit.setError("Username doesn't exist");
+                                loginUsernameEdit.setText("");
                             }
 
                         }
@@ -89,7 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        signUp.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);

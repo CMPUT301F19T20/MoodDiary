@@ -202,11 +202,9 @@ public class HomeFragment extends Fragment {
                                 (MoodEvent) data.getSerializableExtra("original_mood_event");
                         MoodEvent editMoodEvent =
                                 (MoodEvent) data.getSerializableExtra("edited_mood_event_return");
-//                        int i = data.getIntExtra("mood_event_index_return", 0);
                         homeViewModel.getMoodList().edit(editMoodEvent, originalMoodEvent);
                         MoodList moodList = homeViewModel.getMoodList();
                         docRef.set(moodList);
-                        Log.d("view", String.valueOf(homeViewModel.getMoodList().getMoodList("all").size()));
                         moodAdapter.notifyDataSetChanged();
                     }
                 }

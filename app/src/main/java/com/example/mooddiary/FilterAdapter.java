@@ -63,7 +63,6 @@ public class FilterAdapter extends ArrayAdapter<MoodBean> {
 
     public void setSelectedItem(int i) {
         this.selectedItem = i;
-
     }
 
     /**
