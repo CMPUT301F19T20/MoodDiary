@@ -180,26 +180,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(markPoint!=null){
                 switch (moodType){
                     case "happy":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("happy").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.happy)));
                         break;
                     case "sad":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("sad").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.sad)));
                         break;
                     case "content":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("content").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.content)));
                         break;
                     case "angry":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("angry").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.angry)));
                         break;
                     case "stressed":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("stressed").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.stressed)));
                     case  "meh":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("meh").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.meh)));
                 }
             }
@@ -210,33 +210,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * set the location points markers of the user's friends locations
      */
     public void setFriendMapMarker(){
-        for (MoodEvent moodEvent:friendMapMoods.values()) {
+        for (Map.Entry<String,MoodEvent> entry:friendMapMoods.entrySet()){
+            String name = entry.getKey();
+            MoodEvent moodEvent = entry.getValue();
             String locationName = moodEvent.getLocation();
             LatLng markPoint = getLocationLatLng(getApplicationContext(), locationName);
             String moodType = moodEvent.getMood().getMood();
             if (markPoint != null) {
                 switch (moodType) {
                     case "happy":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.happy)));
                         break;
                     case "sad":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.sad)));
                         break;
                     case "content":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.content)));
                         break;
                     case "angry":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.angry)));
                         break;
                     case "stressed":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.stressed)));
                     case "meh":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.meh)));
                 }
             }
