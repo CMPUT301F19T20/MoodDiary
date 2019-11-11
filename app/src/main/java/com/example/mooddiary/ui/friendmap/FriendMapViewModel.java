@@ -4,19 +4,29 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.mooddiary.MoodEvent;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * This is ViewModel holding data for FriendMapFragment
  */
 public class FriendMapViewModel extends ViewModel {
 
-    private MutableLiveData<String> mText;
+    private ArrayList<String> friendsName;
+    private HashMap<String, MoodEvent> friendsRecentEvent;
 
-    public FriendMapViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is friend map fragment");
+    public FriendMapViewModel(){
+        friendsName = new ArrayList<>();
+        friendsRecentEvent = new HashMap<>();
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public ArrayList<String> getFriendsName() {
+        return friendsName;
+    }
+
+    public HashMap<String, MoodEvent> getFriendsRecentEvent() {
+        return friendsRecentEvent;
     }
 }
