@@ -24,8 +24,8 @@ import java.io.File;
  * This is an activity where user views details of a mood event
  */
 public class ViewActivity extends AppCompatActivity {
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
+    //FirebaseStorage storage = FirebaseStorage.getInstance();
+    //StorageReference storageRef = storage.getReference();
 
     private final int VIEW_TO_ADD_EDIT_REQUEST = 5;
 
@@ -58,15 +58,15 @@ public class ViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view);
 
-        viewDateText = (TextView) findViewById(R.id.view_date_text);
-        viewTimeText = (TextView) findViewById(R.id.view_time_text);
-        viewSocialSituationText = (TextView) findViewById(R.id.view_social_situation_text);
-        viewLocationText = (TextView) findViewById(R.id.view_location_text);
-        viewMoodTypeText = (TextView) findViewById(R.id.view_mood_type_text);
-        viewMoodTypeImage = (ImageView) findViewById(R.id.view_mood_type_image);
-        viewReasonText = (TextView) findViewById(R.id.view_reason_text);
-        viewPhotoImage = (ImageView) findViewById(R.id.view_photo_image);
-        viewEditButton = (Button) findViewById(R.id.view_edit_button);
+        viewDateText = findViewById(R.id.view_date_text);
+        viewTimeText = findViewById(R.id.view_time_text);
+        viewSocialSituationText = findViewById(R.id.view_social_situation_text);
+        viewLocationText = findViewById(R.id.view_location_text);
+        viewMoodTypeText = findViewById(R.id.view_mood_type_text);
+        viewMoodTypeImage = findViewById(R.id.view_mood_type_image);
+        viewReasonText = findViewById(R.id.view_reason_text);
+        viewPhotoImage = findViewById(R.id.view_photo_image);
+        viewEditButton = findViewById(R.id.view_edit_button);
         viewDownloadingProgress = findViewById(R.id.view_downloading_progress);
 
         Intent intent = getIntent();
@@ -87,7 +87,7 @@ public class ViewActivity extends AppCompatActivity {
         photoChangeFlag = false;
 
         if (!editedMoodEvent.getPhoto().equals("")) {
-            StorageReference imageRef = storageRef.child(editedMoodEvent.getPhoto());
+            StorageReference imageRef = Database.storageRef.child(editedMoodEvent.getPhoto());
             try{
                 final File tempFile = File.createTempFile("tempPhoto","png");
                 imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {

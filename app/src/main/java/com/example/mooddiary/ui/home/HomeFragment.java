@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.mooddiary.Database;
 import com.example.mooddiary.FilterAdapter;
 import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.MoodAdapter;
@@ -58,9 +59,7 @@ import static android.app.Activity.RESULT_OK;
  * This is Home fragment that shows a list of user's mood event
  */
 public class HomeFragment extends Fragment {
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
+    //FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final int VIEW_EDIT_REQUEST = 0;
     private static final int HOME_TO_ADD_REQUEST = 10;
     private HomeViewModel homeViewModel;
@@ -94,22 +93,19 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
 
-        homeViewModel =
-                ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
-        View root =
-                inflater.inflate(R.layout.fragment_home, container, false);
+        homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_home, container, false);
         myMoodEventListView = root.findViewById(R.id.my_mood_event_list_view);
-
 
         homeFilterButton = root.findViewById(R.id.home_filter_button);
         homeFilterListView = root.findViewById(R.id.home_filter_list_view);
         myMoodEventListView = root.findViewById(R.id.my_mood_event_list_view);
 
-        moodAdapter =
-                new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList("all"));
+        moodAdapter = new MoodAdapter(getActivity(), R.layout.mood_list_item,
+                homeViewModel.getMoodList().getMoodList("all"));
         myMoodEventListView.setAdapter(moodAdapter);
 
-        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+        DocumentReference docRef = Database.getUserMoodList();
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -146,7 +142,7 @@ public class HomeFragment extends Fragment {
                 dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+                        DocumentReference docRef = Database.getUserMoodList();
                         homeViewModel.getMoodList().delete(deleteMood);
                         MoodList moodList = homeViewModel.getMoodList();
                         docRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -197,7 +193,7 @@ public class HomeFragment extends Fragment {
                     boolean ifEdited = (boolean) data.getBooleanExtra("if_edited", false);
                     if (ifEdited) {
 
-                        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+                        DocumentReference docRef = Database.getUserMoodList();
                         MoodEvent originalMoodEvent =
                                 (MoodEvent) data.getSerializableExtra("original_mood_event");
                         MoodEvent editMoodEvent =
@@ -211,11 +207,11 @@ public class HomeFragment extends Fragment {
                 break;
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+                    DocumentReference docRef = Database.getUserMoodList();
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
                     homeViewModel.getMoodList().add(moodEventAdded);
                     //user.setMoodList(homeViewModel.getMoodList());
-                    db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
+                    //Database.db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                     MoodList moodList = homeViewModel.getMoodList();
                     docRef.set(moodList);
                     moodAdapter.notifyDataSetChanged();
