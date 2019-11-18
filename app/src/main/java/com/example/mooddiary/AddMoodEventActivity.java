@@ -64,8 +64,8 @@ import java.util.Date;
  */
 public class AddMoodEventActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private static final SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
+    //FirebaseStorage storage = FirebaseStorage.getInstance();
+    //StorageReference storageRef = storage.getReference();
 
     private Button addButton;
     private ImageButton cancelButton;
@@ -78,7 +78,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private EditText locationText;
     private EditText reasonEdit;
     private ImageView photoImage;
-    private Context mContext;
     private ProgressBar loadingImage;
     private int moodNamePosition = -1 ; // if moodevent is null
 
@@ -170,7 +169,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             String socialSituation = moodEventFromView.getSocialSituation();
             Mood mood = moodEventFromView.getMood();
             if (!moodEventFromView.getPhoto().equals("")) {
-                StorageReference imageRef = storageRef.child(moodEventFromView.getPhoto());
+                StorageReference imageRef = Database.storageRef.child(moodEventFromView.getPhoto());
                 try{
                     final File tempFile = File.createTempFile("tempPhoto","png");
                     imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
@@ -288,7 +287,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         });
 
         // initialize mood spinner
-        mContext = AddMoodEventActivity.this;
         mData = new ArrayList<MoodBean>();
         bindViews();
         if (moodNamePosition != -1) {
@@ -316,7 +314,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 try{
                     if(photoChangeFlag) {
                         Uri file = Uri.fromFile(new File(getExternalFilesDir("photo") + "/" + photoResult));
-                        StorageReference imageRef = storageRef.child(photoResult);
+                        StorageReference imageRef = Database.storageRef.child(photoResult);
                         UploadTask uploadTask = imageRef.putFile(file);
 
                         uploadTask.addOnFailureListener(new OnFailureListener() {

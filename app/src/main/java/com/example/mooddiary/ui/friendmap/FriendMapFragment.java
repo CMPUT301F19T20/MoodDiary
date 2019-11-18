@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.mooddiary.Database;
 import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.MapsActivity;
 import com.example.mooddiary.MoodEvent;
@@ -31,7 +32,7 @@ import java.util.ArrayList;
 public class FriendMapFragment extends Fragment {
 
     private FriendMapViewModel friendMapViewModel;
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    //FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     /**
      * This creates the view for the list of user's friend's mood event map.
@@ -60,7 +61,7 @@ public class FriendMapFragment extends Fragment {
     }
 
     public void getFriends() {
-        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("FriendLists");
+        DocumentReference docRef = Database.getUserFriendList();
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -76,8 +77,7 @@ public class FriendMapFragment extends Fragment {
     public void getFriendsEvents(){
         friendMapViewModel.getFriendsRecentEvent().clear();
         for (String name:friendMapViewModel.getFriendsName()){
-            DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("FriendLists")
-                    .collection(name).document("Moodlist");
+            DocumentReference docRef = Database.getFriendMoodList(name);
             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {

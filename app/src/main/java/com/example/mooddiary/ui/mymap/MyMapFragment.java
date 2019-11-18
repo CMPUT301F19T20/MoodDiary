@@ -42,7 +42,7 @@ public class MyMapFragment extends Fragment {
         myMapViewModel =
                 ViewModelProviders.of(this).get(MyMapViewModel.class);
         View root = inflater.inflate(R.layout.fragment_my_map, container, false);
-        final TextView textView = root.findViewById(R.id.text_slideshow);
+        //final TextView textView = root.findViewById(R.id.text_slideshow);
 
         viewModelFromHome = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
 

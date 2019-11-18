@@ -29,8 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private Button signUpButton;
     private EditText loginUsernameEdit;
-    static public String userName;
-    private FirebaseFirestore db;
+    public static String userName;
+    //private FirebaseFirestore db;
     public static final String TAG = LoginActivity.class.getSimpleName();
 
     /**
@@ -47,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_login_button);
         signUpButton = findViewById(R.id.login_signup_button);
         loginUsernameEdit = findViewById(R.id.login_username_edit);
-        db = FirebaseFirestore.getInstance();
+        //db = FirebaseFirestore.getInstance();
         initButtons();
     }
 
@@ -61,11 +61,11 @@ public class LoginActivity extends AppCompatActivity {
                 userName = loginUsernameEdit.getText().toString();
                 String usernamePat = "^([a-z0-9A-Z]{3,20})$";
                 if (!Pattern.matches(usernamePat, loginUsernameEdit.getText().toString())) {
-                   loginUsernameEdit.setError("Username should more 3 and less than 20 characters with only letters or numbers");
+                    loginUsernameEdit.setError("Username should more 3 and less than 20 characters with only letters or numbers");
                     loginUsernameEdit.setText("");
                 }
                 else{
-                    db.collection("users").document("users").collection(userName).document("MoodList").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    Database.getUserMoodList().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if(documentSnapshot.exists()){
