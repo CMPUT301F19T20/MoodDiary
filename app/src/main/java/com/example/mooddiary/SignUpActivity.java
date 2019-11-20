@@ -37,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Button confirmButton;
     private Button loginButton;
     private String userName;
-    private FirebaseFirestore db;
+    //private FirebaseFirestore db;
     public DocumentReference MoodRef;
     public DocumentReference FriendsRef;
 
@@ -58,7 +58,7 @@ public class SignUpActivity extends AppCompatActivity {
         confirmButton = findViewById(R.id.signup_confirm_button);
         newUsernameEdit = findViewById(R.id.signup_new_username_edit);
         loginButton = findViewById(R.id.signup_login_button);
-        db = FirebaseFirestore.getInstance();
+        //db = FirebaseFirestore.getInstance();
         initButton();
         Intent intent = getIntent();
     }
@@ -79,7 +79,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 if (valid) {
                     userName = newUsernameEdit.getText().toString();
-                    db.collection("users").document("users").collection(userName).document("MoodList").get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    Database.getUserMoodList().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists()) {
@@ -90,8 +90,8 @@ public class SignUpActivity extends AppCompatActivity {
                                 ArrayList<String> friendsList = new ArrayList<>();
                                 Map<String, Object> friendsData = new HashMap<>();
                                 friendsData.put("FriendsList", friendsList);
-                                MoodRef = db.collection("users").document("users").collection(userName).document("MoodList");
-                                FriendsRef = db.collection("users").document("users").collection(userName).document("FriendsList");
+                                MoodRef = Database.getUserMoodList();
+                                FriendsRef = Database.getUserFriendList();
                                 FriendsRef.set(friendsData);
                                 MoodRef.set(moodList)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {

@@ -33,6 +33,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -63,8 +64,8 @@ import java.util.Date;
  */
 public class AddMoodEventActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private static final SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
-    FirebaseStorage storage = FirebaseStorage.getInstance();
-    StorageReference storageRef = storage.getReference();
+    //FirebaseStorage storage = FirebaseStorage.getInstance();
+    //StorageReference storageRef = storage.getReference();
 
     private Button addButton;
     private ImageButton cancelButton;
@@ -77,7 +78,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private EditText locationText;
     private EditText reasonEdit;
     private ImageView photoImage;
-    private Context mContext;
+    private ProgressBar loadingImage;
     private int moodNamePosition = -1 ; // if moodevent is null
 
     private boolean successFlag;
@@ -88,6 +89,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private String moodSpinnerResult = "happy";
     private String dateResult = "";
     private String timeResult = "";
+    private String preciseTimeResult = "";
     private String locationResult = "";
     private String reasonResult = "";
     private String photoResult = "";
@@ -129,6 +131,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         photoImage = findViewById(R.id.add_image_reason);
         photoFromCameraButton = findViewById(R.id.add_photo_camera);
         photoFromAlbumButton = findViewById(R.id.add_photo_album);
+        loadingImage = findViewById(R.id.add_downloading_progress);
 
         photoChangeFlag = false;
 
@@ -151,12 +154,13 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             // initialize return results in Add Activity
             dateResult = moodEventFromView.getDate();
             timeResult = moodEventFromView.getTime();
+            preciseTimeResult = moodEventFromView.getPreciseTime();
             moodSpinnerResult = moodEventFromView.getMood().getMood();
             socialSituationSpinnerResult = moodEventFromView.getSocialSituation();
             locationResult = moodEventFromView.getLocation();
             reasonResult = moodEventFromView.getReason();
             photoResult = moodEventFromView.getPhoto();
-
+            loadingImage.setVisibility(View.VISIBLE);
             // initialize views in Add Activity
             dateText.setText(moodEventFromView.getDate());
             timeText.setText(moodEventFromView.getTime());
@@ -165,21 +169,25 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             String socialSituation = moodEventFromView.getSocialSituation();
             Mood mood = moodEventFromView.getMood();
             if (!moodEventFromView.getPhoto().equals("")) {
-                StorageReference imageRef = storageRef.child(moodEventFromView.getPhoto());
+                StorageReference imageRef = Database.storageRef.child(moodEventFromView.getPhoto());
                 try{
                     final File tempFile = File.createTempFile("tempPhoto","png");
                     imageRef.getFile(tempFile).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                         @Override
                         public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                            System.out.println("setphoto");
-                            Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
-                            photoImage.setImageBitmap(bitmap);
+                            if(!photoChangeFlag) {
+                                loadingImage.setVisibility(View.INVISIBLE);
+                                Bitmap bitmap = BitmapFactory.decodeFile(tempFile.getAbsolutePath());
+                                photoImage.setImageBitmap(bitmap);
+                            }
                         }
                     });
                 } catch (Exception e) {}
 
 //                Bitmap bitmap = BitmapFactory.decodeFile(getExternalFilesDir("photo") + "/" + moodEventFromView.getPhoto());
 //                photoImage.setImageBitmap(bitmap);
+            } else {
+                loadingImage.setVisibility(View.INVISIBLE);
             }
 
             String moodName = mood.getMood();
@@ -279,7 +287,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         });
 
         // initialize mood spinner
-        mContext = AddMoodEventActivity.this;
         mData = new ArrayList<MoodBean>();
         bindViews();
         if (moodNamePosition != -1) {
@@ -307,7 +314,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 try{
                     if(photoChangeFlag) {
                         Uri file = Uri.fromFile(new File(getExternalFilesDir("photo") + "/" + photoResult));
-                        StorageReference imageRef = storageRef.child(photoResult);
+                        StorageReference imageRef = Database.storageRef.child(photoResult);
                         UploadTask uploadTask = imageRef.putFile(file);
 
                         uploadTask.addOnFailureListener(new OnFailureListener() {
@@ -322,7 +329,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 if(!successFlag) { return; }
 
                 MoodEvent moodEventResult =
-                        new MoodEvent(moodSpinnerResult, dateResult, timeResult, socialSituationSpinnerResult, locationResult, reasonResult, photoResult);
+                        new MoodEvent(moodSpinnerResult, dateResult, timeResult,preciseTimeResult, socialSituationSpinnerResult, locationResult, reasonResult, photoResult);
                 if (isFromView) {
                     Intent intent = new Intent();
                     intent.putExtra("edited_mood_event", moodEventResult);
@@ -381,6 +388,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                         bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
                         out.flush();
                         out.close();
+                        loadingImage.setVisibility(View.INVISIBLE);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -396,8 +404,8 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                         handleImageBeforeKitKat(data);
                     }
                     photoChangeFlag = true;
+                    loadingImage.setVisibility(View.INVISIBLE);
                 }
-
                 break;
             default:
                 break;
@@ -452,8 +460,10 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
         Calendar calendar=Calendar.getInstance();
-        String desc=String.format("%02d:%02d:%02d",hourOfDay,minute,calendar.get(Calendar.SECOND));
+        String desc_precise=String.format("%02d:%02d:%02d",hourOfDay,minute,calendar.get(Calendar.SECOND));
+        String desc=String.format("%02d:%02d",hourOfDay,minute);
         timeText.setText(desc);
+        preciseTimeResult = desc_precise;
         timeResult = desc;
     }
     /**

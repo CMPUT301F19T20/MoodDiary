@@ -3,7 +3,9 @@ package com.example.mooddiary;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.mooddiary.ui.friendevent.FriendEventFragment;
 import com.example.mooddiary.ui.home.HomeFragment;
+import com.example.mooddiary.ui.share.ShareFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 

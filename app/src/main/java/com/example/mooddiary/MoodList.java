@@ -241,7 +241,6 @@ public class MoodList implements Serializable {
             }
         });
         Collections.reverse(allMoodList);
-
     }
 
     /**

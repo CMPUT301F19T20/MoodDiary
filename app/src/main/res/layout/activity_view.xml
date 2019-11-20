@@ -192,8 +192,7 @@
             </TextView>
 
             <!--picture-->
-            <ImageView
-                android:id="@+id/view_photo_image"
+            <RelativeLayout
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_gravity="center"
@@ -201,8 +200,20 @@
                 android:scaleType="fitCenter"
                 android:padding="10dp">
 
-            </ImageView>
+                <ImageView
+                    android:id="@+id/view_photo_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </ImageView>
+                <ProgressBar
+                    android:id="@+id/view_downloading_progress"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_centerInParent="true"
+                    android:visibility="visible">
+                </ProgressBar>
 
+            </RelativeLayout>
         </LinearLayout>
 
     </ScrollView>

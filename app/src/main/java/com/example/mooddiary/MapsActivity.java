@@ -30,7 +30,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is an activity that shows a map which mood event marked
@@ -39,9 +41,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap mMap;
     private ArrayList<MoodEvent> myMoods  = new ArrayList<>();
-    private ArrayList<MoodEvent> friendMoods = new ArrayList<>();
+    private HashMap<String,MoodEvent> friendMoods = new HashMap<>();
     private ArrayList<MoodEvent> myMapMoods = new ArrayList<>();
-    private ArrayList<MoodEvent> friendMapMoods = new ArrayList<>();
+    private HashMap<String,MoodEvent> friendMapMoods = new HashMap<>();
     String map = null;
     FirebaseFirestore db;
   
@@ -62,11 +64,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         Intent intent = getIntent();
         this.map = intent.getStringExtra("map");
         this.myMoods = (ArrayList<MoodEvent>) intent.getSerializableExtra("moodlist");
-
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-        DocumentReference docRef = db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
-
+        this.friendMoods = (HashMap<String,MoodEvent>)intent.getSerializableExtra("friendsEvents");
 
     }
 
@@ -161,10 +159,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * @param friendMoodList
      *        This is the moodlist of user's friends
      */
-    public void getFriendMapMoods(ArrayList<MoodEvent> friendMoodList){
-        for (int i = 0; i< friendMoodList.size();i++){
-            if (friendMoodList.get(i).getLocation()!=null)
-                friendMapMoods.add(friendMoodList.get(i));
+    public void getFriendMapMoods(HashMap<String,MoodEvent> friendMoodList){
+        for(Map.Entry<String,MoodEvent> entry:friendMoodList.entrySet()){
+            String key = entry.getKey();
+            MoodEvent moodEvent = entry.getValue();
+            if (!moodEvent.getLocation().equals("")){
+                friendMapMoods.put(key,moodEvent);
+            }
         }
     }
 
@@ -179,26 +180,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if(markPoint!=null){
                 switch (moodType){
                     case "happy":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("happy").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.happy)));
                         break;
                     case "sad":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("sad").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.sad)));
                         break;
                     case "content":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("content").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.content)));
                         break;
                     case "angry":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("angry").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.angry)));
                         break;
                     case "stressed":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("stressed").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.stressed)));
                     case  "meh":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title("meh").icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.meh)));
                 }
             }
@@ -209,33 +210,35 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * set the location points markers of the user's friends locations
      */
     public void setFriendMapMarker(){
-        for (MoodEvent moodEvent:friendMapMoods) {
+        for (Map.Entry<String,MoodEvent> entry:friendMapMoods.entrySet()){
+            String name = entry.getKey();
+            MoodEvent moodEvent = entry.getValue();
             String locationName = moodEvent.getLocation();
             LatLng markPoint = getLocationLatLng(getApplicationContext(), locationName);
             String moodType = moodEvent.getMood().getMood();
             if (markPoint != null) {
                 switch (moodType) {
                     case "happy":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.happy)));
                         break;
                     case "sad":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.sad)));
                         break;
                     case "content":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.content)));
                         break;
                     case "angry":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.angry)));
                         break;
                     case "stressed":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.stressed)));
                     case "meh":
-                        mMap.addMarker(new MarkerOptions().position(markPoint).icon(
+                        mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
                                 BitmapDescriptorFactory.fromResource(R.drawable.meh)));
                 }
             }

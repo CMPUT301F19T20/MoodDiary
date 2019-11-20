@@ -1,7 +1,5 @@
 package com.example.mooddiary;
 
-import com.google.firebase.firestore.DocumentReference;
-
 /**
  * This is a class to store a Request object
  */
@@ -45,10 +43,8 @@ public class Request {
      * This sends a follow request to FireBase
      * @param request
      *      This is the request to send
-     * @param docRef
-     *      This is the document reference in the FireBase for request list
      */
-    public static void send(Request request, DocumentReference docRef) {
-        docRef.set(request);
+    public static void send(Request request) {
+        Database.getRequestList(request.getSender()+request.getReceiver()).set(request);
     }
 }
