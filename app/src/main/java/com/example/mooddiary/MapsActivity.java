@@ -181,26 +181,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 switch (moodType){
                     case "happy":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title("happy").icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.happy)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.happymarker)));
                         break;
                     case "sad":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title("sad").icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.sad)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.sadmarker)));
                         break;
                     case "content":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title("content").icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.content)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.contentmarker)));
                         break;
                     case "angry":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title("angry").icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.angry)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.angrymarker)));
                         break;
                     case "stressed":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title("stressed").icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.stressed)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.worriedmarker)));
                     case  "meh":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title("meh").icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.meh)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.mehmarker)));
                 }
             }
         }
@@ -220,26 +220,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 switch (moodType) {
                     case "happy":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.happy)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.happymarker)));
                         break;
                     case "sad":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.sad)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.sadmarker)));
                         break;
                     case "content":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.content)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.contentmarker)));
                         break;
                     case "angry":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.angry)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.angrymarker)));
                         break;
                     case "stressed":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.stressed)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.worriedmarker)));
                     case "meh":
                         mMap.addMarker(new MarkerOptions().position(markPoint).title(name).icon(
-                                BitmapDescriptorFactory.fromResource(R.drawable.meh)));
+                                BitmapDescriptorFactory.fromResource(R.drawable.mehmarker)));
                 }
             }
         }
