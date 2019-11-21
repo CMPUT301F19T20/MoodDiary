@@ -17,11 +17,18 @@ public class Database {
                 .document("MoodList");
     }
 
-    public static DocumentReference getUserFriendList() {
+    public static DocumentReference getUserFollowList() {
         return Database.db.collection("users")
                 .document("users")
                 .collection(LoginActivity.userName)
-                .document("FriendsList");
+                .document("FollowList");
+    }
+
+    public static DocumentReference getUserFollowerList(){
+        return Database.db.collection("users")
+                .document("users")
+                .collection(LoginActivity.userName)
+                .document("FollowerList");
     }
 
     public static DocumentReference getFriendMoodList(String friendUsername) {
