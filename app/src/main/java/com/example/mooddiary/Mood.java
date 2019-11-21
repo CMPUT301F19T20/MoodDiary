@@ -17,17 +17,10 @@ public class Mood implements Serializable {
     private final static String STRESSED_COLOR = "#51dacf";
     private final static String MEH_COLOR = "#a7d129";
 
-    private int moodImage;
     private String mood;
-    private String color;
-
-    public Mood() {
-    }
 
     public Mood(String mood) {
         this.mood = mood;
-        this.moodImage = imageOfMood(mood);
-        this.color = colorOfMood(mood);
     }
 
     /**
@@ -36,25 +29,8 @@ public class Mood implements Serializable {
      *      Return the type of mood.
      */
     public String getMood() {
-//        Log.d("test", "second getMood");
         return mood;
     }
-
-    /**
-     * This returns the image for the mood.
-     * @return
-     *      Return the image for the mood.
-     */
-    public int getMoodImage() {
-        return moodImage;
-    }
-
-    /**
-     * This returns the color of the mood.
-     * @return
-     *      Return the color of the mood.
-     */
-    public String getColor() {return color;}
 
     /**
      * This sets the current mood to a new mood.
@@ -63,19 +39,15 @@ public class Mood implements Serializable {
      */
     public void setMood(String mood) {
         this.mood = mood;
-        this.moodImage = imageOfMood(mood);
-        this.color = colorOfMood(mood);
     }
 
     /**
      * This returns the image of the mood according to its type.
-     * @param mood
-     *      This is the type of the mood.
      * @return
      *      Return the image of the mood.
      */
-    private static int imageOfMood(String mood) {
-        switch(mood) {
+    public int getMoodImage() {
+        switch(this.mood) {
             case "happy" : return R.drawable.happy;
             case "angry" : return R.drawable.angry;
             case "sad" : return R.drawable.sad;
@@ -88,13 +60,11 @@ public class Mood implements Serializable {
 
     /**
      * This returns the color string of the mood according to its type.
-     * @param mood
-     *      This is the type of the mood.
      * @return
      *      Return the color string of the mood.
      */
-    private static String colorOfMood(String mood) {
-        switch(mood) {
+    public String getColor() {
+        switch(this.mood) {
             case "happy" : return HAPPY_COLOR;
             case "angry" : return ANGRY_COLOR;
             case "sad" : return SAD_COLOR;
@@ -102,6 +72,30 @@ public class Mood implements Serializable {
             case "stressed" : return STRESSED_COLOR;
             case "meh" : return MEH_COLOR;
             default : throw new IllegalArgumentException();
+        }
+    }
+
+    /**
+     * This returns the map marker of the mood according to its type.
+     * @return
+     *      Return the map marker of the mood.
+     */
+    public int getMarker() {
+        switch (this.mood) {
+            case "happy":
+                return R.drawable.happymarker;
+            case "sad":
+                return R.drawable.sadmarker;
+            case "content":
+                return R.drawable.contentmarker;
+            case "angry":
+                return R.drawable.angrymarker;
+            case "stressed":
+                return R.drawable.stressedmarker;
+            case "meh":
+                return R.drawable.mehmarker;
+            default:
+                throw new IllegalArgumentException();
         }
     }
 
