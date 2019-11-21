@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mooddiary.Database;
 import com.example.mooddiary.LoginActivity;
+import com.example.mooddiary.MainActivity;
 import com.example.mooddiary.R;
 import com.example.mooddiary.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -77,6 +78,8 @@ public class SendFragment extends Fragment {
                                     } else {
                                         Request request = new Request(LoginActivity.userName, friendUsername);
                                         Request.send(request);
+                                        sendRequestUsernameEdit.setText("");
+                                        Toast.makeText(getActivity(), "request sent", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });

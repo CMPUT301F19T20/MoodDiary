@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 /**
  * This is a ViewModel holding data for SendFragment
+ * easier to sharing data between fragments
  */
 public class SendViewModel extends ViewModel {
 

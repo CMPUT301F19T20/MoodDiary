@@ -39,7 +39,8 @@ public class SignUpActivity extends AppCompatActivity {
     private String userName;
     //private FirebaseFirestore db;
     public DocumentReference MoodRef;
-    public DocumentReference FriendsRef;
+    public DocumentReference followRef;
+    public DocumentReference followerRef;
 
     public static final String TAG = SignUpActivity.class.getSimpleName();
 
@@ -79,7 +80,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
                 if (valid) {
                     userName = newUsernameEdit.getText().toString();
-                    Database.getUserMoodList().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    Database.getUserMoodList(userName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if (documentSnapshot.exists()) {
@@ -87,12 +88,17 @@ public class SignUpActivity extends AppCompatActivity {
                                 newUsernameEdit.setText("");
                             } else {
                                 MoodList moodList = new MoodList();
-                                ArrayList<String> friendsList = new ArrayList<>();
-                                Map<String, Object> friendsData = new HashMap<>();
-                                friendsData.put("FriendsList", friendsList);
-                                MoodRef = Database.getUserMoodList();
-                                FriendsRef = Database.getUserFriendList();
-                                FriendsRef.set(friendsData);
+                                ArrayList<String> followList = new ArrayList<>();
+                                Map<String, Object> followData = new HashMap<>();
+                                followData.put("FollowList", followList);
+                                MoodRef = Database.getUserMoodList(userName);
+                                followRef = Database.getUserFollowList(userName);
+                                followRef.set(followData);
+                                ArrayList<String> followerList = new ArrayList<>();
+                                Map<String, Object> followerData = new HashMap<>();
+                                followerData.put("FollowerList", followerList);
+                                followerRef = Database.getUserFollowerList(userName);
+                                followerRef.set(followerData);
                                 MoodRef.set(moodList)
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override

@@ -8,18 +8,23 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.lifecycle.ViewModelProviders;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * This is an adapter for displaying each friend in the request list.
  */
-public class RequestAdapter extends ArrayAdapter<String> {
+public class RequestAdapter extends ArrayAdapter<Request> {
 
     private int resourceId;
+    private ArrayList<Request> requestList;
 
-    public RequestAdapter(Context context, int textViewResourceId, List<String> objects) {
+    public RequestAdapter(Context context, int textViewResourceId, List<Request> objects) {
         super(context, textViewResourceId, objects);
         resourceId = textViewResourceId;
+        requestList = (ArrayList<Request>) objects;
     }
 
     /**
@@ -35,7 +40,7 @@ public class RequestAdapter extends ArrayAdapter<String> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String friendUsername = getItem(position);
+        Request request = getItem(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
@@ -51,7 +56,25 @@ public class RequestAdapter extends ArrayAdapter<String> {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.friendUsernameText.setText(friendUsername);
+        viewHolder.friendUsernameText.setText(request.getSender());
+        viewHolder.agreeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                request.setConfirmed(true);
+                requestList.remove(request);
+                Database.getRequest(request.getSender()+request.getReceiver()).set(request);
+                notifyDataSetChanged();
+            }
+        });
+
+        viewHolder.declineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestList.remove(request);
+                Database.getRequest(request.getSender()+request.getReceiver()).delete();
+                notifyDataSetChanged();
+            }
+        });
 
         return view;
     }

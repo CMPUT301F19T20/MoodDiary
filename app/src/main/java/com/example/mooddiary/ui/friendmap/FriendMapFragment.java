@@ -61,7 +61,7 @@ public class FriendMapFragment extends Fragment {
     }
 
     public void getFriends() {
-        DocumentReference docRef = Database.getUserFriendList();
+        DocumentReference docRef = Database.getUserFollowList(LoginActivity.userName);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {

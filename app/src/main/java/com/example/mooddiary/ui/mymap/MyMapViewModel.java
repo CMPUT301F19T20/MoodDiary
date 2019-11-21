@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 /**
  * This is ViewModel holding data for MyMapFragment
+ * easier to sharing data between fragments
  */
 public class MyMapViewModel extends ViewModel {
 
