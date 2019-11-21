@@ -19,6 +19,9 @@ public class Mood implements Serializable {
 
     private String mood;
 
+    public Mood() {
+    }
+
     public Mood(String mood) {
         this.mood = mood;
     }
