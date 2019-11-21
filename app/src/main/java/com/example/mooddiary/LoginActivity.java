@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
                     loginUsernameEdit.setText("");
                 }
                 else{
-                    Database.getUserMoodList().get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    Database.getUserMoodList(LoginActivity.userName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             if(documentSnapshot.exists()){

@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel;
 
 /**
  * This is ViewModel holding data for FriendEventFragment
+ * easier to sharing data between fragments
  */
 public class FriendEventViewModel extends ViewModel {
 

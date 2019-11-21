@@ -1,5 +1,7 @@
 package com.example.mooddiary;
 
+import java.io.Serializable;
+
 /**
  * This is a class to store a Request object
  */
@@ -8,6 +10,12 @@ public class Request {
     private String sender;
     private String receiver;
     private boolean confirmed;
+
+    public Request() {
+        this.sender = "";
+        this.receiver = "";
+        this.confirmed = false;
+    }
 
     public Request(String sender, String receiver) {
         this.sender = sender;
@@ -23,7 +31,7 @@ public class Request {
         return receiver;
     }
 
-    public boolean isConfirmed() {
+    public boolean getConfirmed() {
         return confirmed;
     }
 
@@ -35,6 +43,8 @@ public class Request {
         this.receiver = receiver;
     }
 
+    public void setConfirmed(boolean confirmed) {this.confirmed = confirmed; }
+
     public void confirmRequest() {
         this.confirmed = true;
     }
@@ -45,6 +55,6 @@ public class Request {
      *      This is the request to send
      */
     public static void send(Request request) {
-        Database.getRequestList(request.getSender()+request.getReceiver()).set(request);
+        Database.getRequest(request.getSender()+request.getReceiver()).set(request);
     }
 }

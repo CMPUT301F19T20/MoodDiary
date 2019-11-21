@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 /**
  * This is ViewModel holding data for FriendMapFragment
+ * easier to sharing data between fragments
  */
 public class FriendMapViewModel extends ViewModel {
 

@@ -6,6 +6,7 @@ import com.example.mooddiary.MoodList;
 
 /**
  * This is a ViewModel holding data for HomeFragment
+ * easier to sharing data between fragments
  */
 public class HomeViewModel extends ViewModel {
 

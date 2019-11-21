@@ -105,7 +105,7 @@ public class HomeFragment extends Fragment {
                 homeViewModel.getMoodList().getMoodList("all"));
         myMoodEventListView.setAdapter(moodAdapter);
 
-        DocumentReference docRef = Database.getUserMoodList();
+        DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
             @Override
             public void onSuccess(DocumentSnapshot documentSnapshot) {
@@ -116,7 +116,6 @@ public class HomeFragment extends Fragment {
                 }
                 homeViewModel.getMoodList().sortAllMoodList();
                 moodAdapter.notifyDataSetChanged();
-
             }
 
         });
@@ -142,7 +141,7 @@ public class HomeFragment extends Fragment {
                 dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        DocumentReference docRef = Database.getUserMoodList();
+                        DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
                         homeViewModel.getMoodList().delete(deleteMood);
                         MoodList moodList = homeViewModel.getMoodList();
                         docRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -193,7 +192,7 @@ public class HomeFragment extends Fragment {
                     boolean ifEdited = (boolean) data.getBooleanExtra("if_edited", false);
                     if (ifEdited) {
 
-                        DocumentReference docRef = Database.getUserMoodList();
+                        DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
                         MoodEvent originalMoodEvent =
                                 (MoodEvent) data.getSerializableExtra("original_mood_event");
                         MoodEvent editMoodEvent =
@@ -207,7 +206,7 @@ public class HomeFragment extends Fragment {
                 break;
             case HOME_TO_ADD_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    DocumentReference docRef = Database.getUserMoodList();
+                    DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
                     homeViewModel.getMoodList().add(moodEventAdded);
                     //user.setMoodList(homeViewModel.getMoodList());
