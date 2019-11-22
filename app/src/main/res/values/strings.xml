@@ -77,8 +77,8 @@
     <string name="title_activity_maps">Map</string>
 
     <!--SendFragment-->
-    <string name="send_username_title">Please enter the username of your friend</string>
-    <string name="send_button">Send</string>
+    <string name="send_username_title">Enter the username of your friend</string>
+    <string name="send_button">Send following request</string>
 
     <!--ShareFragment-->
     <string name="share_agree_button_text">agree</string>
@@ -87,4 +87,10 @@
     <string name="follow_list_name">Follow</string>
     <string name="follower_list_name">Follower</string>
 
+
+    <string name="important_feature_description">在这里可以添加一个关于你的应用程序的重要功能的描述。</string>
+    <string name="guide_format">Page %1$d</string>
+    <string name="index">首页</string>
+    <string name="skip">跳过</string>
+    <string name="finish">跳转首页</string>
 </resources>
