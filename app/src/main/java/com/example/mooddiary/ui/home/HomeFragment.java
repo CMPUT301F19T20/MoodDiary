@@ -22,6 +22,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.example.mooddiary.AddMoodEventActivity;
 import com.example.mooddiary.Database;
 import com.example.mooddiary.FilterAdapter;
 import com.example.mooddiary.LoginActivity;
@@ -34,6 +35,7 @@ import com.example.mooddiary.SignUpActivity;
 import com.example.mooddiary.ViewActivity;
 
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.FieldValue;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -104,6 +106,16 @@ public class HomeFragment extends Fragment {
         moodAdapter = new MoodAdapter(getActivity(), R.layout.mood_list_item,
                 homeViewModel.getMoodList().getMoodList("all"));
         myMoodEventListView.setAdapter(moodAdapter);
+
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AddMoodEventActivity.class);
+                intent.putExtra("action_add", true);
+                startActivityForResult(intent, HOME_TO_ADD_REQUEST);
+            }
+        });
 
         DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
         docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
