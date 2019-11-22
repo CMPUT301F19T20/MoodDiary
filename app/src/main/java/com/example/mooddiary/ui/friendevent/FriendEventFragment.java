@@ -91,7 +91,6 @@ public class FriendEventFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         return root;
     }
 }

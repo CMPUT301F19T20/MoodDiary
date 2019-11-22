@@ -51,15 +51,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddMoodEventActivity.class);
-                intent.putExtra("action_add", true);
-                startActivityForResult(intent, HOME_TO_ADD_REQUEST);
-            }
-        });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
@@ -92,20 +83,4 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    /**
-     * This gets acitivity results of other fragments
-     * @param requestCode
-     *      requestCode from fragments
-     * @param resultCode
-     *      resultCode from fragments
-     * @param data
-     *      data from fragments
-     */
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        Fragment navHostFragment = getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        Fragment homeFragment = navHostFragment.getChildFragmentManager().getFragments().get(0);
-        homeFragment.onActivityResult(requestCode, resultCode, data);
-    }
 }
