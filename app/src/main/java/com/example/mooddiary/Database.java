@@ -32,13 +32,6 @@ public class Database {
                 .document("FollowerList");
     }
 
-    public static DocumentReference getFriendMoodList(String friendUsername) {
-        return Database.db.collection("users")
-                .document("users")
-                .collection(friendUsername)
-                .document("MoodList");
-    }
-
     public static Query getRequestListByReceiver(String receiverName) {
         return Database.db.collection("requests").whereEqualTo("receiver", receiverName);
     }

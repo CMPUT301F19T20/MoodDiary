@@ -77,7 +77,7 @@ public class FriendMapFragment extends Fragment {
     public void getFriendsEvents(){
         friendMapViewModel.getFriendsRecentEvent().clear();
         for (String name:friendMapViewModel.getFriendsName()){
-            DocumentReference docRef = Database.getFriendMoodList(name);
+            DocumentReference docRef = Database.getUserMoodList(name);
             docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                 @Override
                 public void onSuccess(DocumentSnapshot documentSnapshot) {
