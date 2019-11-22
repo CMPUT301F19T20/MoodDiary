@@ -329,7 +329,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 if(!successFlag) { return; }
 
                 MoodEvent moodEventResult =
-                        new MoodEvent(moodSpinnerResult, dateResult, timeResult,preciseTimeResult, socialSituationSpinnerResult, locationResult, reasonResult, photoResult);
+                        new MoodEvent(moodSpinnerResult, dateResult, timeResult,preciseTimeResult, socialSituationSpinnerResult, locationResult, reasonResult, photoResult, LoginActivity.userName);
                 if (isFromView) {
                     Intent intent = new Intent();
                     intent.putExtra("edited_mood_event", moodEventResult);
