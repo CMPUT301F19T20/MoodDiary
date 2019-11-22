@@ -45,7 +45,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<MoodEvent> myMapMoods = new ArrayList<>();
     private HashMap<String,MoodEvent> friendMapMoods = new HashMap<>();
     String map = null;
-    FirebaseFirestore db;
   
     /**
      * This creates the view of map
