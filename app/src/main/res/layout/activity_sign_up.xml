@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:weightSum="1"
+
+    android:layout_weight="1"
+    android:background="@drawable/bgtest"
     >
 
 
@@ -13,7 +15,7 @@
         android:paddingTop="76dp"
         android:paddingLeft="36dp"
         android:text="@string/signup_String"
-        android:textColor="@color/colorPink"
+        android:textColor="@color/colorWhite"
         android:textSize="30sp">
 
     </TextView>
@@ -21,10 +23,10 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.50"
+        android:layout_weight="0.90"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:paddingTop="66dp"
+        android:paddingTop="10dp"
         android:orientation="vertical"
         android:weightSum="1">
 
@@ -32,19 +34,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
+            android:paddingTop="46dp"
+
             android:text="@string/newUser"
             android:textSize="20sp"
-            android:textColor="@color/colorGray">
+            android:textColor="@color/colorWhite">
         </TextView>
 
         <EditText
             android:id="@+id/signup_new_username_edit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="26dp"
-            android:paddingBottom="20dp"
             android:textSize="20sp"
-            android:textColor="#4d4d4d"
+            android:textColor="@color/colorWhite"
             android:theme="@style/EditTextStyle">
         </EditText>
 
@@ -52,10 +54,10 @@
             android:id="@+id/signup_confirm_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="30dp"
             android:textAllCaps="false"
             android:textSize="20sp"
-            android:background="@color/colorPink"
+            android:background="#3a066c"
             android:text="@string/confirm"
             android:textColor="@color/colorWhite" />
 
@@ -64,6 +66,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="15dp"
         android:orientation="horizontal">
 
         <TextView
