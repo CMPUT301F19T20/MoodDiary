@@ -1,36 +1,27 @@
 package com.example.mooddiary.ui.mymap;
 
 import android.content.Context;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import com.example.mooddiary.Database;
 import com.example.mooddiary.LoginActivity;
-import com.example.mooddiary.MapsActivity;
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
-import com.example.mooddiary.ui.home.HomeViewModel;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -39,7 +30,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -69,7 +59,7 @@ public class MyMapFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_my_map, container, false);
         //final TextView textView = root.findViewById(R.id.text_slideshow);
 
-        myMapMoodMapMap = root.findViewById(R.id.mymap_map_map);
+        myMapMoodMapMap = root.findViewById(R.id.myMap_map_map);
         myMapMoodMapMap.onCreate(savedInstanceState);
         myMapLoadingProgress = root.findViewById(R.id.myMap_loading_progress);
 

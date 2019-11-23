@@ -13,7 +13,7 @@
         android:scaleType="fitCenter">
 
         <com.google.android.gms.maps.MapView
-            android:id="@+id/mymap_map_map"
+            android:id="@+id/myMap_map_map"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <ProgressBar
