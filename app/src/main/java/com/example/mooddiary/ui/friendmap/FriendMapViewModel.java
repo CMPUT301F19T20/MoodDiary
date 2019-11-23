@@ -16,18 +16,18 @@ import java.util.HashMap;
 public class FriendMapViewModel extends ViewModel {
 
     private ArrayList<String> friendsName;
-    private HashMap<String, MoodEvent> friendsRecentEvent;
+    private ArrayList<MoodEvent> friendsRecentEvent;
 
     public FriendMapViewModel(){
         friendsName = new ArrayList<>();
-        friendsRecentEvent = new HashMap<>();
+        friendsRecentEvent = new ArrayList<>();
     }
 
     public ArrayList<String> getFriendsName() {
         return friendsName;
     }
 
-    public HashMap<String, MoodEvent> getFriendsRecentEvent() {
+    public ArrayList<MoodEvent> getFriendsRecentEvent() {
         return friendsRecentEvent;
     }
 }
