@@ -77,7 +77,7 @@ public class MyMapFragment extends Fragment {
                         myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(60,-100)));
                         myMapLoadingProgress.setVisibility(View.INVISIBLE);
                         for(MoodEvent m: myMoodList) {
-                            System.out.println(m.getMood().getMood());
+//                            System.out.println(m.getMood().getMood());
                             if(m.getLocation() != null) {
                                 LatLng markPoint = getLocationLatLng(getContext(), m.getLocation());
                                 if(markPoint != null) {

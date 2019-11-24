@@ -20,19 +20,13 @@
             android:id="@+id/nav_friend_map"
             android:icon="@drawable/ic_menu_location"
             android:title="@string/menu_friend_map" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_friends"
+            android:title="@string/menu_share" />
+        <item
+            android:id="@+id/nav_send"
+            android:icon="@drawable/ic_menu_add_friends"
+            android:title="@string/menu_send" />
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_friends"
-                android:title="@string/menu_share" />
-            <item
-                android:id="@+id/nav_send"
-                android:icon="@drawable/ic_menu_add_friends"
-                android:title="@string/menu_send" />
-        </menu>
-    </item>
-
 </menu>

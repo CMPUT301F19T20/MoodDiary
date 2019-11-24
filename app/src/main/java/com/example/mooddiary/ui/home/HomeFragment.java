@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 
@@ -53,6 +54,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -61,21 +63,19 @@ import static android.app.Activity.RESULT_OK;
  * This is Home fragment that shows a list of user's mood event
  */
 public class HomeFragment extends Fragment {
-    //FirebaseFirestore db = FirebaseFirestore.getInstance();
     private static final int VIEW_EDIT_REQUEST = 0;
     private static final int HOME_TO_ADD_REQUEST = 10;
     private HomeViewModel homeViewModel;
 
     private ListView myMoodEventListView;
     private ListView homeFilterListView;
+    private Button homeFilterClearAllButton;
+    private Button homeFilterSelectAllButton;
     private ImageButton homeFilterButton;
     private MoodAdapter moodAdapter;
     private FilterAdapter filterAdapter;
-    private MoodBean moodBeanFiltered;
-  
-    private int waitFilterIndex = 0;
-    private int currentFilterIndex = 0;
-    private boolean actionAddReturn;
+    private ArrayList<String> selectedMoodType = new ArrayList<String>();
+
     public static final String TAG = HomeFragment.class.getSimpleName();
 
 
@@ -221,11 +221,9 @@ public class HomeFragment extends Fragment {
                     DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
                     MoodEvent moodEventAdded = (MoodEvent) data.getSerializableExtra("added_mood_event");
                     homeViewModel.getMoodList().add(moodEventAdded);
-                    //user.setMoodList(homeViewModel.getMoodList());
-                    //Database.db.collection("users").document("users").collection(LoginActivity.userName).document("MoodList");
                     MoodList moodList = homeViewModel.getMoodList();
                     docRef.set(moodList);
-                    moodAdapter.notifyDataSetChanged();
+                    onMoodSelected(selectedMoodType);
                 }
             default:
         }
@@ -245,35 +243,68 @@ public class HomeFragment extends Fragment {
 
         View view = LayoutInflater.from(activity).inflate(R.layout.fragment_filter, null);
         homeFilterListView = view.findViewById(R.id.home_filter_list_view);
+        homeFilterClearAllButton = view.findViewById(R.id.home_filter_clear_all_button);
+        homeFilterSelectAllButton = view.findViewById(R.id.home_filter_select_all_button);
         ArrayList<MoodBean> mData = new ArrayList<>();
-        mData.add(new MoodBean(R.drawable.redheart,"all"));
-        mData.add(new MoodBean(R.drawable.happy,"happy"));
-        mData.add(new MoodBean(R.drawable.angry,"angry"));
-        mData.add(new MoodBean(R.drawable.content,"content"));
-        mData.add(new MoodBean(R.drawable.meh,"meh"));
-        mData.add(new MoodBean(R.drawable.sad,"sad"));
-        mData.add(new MoodBean(R.drawable.stressed,"stressed"));
-        filterAdapter= new FilterAdapter(activity, R.layout.filter_item, mData);
+        mData.add(new MoodBean(R.drawable.happy,"happy", 0));
+        mData.add(new MoodBean(R.drawable.angry,"angry", 1));
+        mData.add(new MoodBean(R.drawable.content,"content", 2));
+        mData.add(new MoodBean(R.drawable.meh,"meh", 3));
+        mData.add(new MoodBean(R.drawable.sad,"sad", 4));
+        mData.add(new MoodBean(R.drawable.stressed,"stressed", 5));
         homeFilterListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
+        filterAdapter = new FilterAdapter(activity, R.layout.filter_item, mData);
+        filterAdapter.setSelectedItems(selectedMoodType);
         homeFilterListView.setAdapter(filterAdapter);
-        moodBeanFiltered = (MoodBean) homeFilterListView.getItemAtPosition(currentFilterIndex);
-        filterAdapter.setSelectedItem(currentFilterIndex);
+
         homeFilterListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                filterAdapter.setSelectedItem(i);
-                moodBeanFiltered = (MoodBean) adapterView.getItemAtPosition(i);
-                waitFilterIndex = i;
+                MoodBean moodBean = (MoodBean) adapterView.getItemAtPosition(i);
+                if (selectedMoodType.contains(moodBean.getName())) {
+                    selectedMoodType.remove(moodBean.getName());
+                } else {
+                    selectedMoodType.add(moodBean.getName());
+                }
+                filterAdapter.setSelectedItems(selectedMoodType);
                 filterAdapter.notifyDataSetChanged();
 
             }
         });
+
+        homeFilterSelectAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedMoodType = new ArrayList<String>() {
+                    {
+                        add("happy");
+                        add("sad");
+                        add("stressed");
+                        add("meh");
+                        add("content");
+                        add("angry");
+                    }
+                };
+                filterAdapter.setSelectedItems(selectedMoodType);
+                filterAdapter.notifyDataSetChanged();
+            }
+        });
+
+        homeFilterClearAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                selectedMoodType = new ArrayList<>();
+                filterAdapter.setSelectedItems(selectedMoodType);
+                filterAdapter.notifyDataSetChanged();
+            }
+        });
+
         dialog.setView(view)
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        currentFilterIndex = waitFilterIndex;
-                        onMoodSelected(moodBeanFiltered.getName());
+                        selectedMoodType = filterAdapter.getSelectedItems();
+                        onMoodSelected(selectedMoodType);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -287,12 +318,24 @@ public class HomeFragment extends Fragment {
 
     /**
      * This filters the mood history to show only one specific mood
-     * @param mood
-     *      This is the mood selected to show
+     * @param selectedMoodTypes
+     *      These are the mood types selected to show
      */
-    private void onMoodSelected(String mood) {
-        moodAdapter = new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getMoodList(mood));
+    private void onMoodSelected(ArrayList<String> selectedMoodTypes) {
+        ArrayList<MoodEvent> filteredMoodList = new ArrayList<>();
+        if ((selectedMoodTypes.size() == 0) || (selectedMoodType.size() == 6)) {
+            moodAdapter = new MoodAdapter(getActivity(), R.layout.mood_list_item, homeViewModel.getMoodList().getAllMoodList());
+            myMoodEventListView.setAdapter(moodAdapter);
+            return;
+        }
+        for (String moodType: selectedMoodTypes) {
+            filteredMoodList.addAll(homeViewModel.getMoodList().getMoodList(moodType));
+        }
+        filteredMoodList = MoodList.sortMoodList(filteredMoodList);
+        moodAdapter = new MoodAdapter(getActivity(), R.layout.mood_list_item, filteredMoodList);
         myMoodEventListView.setAdapter(moodAdapter);
     }
+
+    
 
 }
