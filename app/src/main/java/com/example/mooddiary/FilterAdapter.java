@@ -1,13 +1,20 @@
 package com.example.mooddiary;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * This is an adapter for displaying choices of mood in the filter.
@@ -15,11 +22,13 @@ import java.util.List;
 public class FilterAdapter extends ArrayAdapter<MoodBean> {
 
     private int resourceId;
-    private int selectedItem;
+    private ArrayList<MoodBean> dataList;
+    private Boolean[] selectedItems = {false, false, false, false, false, false};
 
     public FilterAdapter(Context context, int textViewResourceId, List<MoodBean> objects) {
         super(context, textViewResourceId, objects);
         resourceId = textViewResourceId;
+        dataList = (ArrayList<MoodBean>) objects;
     }
 
     /**
@@ -42,8 +51,9 @@ public class FilterAdapter extends ArrayAdapter<MoodBean> {
             view =
                     LayoutInflater.from(getContext()).inflate(resourceId, parent, false);
             viewHolder = new FilterAdapter.ViewHolder();
-            viewHolder.iconImage = (ImageView) view.findViewById(R.id.home_filter_icon);
-            viewHolder.moodText = (TextView) view.findViewById(R.id.home_filter_mood);
+            viewHolder.iconImage = view.findViewById(R.id.home_filter_icon);
+            viewHolder.moodText = view.findViewById(R.id.home_filter_mood);
+            viewHolder.selectMoodCheckBox = view.findViewById(R.id.home_filter_check);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -51,18 +61,34 @@ public class FilterAdapter extends ArrayAdapter<MoodBean> {
         }
         viewHolder.iconImage.setImageResource(moodBean.getIcon());
         viewHolder.moodText.setText(moodBean.getName());
-        if ( position == selectedItem)
-        {
-            view.setBackgroundResource(R.color.selectedColor);
 
+        if (selectedItems[position]) {
+            viewHolder.selectMoodCheckBox.setImageResource(R.drawable.redheart);
         } else {
-            view.setBackgroundResource(R.color.unselectedColor);
+            viewHolder.selectMoodCheckBox.setImageResource(R.drawable.ic_remove);
         }
+
         return view;
     }
 
-    public void setSelectedItem(int i) {
-        this.selectedItem = i;
+    public ArrayList<String> getSelectedItems() {
+        ArrayList<String> selectedType = new ArrayList<>();
+        for (int i = 0; i < selectedItems.length; i++) {
+            if (selectedItems[i]) {
+                selectedType.add(dataList.get(i).getName());
+            }
+        }
+        return selectedType;
+    }
+
+    public void setSelectedItems(ArrayList<String> selectedType) {
+        for (MoodBean moodBean: dataList) {
+            if (selectedType.contains(moodBean.getName())) {
+                selectedItems[moodBean.getIndex()] = true;
+            } else {
+                selectedItems[moodBean.getIndex()] = false;
+            }
+        }
     }
 
     /**
@@ -73,6 +99,8 @@ public class FilterAdapter extends ArrayAdapter<MoodBean> {
         ImageView iconImage;
 
         TextView moodText;
+
+        ImageView selectMoodCheckBox;
 
     }
 
