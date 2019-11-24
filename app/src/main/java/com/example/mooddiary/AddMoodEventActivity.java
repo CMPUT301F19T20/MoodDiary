@@ -108,6 +108,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private boolean isFromView = false;
     private MoodEvent moodEventFromView;
 
+    private Calendar setCalendar = Calendar.getInstance();
     /**
      * This creates the view of Main add activity
      * @param savedInstanceState
@@ -300,7 +301,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 reasonResult = reasonEdit.getText().toString();
                 locationResult = locationText.getText().toString();
                 successFlag = true;
-
+                Calendar currentTime =Calendar.getInstance();
                 String [] checkNumberOfReasonWords = reasonResult.split(" ");
                 if (checkNumberOfReasonWords.length > 3 || reasonResult.length() > 20) {
                     Toast.makeText(AddMoodEventActivity.this,"reason no more than 20 characters or 3 words",Toast.LENGTH_SHORT).show();
@@ -311,6 +312,11 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                     Toast.makeText(AddMoodEventActivity.this,"fields marked by * are required",Toast.LENGTH_SHORT).show();
                     successFlag = false;
                 }
+                if (currentTime.getTimeInMillis() < setCalendar.getTimeInMillis()){
+                    Toast.makeText(AddMoodEventActivity.this,"You cannot choose future time",Toast.LENGTH_SHORT).show();
+                    successFlag = false;
+                }
+
                 try{
                     if(photoChangeFlag) {
                         Uri file = Uri.fromFile(new File(getExternalFilesDir("photo") + "/" + photoResult));
@@ -420,6 +426,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             Calendar calendar=Calendar.getInstance();
             DatePickerDialog dialog =
                     new DatePickerDialog(this,this,calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+            dialog.getDatePicker().setMaxDate(System.currentTimeMillis());
             dialog.show();
         }
         if (view.getId()==R.id.add_time_text){
@@ -444,9 +451,16 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
 
+
         String desc=String.format("%04d/%02d/%02d",year,month+1,dayOfMonth);
+
+        setCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
+        setCalendar.set(Calendar.YEAR,year);
+        setCalendar.set(Calendar.MONTH,month);
         dateText.setText(desc);
         dateResult = desc;
+
+
     }
     /**
      * This displays the data from time picker
@@ -460,11 +474,17 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     @Override
     public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
         Calendar calendar=Calendar.getInstance();
+            // it's after current
         String desc_precise=String.format("%02d:%02d:%02d",hourOfDay,minute,calendar.get(Calendar.SECOND));
         String desc=String.format("%02d:%02d",hourOfDay,minute);
+        setCalendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
+        setCalendar.set(Calendar.MINUTE,minute);
         timeText.setText(desc);
         preciseTimeResult = desc_precise;
         timeResult = desc;
+
+
+
     }
     /**
      * get require permission from system to deal with opening album
