@@ -85,8 +85,12 @@
     <string name="share_agree_button_text">agree</string>
     <string name="share_decline_button_text">decline</string>
     <string name="request_list_name">New Request</string>
-    <string name="follow_list_name">Follow</string>
-    <string name="follower_list_name">Follower</string>
+    <string name="follow_list_name">All Following</string>
+    <string name="follower_list_name">All Followers</string>
+    <string name="cancel_follow">Unfollow</string>
+    <string name="delete_follower">Delete Follower</string>
+    <string name="follow_back">Follow Back</string>
+    <string name="already_followed">already followed</string>
 
 
     <string name="guide_format">Page %1$d</string>

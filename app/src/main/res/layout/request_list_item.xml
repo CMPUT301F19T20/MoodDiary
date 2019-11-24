@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -9,8 +10,9 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:layout_marginStart="15dp"
+        android:textColor="@color/pure_black"
         android:layout_gravity="center_vertical"
         />
 
@@ -23,16 +25,17 @@
             android:id="@+id/share_agree_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
+            android:layout_marginEnd="3dp"
             android:text="@string/share_agree_button_text"
-            />
+            app:backgroundTint="@android:color/transparent" />
 
         <Button
             android:id="@+id/share_decline_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="3dp"
+            android:layout_marginEnd="3dp"
             android:text="@string/share_decline_button_text"
+            app:backgroundTint="@android:color/transparent"
             />
 
     </LinearLayout>
