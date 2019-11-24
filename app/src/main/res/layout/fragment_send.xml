@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingTop="36dp"
+        android:paddingTop="16dp"
         android:paddingLeft="36dp"
         android:text=" "
         android:textSize="20sp"
@@ -18,21 +18,14 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="36dp"
+        android:paddingLeft="46dp"
         android:text="Want to see how your friends are feeling now?"
-        android:textColor="@color/colorPink"
+        android:textColor="@color/colorDarkPink"
         android:textSize="28sp">
 
     </TextView>
 
 
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:layout_gravity="center"
-        android:src="@drawable/friends">
-
-    </ImageView>
 
 
 
@@ -41,6 +34,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingTop="36dp"
+
         android:paddingLeft="36dp"
         android:paddingRight="36dp">
         <TextView
@@ -74,6 +69,16 @@
             android:text="@string/send_button"
             android:textColor="@color/colorWhite" />
     </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center"
+        android:src="@drawable/friends">
+
+    </ImageView>
+
 
 
 </LinearLayout>

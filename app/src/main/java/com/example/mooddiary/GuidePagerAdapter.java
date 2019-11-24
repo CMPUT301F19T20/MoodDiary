@@ -4,6 +4,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+
+
 public class GuidePagerAdapter extends FragmentPagerAdapter {
 
     public GuidePagerAdapter(FragmentManager fm) {

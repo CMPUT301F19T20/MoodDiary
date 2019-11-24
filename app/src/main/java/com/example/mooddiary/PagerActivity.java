@@ -13,16 +13,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
 
 
 
 public class PagerActivity extends AppCompatActivity implements View.OnClickListener {
-
-    private static final String TAG = "yunyang";
 
     private ViewPager mViewPager;
     private Button btn_skip;
@@ -36,25 +36,23 @@ public class PagerActivity extends AppCompatActivity implements View.OnClickList
 
     private int lastLeftValue = 0;
     private ImageView[] indicators;
-    // 当前页面位置
+    // Current page location
     private int currentPage = 0;
 
-    // 是否首次进入引导页的标记
+    // Whether to enter the guide page for the first time
     private boolean isFirstGuide;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            // 沉浸式状态栏
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-            // 更改状态栏颜色
-            getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.black_trans80));
-        }
+        // Immersive status bar
+        getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        // Change the status bar color
+        getWindow().setStatusBarColor(ContextCompat.getColor(this, R.color.black_trans80));
         setContentView(R.layout.activity_pager);
-        // 首次进入App，展示引导页。
+        // Enter the App for the first time and show the guide page
         isFirstGuide = Utils.readSharedSetting(PagerActivity.this, "isGuide", false);
         if (isFirstGuide) {
             gotoMain();
@@ -64,76 +62,54 @@ public class PagerActivity extends AppCompatActivity implements View.OnClickList
     }
 
     /**
-     * 跳转首页
+     * Go to Login Activity
      */
     private void gotoMain() {
         finish();
         Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-         /*
-             注意：
-            1、overridePendingTransition方法必须在startActivity()或者finish()方法的后面。
-            2、如果参数是0，表示没有动画
-            public void overridePendingTransition(int enterAnim, int exitAnim) {}
-            在A启动B时：
-            enterAnim：是B进入的动画
-            exitAnim：是A退出的动画
-             */
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void initMDViewPager() {
         mGuidePagerAdapter = new GuidePagerAdapter(getSupportFragmentManager());
         mNextBtn = (ImageButton) findViewById(R.id.btn_next);
-        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP)
-            mNextBtn.setImageDrawable(
-                    Utils.tintMyDrawable(ContextCompat.getDrawable(this, R.drawable.ic_chevron_right_24dp), Color.WHITE)
-            );
         indicators = new ImageView[]{
                 image_indicator_zero,
                 image_indicator_one,
                 image_indicator_two
         };
+
         mViewPager.setAdapter(mGuidePagerAdapter);
         mViewPager.setCurrentItem(currentPage);
         updateIndicators(currentPage);
 
-        final int color1 = ContextCompat.getColor(this, R.color.colorPink);
-        final int color2 = ContextCompat.getColor(this, R.color.sad);
-        final int color3 = ContextCompat.getColor(this, R.color.angry);
-
-        final int[] colorList = new int[]{color1, color2, color3};
-        // 使用ArgbEvaluator用于更新颜色，在前一个页面和后一个页面的颜色之间进行过渡。
-        final ArgbEvaluator evaluator = new ArgbEvaluator();
-
+        final int[] bgs = new int[]{
+                R.drawable.wave1,
+                R.drawable.wave2,
+                R.drawable.wave3};
         mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                // 更新颜色
-                int colorUpdate =
-                        (Integer) evaluator.evaluate(
-                                positionOffset,
-                                colorList[position],
-                                colorList[position == 2 ? position : position + 1]);
-                mViewPager.setBackgroundColor(colorUpdate);
+                mViewPager.setBackgroundResource(bgs[position]);
             }
 
             @Override
             public void onPageSelected(int position) {
-                // 更新当前角标位置
+                // Update current corner position
                 currentPage = position;
                 updateIndicators(currentPage);
 
                 switch (position) {
                     case 0:
-                        mViewPager.setBackgroundColor(color1);
+                        mViewPager.setBackgroundResource(bgs[0]);
                         break;
                     case 1:
-                        mViewPager.setBackgroundColor(color2);
+                        mViewPager.setBackgroundResource(bgs[1]);
                         break;
                     case 2:
-                        mViewPager.setBackgroundColor(color3);
+                        mViewPager.setBackgroundResource(bgs[2]);
                         break;
                 }
 
@@ -151,7 +127,7 @@ public class PagerActivity extends AppCompatActivity implements View.OnClickList
     }
 
     /**
-     * 通过切换两个不同的drawable来更新指示器。
+     * Update indicator by switching between two different drawables。
      */
     private void updateIndicators(int position) {
         for (int i = 0; i < indicators.length; i++) {
