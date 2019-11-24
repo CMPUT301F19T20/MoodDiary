@@ -45,7 +45,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private ArrayList<MoodEvent> myMapMoods = new ArrayList<>();
     private HashMap<String,MoodEvent> friendMapMoods = new HashMap<>();
     String map = null;
-    FirebaseFirestore db;
   
     /**
      * This creates the view of map
@@ -61,10 +60,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        /*
         Intent intent = getIntent();
         this.map = intent.getStringExtra("map");
         this.myMoods = (ArrayList<MoodEvent>) intent.getSerializableExtra("moodlist");
         this.friendMoods = (HashMap<String,MoodEvent>)intent.getSerializableExtra("friendsEvents");
+
+         */
 
     }
 

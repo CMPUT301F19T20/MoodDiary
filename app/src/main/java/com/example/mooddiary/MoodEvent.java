@@ -4,14 +4,13 @@ import android.util.Log;
 
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.Date;
 
 /**
  * This is a class to store data for MoodEvent
  */
 public class MoodEvent implements Serializable {
+    private String username;
     private String date;
     private String time;
     private String preciseTime;
@@ -31,10 +30,7 @@ public class MoodEvent implements Serializable {
 
 
     public MoodEvent(String mood, String date, String time,String preciseTime, String socialSituation, String location,
-                     String reason, String photo) {
-//        try {
-//            this.date = fmt.parse(date + " " + time);
-//        } catch(Exception e) {}
+                     String reason, String photo, String username) {
         this.date = date;
         this.time = time;
         this.preciseTime = preciseTime;
@@ -43,6 +39,7 @@ public class MoodEvent implements Serializable {
         this.reason = reason;
         this.photo = photo;
         this.mood = new Mood(mood);
+        this.username = username;
     }
 
     /**
@@ -121,6 +118,14 @@ public class MoodEvent implements Serializable {
         this.mood = mood;
     }
 
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     /**
      * This is to check whether two MoodEvents are the same
      * @param e
@@ -138,7 +143,8 @@ public class MoodEvent implements Serializable {
                 this.location.equals(compare.getLocation()) &&
                 this.reason.equals(compare.getReason()) &&
                 this.photo.equals(compare.getPhoto()) &&
-                this.mood.equals(compare.getMood())) {
+                this.mood.equals(compare.getMood()) &&
+                this.username.equals(compare.getUsername())) {
             return true;
         } else {
             return false;

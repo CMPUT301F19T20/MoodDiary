@@ -24,7 +24,6 @@
     <color name="colorDarkPink">#f17f75</color>
 
     <!--filter color-->
-    <color name="selectedColor">#FBF5EF</color>
     <color name="unselectedColor">#ffffff</color>
     <color name="dividerLine">#f2b2b2</color>
 

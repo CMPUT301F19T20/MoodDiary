@@ -208,21 +208,10 @@ public class MoodList implements Serializable {
             default :
                 throw new IllegalArgumentException();
         }
-//        sortList.sort(new Comparator<MoodEvent>() {
-//            @Override
-//            public int compare(MoodEvent o1, MoodEvent o2) {
-//                if(o1.getNumericDate() > o2.getNumericDate()) {
-//                    return 1;
-//                } else if(o1.getNumericDate() < o2.getNumericDate()) {
-//                    return -1;
-//                } else {
-//                    return 0;
-//                }
-//            }
-//        });
-//        Collections.reverse(sortList);
         return sortList;
     }
+
+
 
     /**
      * This sorts allMoodList by Time
@@ -368,6 +357,23 @@ public class MoodList implements Serializable {
         this.sadList.clear();
         this.stressedList.clear();
         this.mehList.clear();
+    }
+
+    public static ArrayList<MoodEvent> sortMoodList(ArrayList<MoodEvent> moodListToSort) {
+        moodListToSort.sort(new Comparator<MoodEvent>() {
+            @Override
+            public int compare(MoodEvent o1, MoodEvent o2) {
+                if(o1.getNumericDate() > o2.getNumericDate()) {
+                    return 1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return -1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+        Collections.reverse(moodListToSort);
+        return moodListToSort;
     }
 
 }
