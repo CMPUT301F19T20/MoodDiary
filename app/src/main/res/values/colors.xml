@@ -36,5 +36,7 @@
     <color name="amber_50">#FFF8E1</color>
     <color name="purple_50">#F3E5F5</color>
 
+    <color name="pure_black">#000000</color>
+
 
 </resources>

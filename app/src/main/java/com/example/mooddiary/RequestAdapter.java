@@ -92,5 +92,4 @@ public class RequestAdapter extends ArrayAdapter<Request> {
 
     }
 
-
 }

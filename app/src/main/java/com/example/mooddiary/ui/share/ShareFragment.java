@@ -4,20 +4,27 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import com.example.mooddiary.Database;
+import com.example.mooddiary.FollowAdapter;
+import com.example.mooddiary.FollowerAdapter;
 import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.R;
 import com.example.mooddiary.Request;
 import com.example.mooddiary.RequestAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -37,9 +44,9 @@ public class ShareFragment extends Fragment {
     private ListView shareFollowListView;
     private ListView shareRequestListView;
     private ListView shareFollowerListView;
-    private RequestAdapter requestAdapter;
-    private ArrayAdapter<String> followAdapter;
-    private ArrayAdapter<String> followerAdapter;
+    private RequestAdapter shareRequestAdapter;
+    private FollowAdapter shareFollowAdapter;
+    private FollowerAdapter shareFollowerAdapter;
 
     /**
      * This creates the view for the user's friend list.
@@ -61,13 +68,112 @@ public class ShareFragment extends Fragment {
         shareFollowListView = root.findViewById(R.id.share_follow_list_view);
         shareFollowerListView = root.findViewById(R.id.share_follower_list_view);
 
-        followAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, shareViewModel.getFollowList());
-        followerAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, shareViewModel.getFollowerList());
-        requestAdapter = new RequestAdapter(getActivity(), R.layout.request_list_item, shareViewModel.getReceivedRequestList());
+        shareFollowAdapter = new FollowAdapter(getActivity(), R.layout.follow_list_item, shareViewModel.getFollowList());
+        shareFollowerAdapter = new FollowerAdapter(getActivity(), R.layout.follower_list_item, shareViewModel.getFollowerList());
+        shareRequestAdapter = new RequestAdapter(getActivity(), R.layout.request_list_item, shareViewModel.getReceivedRequestList());
 
-        shareFollowListView.setAdapter(followAdapter);
-        shareFollowerListView.setAdapter(followerAdapter);
-        shareRequestListView.setAdapter(requestAdapter);
+        shareFollowListView.setAdapter(shareFollowAdapter);
+        shareFollowerListView.setAdapter(shareFollowerAdapter);
+        shareRequestListView.setAdapter(shareRequestAdapter);
+
+        shareFollowListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String friendUsername = (String) shareFollowListView.getItemAtPosition(i);
+                BottomSheetDialog followBottomSheetDialog = new BottomSheetDialog(getActivity());
+                View sheetView = getActivity().getLayoutInflater().inflate(R.layout.follow_expand_bottom, null);
+                followBottomSheetDialog.setContentView(sheetView);
+                LinearLayout shareUnfollowLinearLayout = sheetView.findViewById(R.id.share_cancel_following);
+                shareUnfollowLinearLayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // remove friend's name from user's following list
+                        shareViewModel.getFollowList().remove(friendUsername);
+                        DocumentReference userFollowRef = Database.getUserFollowList(LoginActivity.userName);
+                        HashMap<String, Object> followData = new HashMap<>();
+                        followData.put("FollowList", shareViewModel.getFollowList());
+                        userFollowRef.set(followData);
+                        // remove user's name from friend's follower list
+                        DocumentReference friendFollowerRef = Database.getUserFollowerList(friendUsername);
+                        friendFollowerRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document != null) {
+                                        ArrayList<String> friendFollowerList = (ArrayList<String>) document.get("FollowerList");
+                                        friendFollowerList.remove(LoginActivity.userName);
+                                        HashMap<String, Object> friendFollowerData = new HashMap<>();
+                                        friendFollowerData.put("FollowerList", friendFollowerList);
+                                        Database.getUserFollowerList(friendUsername).set(friendFollowerData);
+                                    }
+                                }
+                            }
+                        });
+                        followBottomSheetDialog.dismiss();
+                    }
+                });
+                followBottomSheetDialog.show();
+            }
+        });
+
+        shareFollowerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String friendUsername = (String) shareFollowerListView.getItemAtPosition(i);
+                BottomSheetDialog followerBottomSheetDialog = new BottomSheetDialog(getActivity());
+                View sheetView = getActivity().getLayoutInflater().inflate(R.layout.follower_expand_bottom, null);
+                followerBottomSheetDialog.setContentView(sheetView);
+                LinearLayout shareDeleteFollowerLinearlayout = sheetView.findViewById(R.id.share_delete_follower);
+                shareDeleteFollowerLinearlayout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // delete friend from user's follower list
+                        shareViewModel.getFollowerList().remove(friendUsername);
+                        DocumentReference userFollowerRef = Database.getUserFollowerList(LoginActivity.userName);
+                        HashMap<String, Object> followerData = new HashMap<>();
+                        followerData.put("FollowerList", shareViewModel.getFollowerList());
+                        userFollowerRef.set(followerData);
+                        // delete user from user's follow list
+                        DocumentReference friendFollowRef = Database.getUserFollowList(friendUsername);
+                        friendFollowRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document != null) {
+                                        ArrayList<String> friendFollowList = (ArrayList<String>) document.get("FollowList");
+                                        friendFollowList.remove(LoginActivity.userName);
+                                        HashMap<String, Object> friendFollowData = new HashMap<>();
+                                        friendFollowData.put("FollowList", friendFollowList);
+                                        Database.getUserFollowList(friendUsername).set(friendFollowData);
+                                    }
+                                }
+                            }
+                        });
+                        followerBottomSheetDialog.dismiss();
+                    }
+                });
+
+                if (shareViewModel.getFollowList().contains(friendUsername)) {
+                    TextView shareAlreadyFollowedText = sheetView.findViewById(R.id.share_already_followed_text);
+                    shareAlreadyFollowedText.setVisibility(View.VISIBLE);
+                } else {
+                    LinearLayout shareFollowBackLinearLayout = sheetView.findViewById(R.id.share_follow_back);
+                    shareFollowBackLinearLayout.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Request request = new Request(LoginActivity.userName, friendUsername);
+                            Request.send(request);
+                            followerBottomSheetDialog.dismiss();
+                            Toast.makeText(getActivity(), "request sent", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
+                followerBottomSheetDialog.show();
+            }
+        });
 
         DocumentReference followRef = Database.getUserFollowList(LoginActivity.userName);
         followRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -78,7 +184,7 @@ public class ShareFragment extends Fragment {
                 for (String follow : followList) {
                     shareViewModel.getFollowList().add(follow);
                 }
-                followAdapter.notifyDataSetChanged();
+                shareFollowAdapter.notifyDataSetChanged();
                 setDynamicHeight(shareRequestListView);
                 setDynamicHeight(shareFollowListView);
                 setDynamicHeight(shareFollowerListView);
@@ -95,7 +201,7 @@ public class ShareFragment extends Fragment {
                     for (String follower : followerList) {
                         shareViewModel.getFollowerList().add(follower);
                     }
-                    followerAdapter.notifyDataSetChanged();
+                    shareFollowerAdapter.notifyDataSetChanged();
                     setDynamicHeight(shareRequestListView);
                     setDynamicHeight(shareFollowListView);
                     setDynamicHeight(shareFollowerListView);
@@ -117,6 +223,7 @@ public class ShareFragment extends Fragment {
                         HashMap<String, Object> followerData = new HashMap<>();
                         followerData.put("FollowerList", shareViewModel.getFollowerList());
                         Database.getUserFollowerList(LoginActivity.userName).set(followerData);
+
                         DocumentReference senderFollowRef = Database.getUserFollowList(request.getSender());
                         senderFollowRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
                             @Override
@@ -135,7 +242,7 @@ public class ShareFragment extends Fragment {
                         });
                         Database.getRequest(request.getSender()+request.getReceiver()).delete();
                     }
-                    requestAdapter.notifyDataSetChanged();
+                    shareRequestAdapter.notifyDataSetChanged();
                     setDynamicHeight(shareRequestListView);
                     setDynamicHeight(shareFollowListView);
                     setDynamicHeight(shareFollowerListView);
