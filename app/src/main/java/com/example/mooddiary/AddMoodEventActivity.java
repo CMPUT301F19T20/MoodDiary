@@ -108,7 +108,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private boolean isFromView = false;
     private MoodEvent moodEventFromView;
 
-    private Calendar setCalendar = Calendar.getInstance();
+    private Calendar current;
     /**
      * This creates the view of Main add activity
      * @param savedInstanceState
@@ -301,19 +301,20 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 reasonResult = reasonEdit.getText().toString();
                 locationResult = locationText.getText().toString();
                 successFlag = true;
-                Calendar currentTime =Calendar.getInstance();
+                current = Calendar.getInstance();
                 String [] checkNumberOfReasonWords = reasonResult.split(" ");
                 if (checkNumberOfReasonWords.length > 3 || reasonResult.length() > 20) {
-                    Toast.makeText(AddMoodEventActivity.this,"reason no more than 20 characters or 3 words",Toast.LENGTH_SHORT).show();
+                    reasonEdit.setError("reason no more than 20 characters or 3 words");
                     successFlag = false;
                 }
 
-                if (dateResult.equals("") || timeResult.equals("")) {
-                    Toast.makeText(AddMoodEventActivity.this,"fields marked by * are required",Toast.LENGTH_SHORT).show();
+                if (dateResult.equals("")) {
+                    dateText.setError("This field is required");
                     successFlag = false;
                 }
-                if (currentTime.getTimeInMillis() < setCalendar.getTimeInMillis()){
-                    Toast.makeText(AddMoodEventActivity.this,"You cannot choose future time",Toast.LENGTH_SHORT).show();
+
+                if (timeResult.equals("")) {
+                    timeText.setError("This field is required");
                     successFlag = false;
                 }
 
@@ -336,6 +337,14 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
                 MoodEvent moodEventResult =
                         new MoodEvent(moodSpinnerResult, dateResult, timeResult,preciseTimeResult, socialSituationSpinnerResult, locationResult, reasonResult, photoResult, LoginActivity.userName);
+
+                System.out.println(moodEventResult.getNumericDate());
+                System.out.println(current.getTimeInMillis());
+                if(moodEventResult.getNumericDate() > current.getTimeInMillis()) {
+                    Toast.makeText(AddMoodEventActivity.this, "You cannot choose future time",Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 if (isFromView) {
                     Intent intent = new Intent();
                     intent.putExtra("edited_mood_event", moodEventResult);
@@ -453,10 +462,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
 
         String desc=String.format("%04d/%02d/%02d",year,month+1,dayOfMonth);
-
-        setCalendar.set(Calendar.DAY_OF_MONTH,dayOfMonth);
-        setCalendar.set(Calendar.YEAR,year);
-        setCalendar.set(Calendar.MONTH,month);
         dateText.setText(desc);
         dateResult = desc;
 
@@ -477,8 +482,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             // it's after current
         String desc_precise=String.format("%02d:%02d:%02d",hourOfDay,minute,calendar.get(Calendar.SECOND));
         String desc=String.format("%02d:%02d",hourOfDay,minute);
-        setCalendar.set(Calendar.HOUR_OF_DAY,hourOfDay);
-        setCalendar.set(Calendar.MINUTE,minute);
         timeText.setText(desc);
         preciseTimeResult = desc_precise;
         timeResult = desc;
