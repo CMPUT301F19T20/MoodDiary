@@ -11,6 +11,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.mooddiary.Database;
@@ -28,8 +29,11 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -65,38 +69,57 @@ public class MyMapFragment extends Fragment {
 
         myMapLoadingProgress.setVisibility(View.VISIBLE);
 
-        DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
-        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+        myMapMoodMapMap.getMapAsync(new OnMapReadyCallback() {
             @Override
-            public void onSuccess(DocumentSnapshot documentSnapshot) {
-                myMoodList = documentSnapshot.toObject(MoodList.class).getAllMoodList();
-                myMapMoodMapMap.getMapAsync(new OnMapReadyCallback() {
-                    @Override
-                    public void onMapReady(GoogleMap googleMap) {
-                        myMap = googleMap;
-                        myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(60,-100)));
-                        myMapLoadingProgress.setVisibility(View.INVISIBLE);
-                        for(MoodEvent m: myMoodList) {
-//                            System.out.println(m.getMood().getMood());
-                            if(m.getLocation() != null) {
-                                LatLng markPoint = getLocationLatLng(getContext(), m.getLocation());
-                                if(markPoint != null) {
-                                    myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
-                                            BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
-                                }
-                            }
-                        }
-                    }
-                });
+            public void onMapReady(GoogleMap googleMap) {
+                myMap = googleMap;
+                myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(60,-100)));
             }
         });
 
+        DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
+        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @Override
+            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                ArrayList<MoodEvent> myAllMoodEvents = documentSnapshot.toObject(MoodList.class).getAllMoodList();
+                myMap.clear();
+                myMapLoadingProgress.setVisibility(View.INVISIBLE);
+                for(MoodEvent m: myAllMoodEvents) {
+                    if(m.getLocation() != "") {
+                        LatLng markPoint = getLocationLatLng(getContext(), m.getLocation());
+                        if(markPoint != null) {
+                            myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
+                                    BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
+                        }
+                    }
+                }
+            }
+        });
 
-//        Intent intent = new Intent(getActivity(),MapsActivity.class);
-//        intent.putExtra("map","mymap");
-//        intent.putExtra("moodlist",viewModelFromHome.getMoodList().getAllMoodList());
-//        startActivity(intent);
-
+//        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//            @Override
+//            public void onSuccess(DocumentSnapshot documentSnapshot) {
+//                myMoodList = documentSnapshot.toObject(MoodList.class).getAllMoodList();
+//                myMapMoodMapMap.getMapAsync(new OnMapReadyCallback() {
+//                    @Override
+//                    public void onMapReady(GoogleMap googleMap) {
+//                        myMap = googleMap;
+//                        myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(60,-100)));
+//                        myMapLoadingProgress.setVisibility(View.INVISIBLE);
+//                        for(MoodEvent m: myMoodList) {
+//                            System.out.println(m.getMood().getMood());
+//                            if(m.getLocation() != "") {
+//                                LatLng markPoint = getLocationLatLng(getContext(), m.getLocation());
+//                                if(markPoint != null) {
+//                                    myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
+//                                            BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
+//                                }
+//                            }
+//                        }
+//                    }
+//                });
+//            }
+//        });
 
         return root;
     }

@@ -75,8 +75,10 @@ public class FriendEventFragment extends Fragment {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
                             MoodList moodList = documentSnapshot.toObject(MoodList.class);
-                            friendEventViewModel.getMoodList().add(moodList.getAllMoodList().get(0));
-                            friendMoodAdapter.notifyDataSetChanged();
+                            if(!moodList.getAllMoodList().isEmpty()) {
+                                friendEventViewModel.getMoodList().add(moodList.getAllMoodList().get(0));
+                                friendMoodAdapter.notifyDataSetChanged();
+                            }
                         }
                     });
                 }
