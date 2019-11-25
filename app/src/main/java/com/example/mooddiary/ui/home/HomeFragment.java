@@ -4,12 +4,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -17,16 +21,26 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import android.content.Context;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.app.hubert.guide.NewbieGuide;
+import com.app.hubert.guide.core.Controller;
+import com.app.hubert.guide.listener.OnGuideChangedListener;
+import com.app.hubert.guide.listener.OnLayoutInflatedListener;
+import com.app.hubert.guide.listener.OnPageChangedListener;
+import com.app.hubert.guide.model.GuidePage;
+import com.app.hubert.guide.model.HighLight;
+import com.app.hubert.guide.model.RelativeGuide;
 import com.example.mooddiary.AddMoodEventActivity;
 import com.example.mooddiary.Database;
 import com.example.mooddiary.FilterAdapter;
 import com.example.mooddiary.LoginActivity;
+import com.example.mooddiary.MainActivity;
 import com.example.mooddiary.MoodAdapter;
 import com.example.mooddiary.MoodBean;
 import com.example.mooddiary.MoodEvent;
@@ -97,7 +111,9 @@ public class HomeFragment extends Fragment {
 
         homeViewModel = ViewModelProviders.of(getActivity()).get(HomeViewModel.class);
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        RectF rectF = new RectF(35,70,200,235);
         myMoodEventListView = root.findViewById(R.id.my_mood_event_list_view);
+        myMoodEventListView.setEmptyView(root.findViewById(R.id.empty_view));
 
         homeFilterButton = root.findViewById(R.id.home_filter_button);
         homeFilterListView = root.findViewById(R.id.home_filter_list_view);
@@ -183,6 +199,93 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        NewbieGuide.with(this)
+                .setLabel("page")
+//                .anchor(anchor)
+                .setOnGuideChangedListener(new OnGuideChangedListener() {
+                    @Override
+                    public void onShowed(Controller controller) {
+                        Log.e(TAG, "NewbieGuide onShowed: ");
+                    }
+
+                    @Override
+                    public void onRemoved(Controller controller) {
+                        Log.e(TAG, "NewbieGuide  onRemoved: ");
+                    }
+                })
+                .setOnPageChangedListener(new OnPageChangedListener() {
+                    @Override
+                    public void onPageChanged(int page) {
+                    }
+                })
+                .alwaysShow(true)//Whether the boot layer is displayed every time, by default false is displayed only once
+                .addGuidePage(
+                        GuidePage.newInstance()
+                                .addHighLight(fab)
+                                .setLayoutRes(R.layout.view_guide_floatbutton, R.id.iv)//Set the guide page layout
+                                .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+
+                                    @Override
+                                    public void onLayoutInflated(View view, final Controller controller) {
+                                        view.findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+                                                controller.showPreviewPage();
+                                            }
+                                        });
+                                    }
+                                })
+                                .setEverywhereCancelable(false)
+                )
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(myMoodEventListView)
+                        .setLayoutRes(R.layout.view_guide_moodevent, R.id.iv)
+                        .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, final Controller controller) {
+                                view.findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        controller.showPreviewPage();
+                                    }
+                                });
+                            }
+                        })
+                        .setEverywhereCancelable(false)//Whether to click anywhere to jump to the next page or disappear the guide layer, the default is true
+                )
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(homeFilterButton)
+                        .setLayoutRes(R.layout.view_guide_filterbutton, R.id.iv)
+                        .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, final Controller controller) {
+                                view.findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        controller.showPreviewPage();
+                                    }
+                                });
+                            }
+                        })
+                        .setEverywhereCancelable(false)
+                )
+                .addGuidePage(GuidePage.newInstance()
+                        .addHighLight(rectF)
+                        .setLayoutRes(R.layout.view_guide_drawer, R.id.iv)
+                        .setOnLayoutInflatedListener(new OnLayoutInflatedListener() {
+                            @Override
+                            public void onLayoutInflated(View view, final Controller controller) {
+                                view.findViewById(R.id.textView).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        controller.showPreviewPage();
+                                    }
+                                });
+                            }
+                        })
+                        .setEverywhereCancelable(false)
+                )
+                .show();//display
         return root;
     }
 
