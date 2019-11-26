@@ -83,61 +83,33 @@ public class FriendMapFragment extends Fragment {
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
-                //friendMapViewModel.getFriendsRecentEvent().clear();
-                friendMapLoadingProgress.setVisibility(View.INVISIBLE);
-                friendMap.clear();
-                for (String username : following) {
-                    DocumentReference friendRef = Database.getUserMoodList(username);
-                    friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            ArrayList<MoodEvent> m = documentSnapshot.toObject(MoodList.class).getAllMoodList();
-                            if (!m.isEmpty() && m.get(0).getLocation() != "") {
-                                LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());
-                                if (markPoint != null) {
-                                    friendMap.addMarker(new MarkerOptions().position(markPoint).title(m.get(0).getUsername()).icon(
-                                            BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
-                                }
+                if(documentSnapshot.get("FollowList") != null) {
+                    ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
+                    friendMapLoadingProgress.setVisibility(View.INVISIBLE);
+                    friendMap.clear();
+                    for (String username : following) {
+                        DocumentReference friendRef = Database.getUserMoodList(username);
+                        friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                ArrayList<MoodEvent> m = documentSnapshot.toObject(MoodList.class).getAllMoodList();
+                                if (!m.isEmpty() && m.get(0).getLocation() != "") {
+                                    LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());
+                                    if (markPoint != null) {
+                                        friendMap.addMarker(new MarkerOptions().position(markPoint).title(m.get(0).getUsername()).icon(
+                                                BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
+                                    }
 
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
 
         return root;
     }
-
-    public LatLng getLocationLatLng(Context context, String locationName) {
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng l1 = null;
-
-        try {
-            address = coder.getFromLocationName(locationName, 5);
-            if (address == null) {
-                return null;
-            }
-            if (!(address.isEmpty())){
-                Address location = address.get(0);
-                l1 = new LatLng(location.getLatitude(), location.getLongitude());
-            }
-            else{
-                Toast.makeText(getActivity(), locationName+" is not a valid address, please " +
-                        "enter the correct address", Toast.LENGTH_SHORT).show();
-                return null;
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return l1;
-    }
-
-
 
     @Override
     public void onResume() {

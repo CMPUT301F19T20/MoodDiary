@@ -113,7 +113,7 @@ public class MoodEvent implements Serializable {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
-    
+
     public String getReason() {
         return reason;
     }

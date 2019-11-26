@@ -68,6 +68,9 @@ public class SendFragment extends Fragment {
                 if (!Pattern.matches(usernamePat, friendUsername)) {
                     sendRequestUsernameEdit.setError("Invalid Friend's Username");
                     sendRequestUsernameEdit.setText("");
+                } else if(friendUsername.equals(LoginActivity.userName)) {
+                    sendRequestUsernameEdit.setError("You cannot follow yourself");
+                    sendRequestUsernameEdit.setText("");
                 } else {
                     Database.db.collection("users")
                             .document("users")
