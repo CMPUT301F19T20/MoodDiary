@@ -102,43 +102,6 @@ public class MyMapFragment extends Fragment {
         return root;
     }
 
-    /**
-     * Getting the latitude and longitude of a location string by geocoder
-     * May throw IOException if the locationName does not exist
-     * @param context
-     *      This activity
-     * @param locationName
-     *      This a location
-     * @return
-     *       Returns the LatLng of location
-     */
-    public LatLng getLocationLatLng(Context context, String locationName) {
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng l1 = null;
-
-        try {
-            address = coder.getFromLocationName(locationName, 5);
-            if (address == null) {
-                return null;
-            }
-            if (!(address.isEmpty())){
-                Address location = address.get(0);
-                l1 = new LatLng(location.getLatitude(), location.getLongitude());
-            }
-            else{
-                Toast.makeText(getActivity(), locationName+" is not a valid address, please " +
-                        "enter the correct address", Toast.LENGTH_SHORT).show();
-                return null;
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return l1;
-    }
-
     @Override
     public void onResume() {
         super.onResume();

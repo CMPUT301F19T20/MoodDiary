@@ -111,35 +111,6 @@ public class FriendMapFragment extends Fragment {
         return root;
     }
 
-    public LatLng getLocationLatLng(Context context, String locationName) {
-        Geocoder coder = new Geocoder(context);
-        List<Address> address;
-        LatLng l1 = null;
-
-        try {
-            address = coder.getFromLocationName(locationName, 5);
-            if (address == null) {
-                return null;
-            }
-            if (!(address.isEmpty())){
-                Address location = address.get(0);
-                l1 = new LatLng(location.getLatitude(), location.getLongitude());
-            }
-            else{
-                Toast.makeText(getActivity(), locationName+" is not a valid address, please " +
-                        "enter the correct address", Toast.LENGTH_SHORT).show();
-                return null;
-            }
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-
-        return l1;
-    }
-
-
-
     @Override
     public void onResume() {
         super.onResume();
