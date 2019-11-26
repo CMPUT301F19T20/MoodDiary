@@ -2,6 +2,7 @@ package com.example.mooddiary;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import com.example.mooddiary.ui.friendevent.FriendEventFragment;
@@ -17,6 +18,7 @@ import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.navigation.NavController;
@@ -47,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private final static int HOME_TO_ADD_REQUEST = 10;
     private TextView mainUsernameText;
     private Button mainLogoutButton;
+    private Button mainSwitchButton;
     private NavigationView navigationView;
     private long firstBackPressedTime;
 
@@ -85,6 +88,25 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+
+        mainSwitchButton = navigationView.findViewById(R.id.main_switch_mode_button);
+        mainSwitchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                if (currentMode != Configuration.UI_MODE_NIGHT_YES) {
+                    // Save the night mode status, Application can judge whether to set night mode according to this value
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+
+                    // ThemeConfig theme configuration, here just save the boolean value of whether it is night mode
+                    NightModeConfig.getInstance().setNightMode(getApplicationContext(),true);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                    NightModeConfig.getInstance().setNightMode(getApplicationContext(),false);
+                }
+                recreate();
             }
         });
 

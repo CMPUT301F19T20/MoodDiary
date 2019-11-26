@@ -201,7 +201,7 @@ public class HomeFragment extends Fragment {
 
         NewbieGuide.with(this)
                 .setLabel("page")
-//                .anchor(anchor)
+                //.anchor(anchor)
                 .setOnGuideChangedListener(new OnGuideChangedListener() {
                     @Override
                     public void onShowed(Controller controller) {
@@ -218,7 +218,7 @@ public class HomeFragment extends Fragment {
                     public void onPageChanged(int page) {
                     }
                 })
-                .alwaysShow(true)//Whether the boot layer is displayed every time, by default false is displayed only once
+                //.alwaysShow(true)//Whether the boot layer is displayed every time, by default false is displayed only once
                 .addGuidePage(
                         GuidePage.newInstance()
                                 .addHighLight(fab)

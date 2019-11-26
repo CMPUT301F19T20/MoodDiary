@@ -29,7 +29,7 @@
             android:paddingTop="22dp"
             android:paddingBottom="22dp"
             android:text="@string/add_String"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorBrown"
             android:textSize="27sp">
         </TextView>
     </LinearLayout>

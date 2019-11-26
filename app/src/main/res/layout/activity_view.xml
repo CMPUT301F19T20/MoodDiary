@@ -34,7 +34,7 @@
             android:paddingBottom="6dp"
             android:text="2019/10/31"
             android:layout_toRightOf="@+id/dateicon"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorBrown"
             android:textSize="20sp">
 
         </TextView>
@@ -57,7 +57,7 @@
             android:paddingBottom="6dp"
             android:text="20:30"
             android:layout_alignParentRight="true"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorBrown"
             android:textSize="20sp"></TextView>
 
     </RelativeLayout>
@@ -88,7 +88,7 @@
             android:paddingBottom="6dp"
             android:text="Location"
             android:singleLine="false"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorBrown"
             android:textSize="20sp"></TextView>
     </LinearLayout>
 
@@ -150,7 +150,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingBottom="6dp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorBrown"
             android:textSize="20sp"></TextView>
     </LinearLayout>
 

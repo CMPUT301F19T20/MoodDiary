@@ -25,6 +25,16 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/main_switch_mode_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="@id/main_logout_button"
+                android:layout_alignParentBottom="true"
+                android:background="@android:color/transparent"
+                android:padding="10dp"
+                android:textSize="15sp"
+                android:text="@string/menu_swich_mode"/>
 
             <Button
                 android:id="@+id/main_logout_button"
