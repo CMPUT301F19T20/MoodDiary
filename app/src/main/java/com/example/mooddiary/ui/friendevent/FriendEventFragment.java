@@ -67,20 +67,22 @@ public class FriendEventFragment extends Fragment {
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                ArrayList<String> following = (ArrayList<String>)documentSnapshot.get("FollowList");
-                friendEventViewModel.getMoodList().clear();
-                for(String username: following) {
-                    DocumentReference friendRef = Database.getUserMoodList(username);
-                    friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            MoodList moodList = documentSnapshot.toObject(MoodList.class);
-                            if(!moodList.getAllMoodList().isEmpty()) {
-                                friendEventViewModel.getMoodList().add(moodList.getAllMoodList().get(0));
-                                friendMoodAdapter.notifyDataSetChanged();
+                if(documentSnapshot.get("FollowList") != null) {
+                    ArrayList<String> following = (ArrayList<String>)documentSnapshot.get("FollowList");
+                    friendEventViewModel.getMoodList().clear();
+                    for(String username: following) {
+                        DocumentReference friendRef = Database.getUserMoodList(username);
+                        friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                            @Override
+                            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                MoodList moodList = documentSnapshot.toObject(MoodList.class);
+                                if(!moodList.getAllMoodList().isEmpty()) {
+                                    friendEventViewModel.getMoodList().add(moodList.getAllMoodList().get(0));
+                                    friendMoodAdapter.notifyDataSetChanged();
+                                }
                             }
-                        }
-                    });
+                        });
+                    }
                 }
             }
         });
