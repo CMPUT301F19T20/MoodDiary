@@ -97,7 +97,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private String timeResult = "";
     private String preciseTimeResult = "";
     private String locationResult = "";
-    private LatLng locationLatLngResult = null;
+    private LatLng locationLatLngResult = new LatLng(100,200);
     private String reasonResult = "";
     private String photoResult = "";
 
