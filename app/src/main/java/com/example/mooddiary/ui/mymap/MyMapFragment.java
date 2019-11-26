@@ -81,18 +81,21 @@ public class MyMapFragment extends Fragment {
         docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                ArrayList<MoodEvent> myAllMoodEvents = documentSnapshot.toObject(MoodList.class).getAllMoodList();
-                myMap.clear();
-                myMapLoadingProgress.setVisibility(View.INVISIBLE);
-                for(MoodEvent m: myAllMoodEvents) {
-                    if(m.getLocation() != "") {
-                        LatLng markPoint = new LatLng(m.getLatitude(), m.getLongitude());
-                        if(markPoint != null) {
-                            myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
-                                    BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
+                if(documentSnapshot.toObject(MoodList.class) != null) {
+                    ArrayList<MoodEvent> myAllMoodEvents = documentSnapshot.toObject(MoodList.class).getAllMoodList();
+                    myMap.clear();
+                    myMapLoadingProgress.setVisibility(View.INVISIBLE);
+                    for(MoodEvent m: myAllMoodEvents) {
+                        if(m.getLocation() != "") {
+                            LatLng markPoint = new LatLng(m.getLatitude(), m.getLongitude());
+                            if(markPoint != null) {
+                                myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
+                                        BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
+                            }
                         }
                     }
                 }
+
             }
         });
 
