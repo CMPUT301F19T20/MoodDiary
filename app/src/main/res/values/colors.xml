@@ -3,7 +3,6 @@
     <color name="colorPrimary">#ed968e</color>
     <color name="colorPrimaryDark">#775E5D</color>
     <color name="colorAccent">#D8524A </color>
-
     <color name="colorListBackground">#ffffff</color>
 
 
@@ -18,25 +17,21 @@
     <!--UI color-->
     <color name="colorPink">#ed968e</color>
     <color name="colorGray">#cccccc</color>
+    <color name="colorBrown">#775E5D</color>
     <color name="colorDarkGray">#999999</color>
     <color name="colorWhite">#ffffff</color>
     <color name="colorLightPink">#f7c3c3</color>
     <color name="colorDarkPink">#f17f75</color>
+    <color name="colorCreamWhite">#fffaf6</color>
 
     <!--filter color-->
-    <color name="unselectedColor">#ffffff</color>
     <color name="dividerLine">#f2b2b2</color>
 
     <color name="black_trans80">#33000000</color>
-
     <color name="indicator_unselected">#4D000000</color>
-
-    <color name="white_70">#B3FFFFFF</color>
-    <color name="cyan_50">#E0F7FA</color>
-    <color name="amber_50">#FFF8E1</color>
-    <color name="purple_50">#F3E5F5</color>
-
     <color name="pure_black">#000000</color>
+    <color name="pure_white">#ffffff</color>
+
 
 
 </resources>

@@ -14,7 +14,7 @@
         android:paddingTop="76dp"
         android:paddingLeft="36dp"
         android:text="@string/login_String"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorBrown"
         android:textSize="30sp">
 
     </TextView>
@@ -37,7 +37,7 @@
 
             android:text="@string/username"
             android:textSize="20sp"
-            android:textColor="@color/colorPrimaryDark">
+            android:textColor="@color/colorBrown">
         </TextView>
 
         <EditText
@@ -45,7 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorBrown"
             android:theme="@style/EditTextStyle">
         </EditText>
 

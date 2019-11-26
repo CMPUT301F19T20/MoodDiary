@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="46dp"
         android:text="Want to see how your friends are feeling now?"
-        android:textColor="@color/colorDarkPink"
+        android:textColor="@color/colorBrown"
         android:textSize="28sp">
 
     </TextView>
