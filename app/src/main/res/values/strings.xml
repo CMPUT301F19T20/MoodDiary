@@ -102,4 +102,7 @@
     <!-- filter -->
     <string name="clear_all_button">clear all</string>
     <string name="select_all_button">select all</string>
+
+    <!-- API -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyBe-HnY17X1_GOMDFYDJNZHHpEmWOfiATw</string>
 </resources>

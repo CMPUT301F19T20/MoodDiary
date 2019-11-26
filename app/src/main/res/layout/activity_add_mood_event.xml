@@ -253,13 +253,14 @@
                     >
                 </ImageView>
 
-                <EditText
-                    android:id="@+id/add_location_edit"
+                <fragment
+                    android:id="@+id/add_location_autoComplete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:hint="@string/chooseLocation">
-                </EditText>
+                    android:hint="@string/chooseLocation"
+                    android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment">
+                </fragment>
 
             </LinearLayout>
 

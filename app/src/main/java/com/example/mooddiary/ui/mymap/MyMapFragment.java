@@ -86,7 +86,7 @@ public class MyMapFragment extends Fragment {
                 myMapLoadingProgress.setVisibility(View.INVISIBLE);
                 for(MoodEvent m: myAllMoodEvents) {
                     if(m.getLocation() != "") {
-                        LatLng markPoint = getLocationLatLng(getContext(), m.getLocation());
+                        LatLng markPoint = new LatLng(m.getLatitude(), m.getLongitude());
                         if(markPoint != null) {
                             myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
                                     BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
@@ -95,31 +95,6 @@ public class MyMapFragment extends Fragment {
                 }
             }
         });
-
-//        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-//            @Override
-//            public void onSuccess(DocumentSnapshot documentSnapshot) {
-//                myMoodList = documentSnapshot.toObject(MoodList.class).getAllMoodList();
-//                myMapMoodMapMap.getMapAsync(new OnMapReadyCallback() {
-//                    @Override
-//                    public void onMapReady(GoogleMap googleMap) {
-//                        myMap = googleMap;
-//                        myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(60,-100)));
-//                        myMapLoadingProgress.setVisibility(View.INVISIBLE);
-//                        for(MoodEvent m: myMoodList) {
-//                            System.out.println(m.getMood().getMood());
-//                            if(m.getLocation() != "") {
-//                                LatLng markPoint = getLocationLatLng(getContext(), m.getLocation());
-//                                if(markPoint != null) {
-//                                    myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
-//                                            BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
-//                                }
-//                            }
-//                        }
-//                    }
-//                });
-//            }
-//        });
 
         return root;
     }

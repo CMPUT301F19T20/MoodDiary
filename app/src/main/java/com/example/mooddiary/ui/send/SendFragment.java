@@ -21,12 +21,15 @@ import com.example.mooddiary.MainActivity;
 import com.example.mooddiary.R;
 import com.example.mooddiary.Request;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 /**
@@ -76,10 +79,22 @@ public class SendFragment extends Fragment {
                                         sendRequestUsernameEdit.setError("Username Doesn't Exist");
                                         sendRequestUsernameEdit.setText("");
                                     } else {
-                                        Request request = new Request(LoginActivity.userName, friendUsername);
-                                        Request.send(request);
-                                        sendRequestUsernameEdit.setText("");
-                                        Toast.makeText(getActivity(), "request sent", Toast.LENGTH_SHORT).show();
+                                        Database.getUserFollowList(LoginActivity.userName).get()
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                                        ArrayList<String> friends = (ArrayList<String>)documentSnapshot.get("FollowList");
+                                                        if(!friends.contains(friendUsername)) {
+                                                            Request request = new Request(LoginActivity.userName, friendUsername);
+                                                            Request.send(request);
+                                                            sendRequestUsernameEdit.setText("");
+                                                            Toast.makeText(getActivity(), "request sent", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                        else {
+                                                            Toast.makeText(getActivity(), "You are already friends", Toast.LENGTH_LONG).show();
+                                                        }
+                                                    }
+                                                });
                                     }
                                 }
                             });
