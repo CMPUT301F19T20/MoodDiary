@@ -34,7 +34,6 @@
             android:layout_height="wrap_content"
             android:paddingLeft="5dp"
             android:paddingTop="46dp"
-
             android:text="@string/username"
             android:textSize="20sp"
             android:textColor="@color/colorBrown">
@@ -45,6 +44,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:textColor="@color/colorBrown"
+            android:theme="@style/EditTextStyle">
+        </EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingTop="8dp"
+            android:text="@string/password"
+            android:textSize="20sp"
+            android:textColor="@color/colorBrown">
+        </TextView>
+
+        <EditText
+            android:id="@+id/login_password_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:inputType="textPassword"
             android:textColor="@color/colorBrown"
             android:theme="@style/EditTextStyle">
         </EditText>

@@ -18,6 +18,13 @@ public class Database {
                 .document("MoodList");
     }
 
+    public static DocumentReference getUserPassword(String userName) {
+        return Database.db.collection("users")
+                .document("users")
+                .collection(userName)
+                .document("Password");
+    }
+
     public static DocumentReference getUserFollowList(String userName) {
         return Database.db.collection("users")
                 .document("users")

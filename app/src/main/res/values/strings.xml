@@ -56,12 +56,15 @@
     <string name="noAccount">"Don't have an account?"</string>
     <string name="hasAccount">Already have an account?</string>
     <string name="username">username</string>
+    <string name="password">password</string>
     <string name="newUser">enter your username</string>
     <string name="login">Login</string>
     <string name="signup">Sign up</string>
     <string name="confirm">Confirm</string>
     <string name="welcome_String1">Hi! Welcome to Mood Diary</string>
     <string name="welcome_String2">"Let's fill in all your feelings"</string>
+    <string name="new_password">enter your password</string>
+    <string name="new_password_again">enter your password again</string>
 
     <!--Add activity-->
     <string name="add_String">How do you feel today?</string>
