@@ -30,8 +30,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginButton;
     private Button signUpButton;
     private EditText loginUsernameEdit;
+    private EditText loginPasswordEdit;
     public static String userName;
-    //private FirebaseFirestore db;
+    private String password;
     public static final String TAG = LoginActivity.class.getSimpleName();
 
     /**
@@ -54,7 +55,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.login_login_button);
         signUpButton = findViewById(R.id.login_signup_button);
         loginUsernameEdit = findViewById(R.id.login_username_edit);
-        //db = FirebaseFirestore.getInstance();
+        loginPasswordEdit = findViewById(R.id.login_password_edit);
         initButtons();
     }
 
@@ -66,24 +67,45 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 userName = loginUsernameEdit.getText().toString();
+                password = loginPasswordEdit.getText().toString();
                 String usernamePat = "^([a-z0-9A-Z]{3,20})$";
+                String passwordPat = "^([a-z0-9A-Z]{6,20})$";
                 if (!Pattern.matches(usernamePat, loginUsernameEdit.getText().toString())) {
                     loginUsernameEdit.setError("Username should more 3 and less than 20 characters with only letters or numbers");
                     loginUsernameEdit.setText("");
-                }
-                else{
+                    loginPasswordEdit.setText("");
+                } else if (!Pattern.matches(passwordPat, loginPasswordEdit.getText().toString())) {
+                    loginPasswordEdit.setError("Password should more 6 and less than 20 characters with only letters or numbers");
+                    loginPasswordEdit.setText("");
+                } else {
                     Database.getUserMoodList(LoginActivity.userName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                         @Override
                         public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            if(documentSnapshot.exists()){
-                                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent (getApplicationContext(), MainActivity.class);
-                                intent.putExtra("EXTRA", "openFragment");
-                                startActivity(intent);
-                            }
-                            else{
+                            if (!documentSnapshot.exists()) {
                                 loginUsernameEdit.setError("Username doesn't exist");
                                 loginUsernameEdit.setText("");
+                                loginPasswordEdit.setText("");
+                            } else {
+                                Database.getUserPassword(LoginActivity.userName).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            DocumentSnapshot document = task.getResult();
+                                            if (document != null) {
+                                                String truePassword = (String) document.get("Password");
+                                                if (truePassword.equals(password)) {
+                                                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                                                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                                    intent.putExtra("EXTRA", "openFragment");
+                                                    startActivity(intent);
+                                                } else {
+                                                    loginPasswordEdit.setError("Incorrect password");
+                                                    loginPasswordEdit.setText("");
+                                                }
+                                            }
+                                        }
+                                    }
+                                });
                             }
 
                         }
