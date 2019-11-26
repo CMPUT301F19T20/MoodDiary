@@ -1,6 +1,7 @@
 package com.example.mooddiary.ui.friendmap;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
@@ -74,6 +76,9 @@ public class FriendMapFragment extends Fragment {
             @Override
             public void onMapReady(GoogleMap googleMap) {
                 friendMap = googleMap;
+                int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+                friendMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(getContext(),
+                        currentMode == Configuration.UI_MODE_NIGHT_YES? R.raw.night_map:R.raw.day_map));
                 friendMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(60, -100)));
                 DocumentReference docRef = Database.getUserFollowList(LoginActivity.userName);
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
