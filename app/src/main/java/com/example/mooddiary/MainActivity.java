@@ -35,7 +35,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private final static int HOME_TO_ADD_REQUEST = 10;
     private TextView mainUsernameText;
     private Button mainLogoutButton;
-    private Button mainSwitchButton;
+    private Switch mainSwitchSwitch;
     private NavigationView navigationView;
     private long firstBackPressedTime;
 
@@ -91,12 +94,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mainSwitchButton = navigationView.findViewById(R.id.main_switch_mode_button);
-        mainSwitchButton.setOnClickListener(new View.OnClickListener() {
+        mainSwitchSwitch = navigationView.findViewById(R.id.main_switch_mode_switch);
+        int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+        mainSwitchSwitch.setChecked(currentMode == Configuration.UI_MODE_NIGHT_YES);
+        mainSwitchSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                int currentMode = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
-                if (currentMode != Configuration.UI_MODE_NIGHT_YES) {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
                     // Save the night mode status, Application can judge whether to set night mode according to this value
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
 
@@ -106,10 +110,10 @@ public class MainActivity extends AppCompatActivity {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                     NightModeConfig.getInstance().setNightMode(getApplicationContext(),false);
                 }
-                recreate();
+                ViewGroup viewGroup = findViewById(R.id.nav_view);
+                viewGroup.invalidate();
             }
         });
-
     }
 
     /**

@@ -74,28 +74,27 @@ public class MyMapFragment extends Fragment {
             public void onMapReady(GoogleMap googleMap) {
                 myMap = googleMap;
                 myMap.moveCamera(CameraUpdateFactory.newLatLng(new LatLng(60,-100)));
-            }
-        });
-
-        DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
-        docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
-            @Override
-            public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                if(documentSnapshot.toObject(MoodList.class) != null) {
-                    ArrayList<MoodEvent> myAllMoodEvents = documentSnapshot.toObject(MoodList.class).getAllMoodList();
-                    myMap.clear();
-                    myMapLoadingProgress.setVisibility(View.INVISIBLE);
-                    for(MoodEvent m: myAllMoodEvents) {
-                        if(m.getLocation() != "") {
-                            LatLng markPoint = new LatLng(m.getLatitude(), m.getLongitude());
-                            if(markPoint.latitude != 100 && markPoint.longitude != 200) {
-                                myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
-                                        BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
+                DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
+                docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if(documentSnapshot.toObject(MoodList.class) != null) {
+                            ArrayList<MoodEvent> myAllMoodEvents = documentSnapshot.toObject(MoodList.class).getAllMoodList();
+                            myMap.clear();
+                            myMapLoadingProgress.setVisibility(View.INVISIBLE);
+                            for(MoodEvent m: myAllMoodEvents) {
+                                if(m.getLocation() != "") {
+                                    LatLng markPoint = new LatLng(m.getLatitude(), m.getLongitude());
+                                    if(markPoint.latitude != 100 && markPoint.longitude != 200) {
+                                        myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
+                                                BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
+                                    }
+                                }
                             }
                         }
-                    }
-                }
 
+                    }
+                });
             }
         });
 
