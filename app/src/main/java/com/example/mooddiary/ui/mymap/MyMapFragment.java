@@ -88,7 +88,7 @@ public class MyMapFragment extends Fragment {
                     for(MoodEvent m: myAllMoodEvents) {
                         if(m.getLocation() != "") {
                             LatLng markPoint = new LatLng(m.getLatitude(), m.getLongitude());
-                            if(markPoint != null) {
+                            if(markPoint.latitude != 100 && markPoint.longitude != 200) {
                                 myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
                                         BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
                             }

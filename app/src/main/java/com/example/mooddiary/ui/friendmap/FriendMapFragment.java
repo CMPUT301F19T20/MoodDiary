@@ -95,7 +95,7 @@ public class FriendMapFragment extends Fragment {
                                 ArrayList<MoodEvent> m = documentSnapshot.toObject(MoodList.class).getAllMoodList();
                                 if (!m.isEmpty() && m.get(0).getLocation() != "") {
                                     LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());
-                                    if (markPoint != null) {
+                                    if (markPoint.latitude != 100 && markPoint.longitude != 200) {
                                         friendMap.addMarker(new MarkerOptions().position(markPoint).title(m.get(0).getUsername()).icon(
                                                 BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
                                     }
