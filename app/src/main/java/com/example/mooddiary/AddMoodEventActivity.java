@@ -39,13 +39,20 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.api.net.PlacesClient;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.android.gms.maps.model.LatLng;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -56,6 +63,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -64,8 +72,6 @@ import java.util.Date;
  */
 public class AddMoodEventActivity extends AppCompatActivity implements View.OnClickListener, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, AdapterView.OnItemSelectedListener {
     private static final SimpleDateFormat simpleDate = new SimpleDateFormat("yyyyMMddHHmmss");
-    //FirebaseStorage storage = FirebaseStorage.getInstance();
-    //StorageReference storageRef = storage.getReference();
 
     private Button addButton;
     private ImageButton cancelButton;
@@ -75,7 +81,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private TextView timeText;
     private Spinner moodSpinner;
     private Spinner socialSituationSpinner;
-    private EditText locationText;
+    private AutocompleteSupportFragment locationAutoComplete;
     private EditText reasonEdit;
     private ImageView photoImage;
     private ProgressBar loadingImage;
@@ -91,6 +97,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private String timeResult = "";
     private String preciseTimeResult = "";
     private String locationResult = "";
+    private LatLng locationLatLngResult = null;
     private String reasonResult = "";
     private String photoResult = "";
 
@@ -98,8 +105,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private static final  int CHOOSE_PHOTO = 2;
 
     private Uri imageUri;
-
-
 
     private boolean two_selected = false;
     private ArrayList<MoodBean> mData = null;
@@ -109,6 +114,10 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private MoodEvent moodEventFromView;
 
     private Calendar current;
+
+    private String placesAPIKey;
+
+
     /**
      * This creates the view of Main add activity
      * @param savedInstanceState
@@ -127,7 +136,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         timeText = findViewById(R.id.add_time_text);
         moodSpinner = findViewById(R.id.add_mood_spinner);
         socialSituationSpinner = findViewById(R.id.add_social_situation_spinner);
-        locationText = findViewById(R.id.add_location_edit);
+        locationAutoComplete = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.add_location_autoComplete);
         reasonEdit = findViewById(R.id.add_textual_reason_edit);
         photoImage = findViewById(R.id.add_image_reason);
         photoFromCameraButton = findViewById(R.id.add_photo_camera);
@@ -135,6 +144,9 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         loadingImage = findViewById(R.id.add_downloading_progress);
 
         photoChangeFlag = false;
+        placesAPIKey = getString(R.string.google_maps_key);
+        if(!Places.isInitialized()) { Places.initialize(getApplicationContext(), placesAPIKey); }
+        locationAutoComplete.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
 
         /*
           get intent from either Main Activity(Home Fragment) or View Activity
@@ -159,13 +171,14 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             moodSpinnerResult = moodEventFromView.getMood().getMood();
             socialSituationSpinnerResult = moodEventFromView.getSocialSituation();
             locationResult = moodEventFromView.getLocation();
+            locationLatLngResult = new LatLng(moodEventFromView.getLatitude(), moodEventFromView.getLongitude());
             reasonResult = moodEventFromView.getReason();
             photoResult = moodEventFromView.getPhoto();
             loadingImage.setVisibility(View.VISIBLE);
             // initialize views in Add Activity
             dateText.setText(moodEventFromView.getDate());
             timeText.setText(moodEventFromView.getTime());
-            locationText.setText(moodEventFromView.getLocation());
+            locationAutoComplete.setText(moodEventFromView.getLocation());
             reasonEdit.setText(moodEventFromView.getReason());
             String socialSituation = moodEventFromView.getSocialSituation();
             Mood mood = moodEventFromView.getMood();
@@ -270,7 +283,19 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             }
         });
 
+        locationAutoComplete.setOnPlaceSelectedListener(new PlaceSelectionListener() {
+            @Override
+            public void onPlaceSelected(@NonNull Place place) {
+                locationResult = place.getName();
+                locationAutoComplete.setText(locationResult);
+                locationLatLngResult = place.getLatLng();
+            }
 
+            @Override
+            public void onError(@NonNull Status status) {
+
+            }
+        });
 
         socialSituationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -299,7 +324,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
             @Override
             public void onClick(View view) {
                 reasonResult = reasonEdit.getText().toString();
-                locationResult = locationText.getText().toString();
                 successFlag = true;
                 current = Calendar.getInstance();
                 String [] checkNumberOfReasonWords = reasonResult.split(" ");
@@ -335,11 +359,11 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
                 if(!successFlag) { return; }
 
-                MoodEvent moodEventResult =
-                        new MoodEvent(moodSpinnerResult, dateResult, timeResult,preciseTimeResult, socialSituationSpinnerResult, locationResult, reasonResult, photoResult, LoginActivity.userName);
+                MoodEvent moodEventResult = new MoodEvent(moodSpinnerResult, dateResult, timeResult,
+                        preciseTimeResult, socialSituationSpinnerResult, locationResult,
+                        locationLatLngResult.latitude, locationLatLngResult.longitude,
+                        reasonResult, photoResult, LoginActivity.userName);
 
-                System.out.println(moodEventResult.getNumericDate());
-                System.out.println(current.getTimeInMillis());
                 if(moodEventResult.getNumericDate() > current.getTimeInMillis()) {
                     Toast.makeText(AddMoodEventActivity.this, "You cannot choose future time",Toast.LENGTH_LONG).show();
                     return;

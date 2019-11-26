@@ -1,10 +1,9 @@
 package com.example.mooddiary;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.google.android.gms.maps.model.LatLng;
 
 /**
  * This is a class to store data for MoodEvent
@@ -16,6 +15,8 @@ public class MoodEvent implements Serializable {
     private String preciseTime;
     private String socialSituation;
     private String location;
+    private double latitude;
+    private double longitude;
     private String reason;
     private String photo;
     private Mood mood;
@@ -29,13 +30,16 @@ public class MoodEvent implements Serializable {
     }
 
 
-    public MoodEvent(String mood, String date, String time,String preciseTime, String socialSituation, String location,
+    public MoodEvent(String mood, String date, String time,String preciseTime,
+                     String socialSituation, String location, double latitude, double longitude,
                      String reason, String photo, String username) {
         this.date = date;
         this.time = time;
         this.preciseTime = preciseTime;
         this.socialSituation = socialSituation;
         this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.reason = reason;
         this.photo = photo;
         this.mood = new Mood(mood);
@@ -94,6 +98,22 @@ public class MoodEvent implements Serializable {
         this.location = location;
     }
 
+    public double getLatitude() {
+        return this.latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return this.longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+    
     public String getReason() {
         return reason;
     }
