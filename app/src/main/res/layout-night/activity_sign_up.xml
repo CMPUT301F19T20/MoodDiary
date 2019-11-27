@@ -9,19 +9,18 @@
         android:src="@drawable/bgtest"
         android:scaleType = "centerCrop"
         />
-
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical">
-
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
         <TextView
-            android:id="@+id/welcomeback"
+            android:id="@+id/there"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="56dp"
             android:paddingLeft="36dp"
-            android:text="@string/login_String"
+            android:text="@string/signup_String"
             android:textColor="@color/colorBrown"
             android:textSize="30sp">
 
@@ -30,7 +29,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/welcomeback"
+            android:layout_below="@id/there"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:paddingTop="10dp"
@@ -42,13 +41,13 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingTop="36dp"
-                android:text="@string/username"
+                android:text="@string/newUser"
                 android:textSize="20sp"
                 android:textColor="@color/colorBrown">
             </TextView>
 
             <EditText
-                android:id="@+id/login_username_edit"
+                android:id="@+id/signup_new_username_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -61,13 +60,33 @@
                 android:layout_height="wrap_content"
                 android:paddingLeft="5dp"
                 android:paddingTop="8dp"
-                android:text="@string/password"
+                android:text="@string/new_password"
                 android:textSize="20sp"
                 android:textColor="@color/colorBrown">
             </TextView>
 
             <EditText
-                android:id="@+id/login_password_edit"
+                android:id="@+id/signup_new_password_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:inputType="textPassword"
+                android:textColor="@color/colorBrown"
+                android:theme="@style/EditTextStyle">
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="5dp"
+                android:paddingTop="8dp"
+                android:text="@string/new_password_again"
+                android:textSize="20sp"
+                android:textColor="@color/colorBrown">
+            </TextView>
+
+            <EditText
+                android:id="@+id/signup_new_password_check_edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
@@ -77,15 +96,14 @@
             </EditText>
 
             <Button
-                android:id="@+id/login_login_button"
+                android:id="@+id/signup_confirm_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-
                 android:textAllCaps="false"
                 android:textSize="20sp"
                 android:background="@color/colorDarkPink"
-                android:text="@string/login"
+                android:text="@string/confirm"
                 android:textColor="@color/colorWhite" />
 
         </LinearLayout>
@@ -101,18 +119,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="20sp"
-                android:paddingLeft="56dp"
-                android:text="@string/noAccount"
+                android:paddingLeft="46dp"
+                android:text="@string/hasAccount"
                 android:textColor="@color/colorDarkGray">
             </TextView>
 
             <Button
-                android:id="@+id/login_signup_button"
+                android:id="@+id/signup_login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/signup"
+                android:text="@string/login"
                 android:textSize="20sp"
-                android:textColor="@color/colorPink"
+                android:textColor="#e7bcf9"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent">
 
@@ -125,6 +143,3 @@
 
 
 </FrameLayout>
-
-
-

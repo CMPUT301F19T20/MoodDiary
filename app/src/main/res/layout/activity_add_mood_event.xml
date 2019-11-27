@@ -250,6 +250,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
+                    android:layout_marginRight="20dp"
                     android:hint="@string/chooseLocation"
                     android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment">
                 </fragment>

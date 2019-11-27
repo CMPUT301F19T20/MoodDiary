@@ -59,6 +59,7 @@ public class FriendEventFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_friend_event, container, false);
 
         friendMoodEventListView = root.findViewById(R.id.friend_mood_event_list_view);
+        friendMoodEventListView.setEmptyView(root.findViewById(R.id.empty_view));
         friendMoodAdapter = new FriendMoodAdapter(getActivity(),
                 R.layout.friend_mood_list_item, friendEventViewModel.getMoodList());
         friendMoodEventListView.setAdapter(friendMoodAdapter);
