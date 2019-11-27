@@ -28,11 +28,11 @@ public class GuideFragment extends Fragment {
 
     private String[] twoTitles = new String[]{
             "Here you can record daily mood,\n" +
-                    "upload the scenery that you take,\n" +
+                    "upload the photo that you take,\n" +
                     "write the feeling that you come up",
-            "Check your friends' mood over the world,\n" +
-                    "See where your friends are recently,\n"+
-                    "and happy for their achievement\n",
+            "Check your friends' mood,\n" +
+                    "See where your friends are,\n"+
+                    "happy for their achievement\n",
             "Create a unique emotion map that belongs to you\n" +
                     "Of course, the emotion of friends can also be marked\n"
     };

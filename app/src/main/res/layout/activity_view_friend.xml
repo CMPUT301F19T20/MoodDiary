@@ -8,6 +8,8 @@
     tools:context=".ViewActivity">
 
 
+
+
     <!--date&time-->
     <RelativeLayout
         android:layout_width="match_parent"
@@ -68,7 +70,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingBottom="20dp"
         android:paddingLeft="20dp"
         android:paddingRight="20dp">
 
@@ -92,6 +93,36 @@
             android:textSize="20sp"></TextView>
     </LinearLayout>
 
+
+    <!--username-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="20dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/mood"
+            >
+        </ImageView>
+
+        <TextView
+            android:id="@+id/view_friend_username_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="6dp"
+            android:text="username"
+            android:singleLine="false"
+            android:textColor="@color/colorBrown"
+            android:textSize="20sp">
+        </TextView>
+    </LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -218,42 +249,6 @@
 
     </ScrollView>
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginRight="20dp"
-        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/mood">
-
-        </ImageView>
-
-    </RelativeLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-
-
-        <Button
-            android:id="@+id/view_friend_username_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            android:background="@color/colorPink"
-            android:textColor="@color/colorWhite" />
-    </LinearLayout>
 
 </LinearLayout>

@@ -6,7 +6,7 @@
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="@dimen/nav_header_height"
-        android:src="@drawable/day"
+        android:src="@drawable/night"
         android:scaleType = "centerCrop"
         />
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,7 +31,7 @@
             android:layout_marginStart="10dp"
             android:textSize="25sp"
             android:textStyle="bold"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorWhite"
             android:text="@string/nav_header_title"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
