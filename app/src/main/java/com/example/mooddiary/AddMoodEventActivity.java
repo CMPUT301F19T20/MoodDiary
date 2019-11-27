@@ -147,6 +147,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
         placesAPIKey = getString(R.string.google_maps_key);
         if(!Places.isInitialized()) { Places.initialize(getApplicationContext(), placesAPIKey); }
         locationAutoComplete.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG));
+        locationAutoComplete.setHint(getString(R.string.chooseLocation));
 
         /*
           get intent from either Main Activity(Home Fragment) or View Activity

@@ -42,6 +42,16 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/finish"/>
 
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="80dp"
+        android:layout_alignParentLeft="true"
+        android:src="@drawable/arrowleft">
+
+    </ImageView>
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
