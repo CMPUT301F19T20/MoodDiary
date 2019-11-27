@@ -86,9 +86,9 @@ public class FriendMapFragment extends Fragment {
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        if(documentSnapshot.get("FollowList") != null) {
-                            ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
-                            friendMapLoadingProgress.setVisibility(View.INVISIBLE);
+                        ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
+                        friendMapLoadingProgress.setVisibility(View.INVISIBLE);
+                        if(!following.isEmpty()) {
                             friendMap.clear();
                             LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
                             for (String username : following) {
