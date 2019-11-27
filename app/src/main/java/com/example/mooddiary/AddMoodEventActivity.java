@@ -293,9 +293,18 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
             @Override
             public void onError(@NonNull Status status) {
-
             }
         });
+
+        locationAutoComplete.getView().findViewById(R.id.places_autocomplete_clear_button)
+                .setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        locationResult = "";
+                        locationLatLngResult = new LatLng(100,200);
+                        locationAutoComplete.setText("");
+                    }
+                });
 
         socialSituationSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
