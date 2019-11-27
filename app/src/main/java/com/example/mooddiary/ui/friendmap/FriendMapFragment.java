@@ -27,6 +27,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -49,6 +50,7 @@ public class FriendMapFragment extends Fragment {
     private MapView friendMapMoodMapMap;
     private GoogleMap friendMap;
     private ProgressBar friendMapLoadingProgress;
+    private LatLngBounds.Builder boundBuilder;
 
     /**
      * This creates the view for the list of user's friend's mood event map.
@@ -88,6 +90,7 @@ public class FriendMapFragment extends Fragment {
                             ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
                             friendMapLoadingProgress.setVisibility(View.INVISIBLE);
                             friendMap.clear();
+                            boundBuilder = new LatLngBounds.Builder();
                             for (String username : following) {
                                 DocumentReference friendRef = Database.getUserMoodList(username);
                                 friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -99,12 +102,14 @@ public class FriendMapFragment extends Fragment {
                                             if (markPoint.latitude != 100 && markPoint.longitude != 200) {
                                                 friendMap.addMarker(new MarkerOptions().position(markPoint).title(m.get(0).getUsername()).icon(
                                                         BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
+                                                boundBuilder.include(markPoint);
                                             }
 
                                         }
                                     }
                                 });
                             }
+                            friendMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundBuilder.build(), 250));
                         }
                     }
                 });

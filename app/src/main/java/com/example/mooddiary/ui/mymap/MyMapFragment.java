@@ -26,6 +26,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -48,6 +49,7 @@ public class MyMapFragment extends Fragment {
     private GoogleMap myMap;
     private ArrayList<MoodEvent> myMoodList = new ArrayList<>();
     private ProgressBar myMapLoadingProgress;
+    private LatLngBounds.Builder boundBuilder;
   
     /**
      * This creates the view for the user's mood event map.
@@ -64,6 +66,7 @@ public class MyMapFragment extends Fragment {
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my_map, container, false);
         //final TextView textView = root.findViewById(R.id.text_slideshow);
+
 
         myMapMoodMapMap = root.findViewById(R.id.myMap_map_map);
         myMapMoodMapMap.onCreate(savedInstanceState);
@@ -86,6 +89,7 @@ public class MyMapFragment extends Fragment {
                         if(documentSnapshot.toObject(MoodList.class) != null) {
                             ArrayList<MoodEvent> myAllMoodEvents = documentSnapshot.toObject(MoodList.class).getAllMoodList();
                             myMap.clear();
+                            boundBuilder = new LatLngBounds.Builder();
                             myMapLoadingProgress.setVisibility(View.INVISIBLE);
                             for(MoodEvent m: myAllMoodEvents) {
                                 if(m.getLocation() != "") {
@@ -93,13 +97,16 @@ public class MyMapFragment extends Fragment {
                                     if(markPoint.latitude != 100 && markPoint.longitude != 200) {
                                         myMap.addMarker(new MarkerOptions().position(markPoint).title(m.getMood().getMood()).icon(
                                                 BitmapDescriptorFactory.fromResource(m.getMood().getMarker())));
+                                        boundBuilder.include(markPoint);
                                     }
                                 }
                             }
+                            myMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundBuilder.build(), 250));
                         }
 
                     }
                 });
+
             }
         });
 
