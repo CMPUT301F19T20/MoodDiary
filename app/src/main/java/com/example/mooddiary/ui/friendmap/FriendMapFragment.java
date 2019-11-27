@@ -50,7 +50,7 @@ public class FriendMapFragment extends Fragment {
     private MapView friendMapMoodMapMap;
     private GoogleMap friendMap;
     private ProgressBar friendMapLoadingProgress;
-    private LatLngBounds.Builder boundBuilder;
+    
 
     /**
      * This creates the view for the list of user's friend's mood event map.
@@ -90,7 +90,7 @@ public class FriendMapFragment extends Fragment {
                             ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
                             friendMapLoadingProgress.setVisibility(View.INVISIBLE);
                             friendMap.clear();
-                            boundBuilder = new LatLngBounds.Builder();
+                            LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
                             for (String username : following) {
                                 DocumentReference friendRef = Database.getUserMoodList(username);
                                 friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
