@@ -86,30 +86,50 @@ public class FriendMapFragment extends Fragment {
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
-                        if(documentSnapshot.get("FollowList") != null) {
-                            ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
-                            friendMapLoadingProgress.setVisibility(View.INVISIBLE);
+                        ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
+                        friendMapLoadingProgress.setVisibility(View.INVISIBLE);
+                        if(!following.isEmpty()) {
                             friendMap.clear();
                             LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
                             for (String username : following) {
-                                DocumentReference friendRef = Database.getUserMoodList(username);
-                                friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                                    @Override
-                                    public void onSuccess(DocumentSnapshot documentSnapshot) {
-                                        ArrayList<MoodEvent> m = documentSnapshot.toObject(MoodList.class).getAllMoodList();
-                                        if (!m.isEmpty() && m.get(0).getLocation() != "") {
-                                            LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());
-                                            if (markPoint.latitude != 100 && markPoint.longitude != 200) {
-                                                friendMap.addMarker(new MarkerOptions().position(markPoint).title(m.get(0).getUsername()).icon(
-                                                        BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
-                                                boundBuilder.include(markPoint);
-                                            }
+                                if(username.equals(following.get(following.size()-1))) {
+                                    DocumentReference friendRef = Database.getUserMoodList(username);
+                                    friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            ArrayList<MoodEvent> m = documentSnapshot.toObject(MoodList.class).getAllMoodList();
+                                            if (!m.isEmpty() && m.get(0).getLocation() != "") {
+                                                LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());
+                                                if (markPoint.latitude != 100 && markPoint.longitude != 200) {
+                                                    friendMap.addMarker(new MarkerOptions().position(markPoint).title(m.get(0).getUsername()).icon(
+                                                            BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
+                                                    boundBuilder.include(markPoint);
+                                                    friendMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundBuilder.build(), 250));
+                                                }
 
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                } else {
+                                    DocumentReference friendRef = Database.getUserMoodList(username);
+                                    friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                                        @Override
+                                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            ArrayList<MoodEvent> m = documentSnapshot.toObject(MoodList.class).getAllMoodList();
+                                            if (!m.isEmpty() && m.get(0).getLocation() != "") {
+                                                LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());
+                                                if (markPoint.latitude != 100 && markPoint.longitude != 200) {
+                                                    friendMap.addMarker(new MarkerOptions().position(markPoint).title(m.get(0).getUsername()).icon(
+                                                            BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
+                                                    boundBuilder.include(markPoint);
+                                                }
+
+                                            }
+                                        }
+                                    });
+                                }
+
                             }
-                            friendMap.animateCamera(CameraUpdateFactory.newLatLngBounds(boundBuilder.build(), 250));
                         }
                     }
                 });
