@@ -49,7 +49,6 @@ public class MyMapFragment extends Fragment {
     private GoogleMap myMap;
     private ArrayList<MoodEvent> myMoodList = new ArrayList<>();
     private ProgressBar myMapLoadingProgress;
-    private LatLngBounds.Builder boundBuilder;
   
     /**
      * This creates the view for the user's mood event map.
@@ -89,7 +88,7 @@ public class MyMapFragment extends Fragment {
                         if(documentSnapshot.toObject(MoodList.class) != null) {
                             ArrayList<MoodEvent> myAllMoodEvents = documentSnapshot.toObject(MoodList.class).getAllMoodList();
                             myMap.clear();
-                            boundBuilder = new LatLngBounds.Builder();
+                            LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
                             myMapLoadingProgress.setVisibility(View.INVISIBLE);
                             for(MoodEvent m: myAllMoodEvents) {
                                 if(m.getLocation() != "") {
