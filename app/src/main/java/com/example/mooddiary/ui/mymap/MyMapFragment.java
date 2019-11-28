@@ -85,10 +85,11 @@ public class MyMapFragment extends Fragment {
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if(documentSnapshot == null) { return; }
                         ArrayList<MoodEvent> myAllMoodEvents = documentSnapshot.toObject(MoodList.class).getAllMoodList();
                         myMapLoadingProgress.setVisibility(View.INVISIBLE);
+                        myMap.clear();
                         if(!myAllMoodEvents.isEmpty()) {
-                            myMap.clear();
                             LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
                             boolean hasPoint = false;
                             for(MoodEvent m: myAllMoodEvents) {
