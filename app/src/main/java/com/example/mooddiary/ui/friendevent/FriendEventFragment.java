@@ -10,7 +10,6 @@ import android.widget.ListView;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.mooddiary.Database;
 import com.example.mooddiary.FriendMoodAdapter;
 import com.example.mooddiary.LoginActivity;
@@ -30,9 +29,9 @@ import java.util.ArrayList;
  */
 public class FriendEventFragment extends Fragment {
 
-    private FriendEventViewModel friendEventViewModel;
     private ListView friendMoodEventListView;
     private FriendMoodAdapter friendMoodAdapter;
+    private ArrayList<MoodEvent> friendMoodList = new ArrayList<>();
 
     /**
      * This creates the view for the list of user's friends' friends mood events.
@@ -47,14 +46,13 @@ public class FriendEventFragment extends Fragment {
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        friendEventViewModel =
-                ViewModelProviders.of(this).get(FriendEventViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_friend_event, container, false);
 
         friendMoodEventListView = root.findViewById(R.id.friend_mood_event_list_view);
         friendMoodEventListView.setEmptyView(root.findViewById(R.id.empty_view));
         friendMoodAdapter = new FriendMoodAdapter(getActivity(),
-                R.layout.friend_mood_list_item, friendEventViewModel.getMoodList());
+                R.layout.friend_mood_list_item, friendMoodList);
         friendMoodEventListView.setAdapter(friendMoodAdapter);
 
         DocumentReference docRef = Database.getUserFollowList(LoginActivity.userName);
@@ -63,7 +61,7 @@ public class FriendEventFragment extends Fragment {
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
                 if(documentSnapshot.get("FollowList") != null) {
                     ArrayList<String> following = (ArrayList<String>)documentSnapshot.get("FollowList");
-                    friendEventViewModel.getMoodList().clear();
+                    friendMoodList.clear();
                     for(String username: following) {
                         DocumentReference friendRef = Database.getUserMoodList(username);
                         friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
@@ -71,7 +69,7 @@ public class FriendEventFragment extends Fragment {
                             public void onSuccess(DocumentSnapshot documentSnapshot) {
                                 MoodList moodList = documentSnapshot.toObject(MoodList.class);
                                 if(!moodList.getAllMoodList().isEmpty()) {
-                                    friendEventViewModel.getMoodList().add(moodList.getAllMoodList().get(0));
+                                    friendMoodList.add(moodList.getAllMoodList().get(0));
                                     friendMoodAdapter.notifyDataSetChanged();
                                 }
                             }

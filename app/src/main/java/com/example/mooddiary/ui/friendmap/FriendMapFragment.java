@@ -12,7 +12,6 @@ import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.mooddiary.Database;
 import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.MoodEvent;
@@ -39,7 +38,6 @@ import java.util.ArrayList;
  */
 public class FriendMapFragment extends Fragment {
 
-    private FriendMapViewModel friendMapViewModel;
     private MapView friendMapMoodMapMap;
     private GoogleMap friendMap;
     private ProgressBar friendMapLoadingProgress;
@@ -55,8 +53,7 @@ public class FriendMapFragment extends Fragment {
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        friendMapViewModel =
-                ViewModelProviders.of(this).get(FriendMapViewModel.class);
+
         View root = inflater.inflate(R.layout.fragment_friend_map, container, false);
 
 

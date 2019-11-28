@@ -9,12 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.mooddiary.Database;
 import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.MoodEvent;
@@ -34,7 +31,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -64,8 +60,6 @@ public class MyMapFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_my_map, container, false);
-        //final TextView textView = root.findViewById(R.id.text_slideshow);
-
 
         myMapMoodMapMap = root.findViewById(R.id.myMap_map_map);
         myMapMoodMapMap.onCreate(savedInstanceState);
