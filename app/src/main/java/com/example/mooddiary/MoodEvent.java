@@ -3,7 +3,6 @@ package com.example.mooddiary;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import com.google.android.gms.maps.model.LatLng;
 
 /**
  * This is a class to store data for MoodEvent

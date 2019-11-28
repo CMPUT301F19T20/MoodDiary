@@ -2,28 +2,16 @@ package com.example.mooddiary;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.Network;
-import android.net.NetworkRequest;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -127,15 +115,13 @@ public class SignUpActivity extends AppCompatActivity {
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
                                             public void onSuccess(Void aVoid) {
-                                                Toast.makeText(SignUpActivity.this, "New User signed up", Toast.LENGTH_SHORT).show();
-                                                Log.d(TAG, "DocumentSnapshot successfully written!");
+//                                                Toast.makeText(SignUpActivity.this, "New User signed up", Toast.LENGTH_SHORT).show();
                                             }
                                         })
                                         .addOnFailureListener(new OnFailureListener() {
                                             @Override
                                             public void onFailure(@NonNull Exception e) {
-                                                Toast.makeText(SignUpActivity.this, "Fail to signed up", Toast.LENGTH_SHORT).show();
-                                                Log.w(TAG, "Error adding document", e);
+//                                                Toast.makeText(SignUpActivity.this, "Fail to signed up", Toast.LENGTH_SHORT).show();
                                             }
                                         });
                                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);

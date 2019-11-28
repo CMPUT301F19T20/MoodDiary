@@ -5,70 +5,40 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.RectF;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
-
-import android.content.Context;
-import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
-
 import com.app.hubert.guide.NewbieGuide;
 import com.app.hubert.guide.core.Controller;
 import com.app.hubert.guide.listener.OnGuideChangedListener;
 import com.app.hubert.guide.listener.OnLayoutInflatedListener;
 import com.app.hubert.guide.listener.OnPageChangedListener;
 import com.app.hubert.guide.model.GuidePage;
-import com.app.hubert.guide.model.HighLight;
-import com.app.hubert.guide.model.RelativeGuide;
 import com.example.mooddiary.AddMoodEventActivity;
 import com.example.mooddiary.Database;
 import com.example.mooddiary.FilterAdapter;
 import com.example.mooddiary.LoginActivity;
-import com.example.mooddiary.MainActivity;
 import com.example.mooddiary.MoodAdapter;
 import com.example.mooddiary.MoodBean;
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
-import com.example.mooddiary.SignUpActivity;
 import com.example.mooddiary.ViewActivity;
-
-import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.firestore.FieldValue;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
-
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -164,7 +134,7 @@ public class HomeFragment extends Fragment {
                 final MoodEvent deleteMood = (MoodEvent)myMoodEventListView.getItemAtPosition(i);
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
                 dialog.setTitle("Delete a mood");
-                dialog.setMessage("Delete is unrecovrable. Are you sure?");
+                dialog.setMessage("Delete is unrecoverable. Are you sure?");
                 dialog.setCancelable(false);
                 dialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
@@ -172,13 +142,7 @@ public class HomeFragment extends Fragment {
                         DocumentReference docRef = Database.getUserMoodList(LoginActivity.userName);
                         homeViewModel.getMoodList().delete(deleteMood);
                         MoodList moodList = homeViewModel.getMoodList();
-                        docRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Log.d(TAG,"delete successful");                            }
-                        });
                         docRef.set(moodList);
-                        //user.setMoodList(homeViewModel.getMoodList());
                         moodAdapter.notifyDataSetChanged();
                     }
                 });

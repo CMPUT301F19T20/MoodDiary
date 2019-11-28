@@ -3,24 +3,13 @@ package com.example.mooddiary;
 import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.animation.ArgbEvaluator;
 import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.ViewPager;
-
-
 
 public class PagerActivity extends AppCompatActivity implements View.OnClickListener {
 

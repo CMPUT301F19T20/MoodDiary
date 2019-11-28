@@ -3,24 +3,18 @@ package com.example.mooddiary;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.io.SyncFailedException;
 import java.util.regex.Pattern;
 
 /**
@@ -94,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
                                             if (document != null) {
                                                 String truePassword = (String) document.get("Password");
                                                 if (truePassword.equals(password)) {
-                                                    Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                                                     Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                                                     intent.putExtra("EXTRA", "openFragment");
                                                     startActivity(intent);
