@@ -83,7 +83,7 @@ public class FriendMapFragment extends Fragment {
                         friendMapLoadingProgress.setVisibility(View.INVISIBLE);
                         if(!following.isEmpty()) {
                             friendMap.clear();
-                            LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
+                            final LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
                             for (String username : following) {
                                 if(username.equals(following.get(following.size()-1))) {
                                     DocumentReference friendRef = Database.getUserMoodList(username);

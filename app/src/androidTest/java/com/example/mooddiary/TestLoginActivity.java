@@ -72,6 +72,10 @@ public class TestLoginActivity {
         solo.clickOnButton("Login");
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
     }
+
+    /**
+     * check for a wrong password
+      */
     @Test
     public void checkWrongPassword(){
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);

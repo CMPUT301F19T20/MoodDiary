@@ -38,7 +38,7 @@ public class RequestAdapter extends ArrayAdapter<Request> {
      */
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        Request request = getItem(position);
+        final Request request = getItem(position);
         View view;
         ViewHolder viewHolder;
         if (convertView == null) {
