@@ -52,6 +52,7 @@ public class TestMainActivity {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.login_username_edit));
         solo.enterText((EditText) solo.getView(R.id.login_username_edit),"tester");
+        solo.enterText((EditText) solo.getView(R.id.login_password_edit),"060199");
         solo.clickOnButton("Login");
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
         solo.clickOnView(solo.getView(R.id.fab));
@@ -69,7 +70,7 @@ public class TestMainActivity {
         //solo.clickOnButton("OK");
         Spinner spinner2 = (Spinner) solo.getView(R.id.add_social_situation_spinner);
         spinner2.setSelection(1, true);
-        //solo.enterText((EditText) solo.getView(R.id.add_textual_reason_edit),"no thing");
+        solo.enterText((EditText) solo.getView(R.id.add_textual_reason_edit),"no thing");
         solo.clickOnButton(("Finish your diary"));
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
         solo.waitForText("2012/03/06", 1, 2000);
