@@ -37,8 +37,18 @@ public class TestSignupActivity {
     }
 
     /**
-    *Test nomal changing to LoginActivity
-    * Click Confirm Button
+     * Test a sign up without password
+     */
+    @Test
+    public void testSignupNopassword(){
+        solo.assertCurrentActivity("Wong Activity", SignUpActivity.class);
+        solo.enterText((EditText) solo.getView(R.id.signup_new_username_edit),"tester");
+        solo.clickOnButton("Confirm");
+        solo.assertCurrentActivity("Wong Activity", SignUpActivity.class);
+    }
+    /**
+     *Test nomal changing to LoginActivity
+     * Click Confirm Button
      */
     @Test
     public void testToLogin2(){

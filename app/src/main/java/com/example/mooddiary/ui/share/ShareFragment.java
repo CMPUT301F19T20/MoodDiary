@@ -78,8 +78,8 @@ public class ShareFragment extends Fragment {
         shareFollowListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String friendUsername = (String) shareFollowListView.getItemAtPosition(i);
-                BottomSheetDialog followBottomSheetDialog = new BottomSheetDialog(getActivity());
+                final String friendUsername = (String) shareFollowListView.getItemAtPosition(i);
+                final BottomSheetDialog followBottomSheetDialog = new BottomSheetDialog(getActivity());
                 View sheetView = getActivity().getLayoutInflater().inflate(R.layout.follow_expand_bottom, null);
                 followBottomSheetDialog.setContentView(sheetView);
                 LinearLayout shareUnfollowLinearLayout = sheetView.findViewById(R.id.share_cancel_following);
@@ -119,8 +119,8 @@ public class ShareFragment extends Fragment {
         shareFollowerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String friendUsername = (String) shareFollowerListView.getItemAtPosition(i);
-                BottomSheetDialog followerBottomSheetDialog = new BottomSheetDialog(getActivity());
+                final String friendUsername = (String) shareFollowerListView.getItemAtPosition(i);
+                final BottomSheetDialog followerBottomSheetDialog = new BottomSheetDialog(getActivity());
                 View sheetView = getActivity().getLayoutInflater().inflate(R.layout.follower_expand_bottom, null);
                 followerBottomSheetDialog.setContentView(sheetView);
                 LinearLayout shareDeleteFollowerLinearlayout = sheetView.findViewById(R.id.share_delete_follower);
@@ -178,6 +178,7 @@ public class ShareFragment extends Fragment {
         followRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(documentSnapshot == null) { return; }
                 ArrayList<String> followList = (ArrayList<String>) documentSnapshot.get("FollowList");
                 shareFollowList.clear();
                 for (String follow : followList) {
@@ -212,9 +213,10 @@ public class ShareFragment extends Fragment {
         receivedRequestListQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if(queryDocumentSnapshots == null) { return; }
                 shareReceivedRequestList.clear();
                 for (QueryDocumentSnapshot document: queryDocumentSnapshots) {
-                    Request request = document.toObject(Request.class);
+                    final Request request = document.toObject(Request.class);
                     if (!request.getConfirmed()) {
                         shareReceivedRequestList.add(request);
                     } else {

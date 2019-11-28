@@ -14,7 +14,7 @@
     <string name="menu_share">Friends</string>
     <string name="menu_send">Follow New Friends</string>
     <string name="menu_logout">Logout</string>
-    <string name="menu_swich_mode">Day Mode</string>
+    <string name="menu_swich_mode">Night Mode</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>

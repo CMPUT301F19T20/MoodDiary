@@ -45,6 +45,7 @@ public class TestLoginActivity {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.login_username_edit));
         solo.enterText((EditText) solo.getView(R.id.login_username_edit),"tester");
+        solo.enterText((EditText) solo.getView(R.id.login_password_edit),"060199");
         solo.clickOnButton("Login");
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
     }
@@ -67,6 +68,20 @@ public class TestLoginActivity {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.login_username_edit));
         solo.enterText((EditText) solo.getView(R.id.login_username_edit),"notUser");
+        solo.enterText((EditText) solo.getView(R.id.login_password_edit),"060199");
+        solo.clickOnButton("Login");
+        solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
+    }
+
+    /**
+     * check for a wrong password
+      */
+    @Test
+    public void checkWrongPassword(){
+        solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
+        solo.clearEditText((EditText) solo.getView(R.id.login_username_edit));
+        solo.enterText((EditText) solo.getView(R.id.login_username_edit),"tester");
+        solo.enterText((EditText) solo.getView(R.id.login_password_edit),"123456");
         solo.clickOnButton("Login");
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
     }

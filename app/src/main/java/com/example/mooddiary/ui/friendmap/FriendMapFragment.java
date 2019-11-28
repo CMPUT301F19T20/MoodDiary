@@ -76,17 +76,19 @@ public class FriendMapFragment extends Fragment {
                 docRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                        if(documentSnapshot == null) { return; }
                         ArrayList<String> following = (ArrayList<String>) documentSnapshot.get("FollowList");
                         friendMapLoadingProgress.setVisibility(View.INVISIBLE);
+                        friendMap.clear();
                         if(!following.isEmpty()) {
-                            friendMap.clear();
-                            LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
+                            final LatLngBounds.Builder boundBuilder = new LatLngBounds.Builder();
                             for (String username : following) {
                                 if(username.equals(following.get(following.size()-1))) {
                                     DocumentReference friendRef = Database.getUserMoodList(username);
                                     friendRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
                                         @Override
                                         public void onSuccess(DocumentSnapshot documentSnapshot) {
+                                            if(documentSnapshot == null) { return; }
                                             ArrayList<MoodEvent> m = documentSnapshot.toObject(MoodList.class).getAllMoodList();
                                             if (!m.isEmpty() && m.get(0).getLocation() != "") {
                                                 LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());

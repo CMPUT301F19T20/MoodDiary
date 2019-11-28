@@ -49,7 +49,7 @@ public class SendFragment extends Fragment {
         sendSendRequestButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String friendUsername = sendRequestUsernameEdit.getText().toString();
+                final String friendUsername = sendRequestUsernameEdit.getText().toString();
                 String usernamePat = "^([a-z0-9A-Z]{3,20})$";
                 if (!Pattern.matches(usernamePat, friendUsername)) {
                     sendRequestUsernameEdit.setError("Invalid Friend's Username");
