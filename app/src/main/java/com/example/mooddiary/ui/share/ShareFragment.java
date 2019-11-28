@@ -178,6 +178,7 @@ public class ShareFragment extends Fragment {
         followRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot, @Nullable FirebaseFirestoreException e) {
+                if(documentSnapshot == null) { return; }
                 ArrayList<String> followList = (ArrayList<String>) documentSnapshot.get("FollowList");
                 shareViewModel.getFollowList().clear();
                 for (String follow : followList) {
@@ -212,6 +213,7 @@ public class ShareFragment extends Fragment {
         receivedRequestListQuery.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirebaseFirestoreException e) {
+                if(queryDocumentSnapshots == null) { return; }
                 shareViewModel.getReceivedRequestList().clear();
                 for (QueryDocumentSnapshot document: queryDocumentSnapshots) {
                     final Request request = document.toObject(Request.class);
