@@ -20,6 +20,7 @@ public class ViewFriendActivity extends AppCompatActivity {
 
     private TextView viewFriendDateText;
     private TextView viewFriendTimeText;
+    private TextView viewFriendUsernameText;
     private TextView viewFriendReasonText;
     private TextView viewFriendLocationText;
     private TextView viewFriendMoodTypeText;
@@ -36,6 +37,7 @@ public class ViewFriendActivity extends AppCompatActivity {
 
         viewFriendDateText = findViewById(R.id.view_friend_date_text);
         viewFriendTimeText = findViewById(R.id.view_friend_time_text);
+        viewFriendUsernameText = findViewById(R.id.view_friend_username_text);
         viewFriendReasonText = findViewById(R.id.view_friend_reason_text);
         viewFriendLocationText = findViewById(R.id.view_friend_location_text);
         viewFriendMoodTypeText = findViewById(R.id.view_friend_mood_type_text);
@@ -49,6 +51,7 @@ public class ViewFriendActivity extends AppCompatActivity {
 
         viewFriendDateText.setText(moodEvent.getDate());
         viewFriendTimeText.setText(moodEvent.getTime());
+        viewFriendUsernameText.setText(moodEvent.getUsername());
         viewFriendReasonText.setText((moodEvent.getReason()));
         viewFriendMoodTypeText.setText(moodEvent.getMood().getMood());
         viewFriendMoodTypeImage.setImageResource(moodEvent.getMood().getMoodImage());
