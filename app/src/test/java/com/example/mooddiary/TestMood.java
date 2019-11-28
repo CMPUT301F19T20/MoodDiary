@@ -22,10 +22,7 @@ public class TestMood {
         Mood mood6 = new Mood("meh");
         assertEquals("meh",mood6.getMood());
     }
-    @Test(expected = IllegalArgumentException.class)
-    public void testMoodConstructor(){
-        Mood mood = new Mood("good");
-    }
+
     @Test
     public void testGetImage(){
         Mood mood = new Mood("happy");
@@ -44,12 +41,10 @@ public class TestMood {
     @Test
     public void testSetMood(){
         Mood mood = new Mood("happy");
-        assertThrows(IllegalArgumentException.class,() -> {
-            mood.setMood("good");
-        });
+
         mood.setMood("sad");
         assertEquals("sad",mood.getMood());
-        assertEquals(R.drawable.sad,mood.getMoodImage());
+
     }
     @Test
     public void testGetColor(){
