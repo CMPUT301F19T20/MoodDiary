@@ -1,7 +1,5 @@
 package com.example.mooddiary;
 
-import java.io.Serializable;
-
 /**
  * This is a class to store a Request object
  */

@@ -1,7 +1,5 @@
 package com.example.mooddiary;
 
-import android.util.Log;
-
 import java.io.Serializable;
 
 /**

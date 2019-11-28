@@ -6,13 +6,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
-
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.ContentUris;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -24,7 +22,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,29 +35,20 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
-
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.google.android.gms.maps.model.LatLng;
-
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -313,7 +301,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                                        int pos, long id) {
 
                 String[] socialsituation = getResources().getStringArray(R.array.SocialSituation);
-                Toast.makeText(AddMoodEventActivity.this, "your choice is :"+socialsituation[pos], Toast.LENGTH_SHORT).show();
                 socialSituationSpinnerResult = socialsituation[pos];
             }
             @Override
@@ -572,7 +559,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
                 e.printStackTrace();
             }
         }else {
-            Toast.makeText(this,"failed to get image", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this,"failed to get image", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -586,7 +573,6 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
     private void handleImageOnKitKat(Intent data) {
         String imagePath = null;
         Uri uri = data.getData();
-        Log.d("lty", "handleImageOnKitKat: uri is " + uri);
         if (DocumentsContract.isDocumentUri(this, uri)) {
 
             String docId = DocumentsContract.getDocumentId(uri);

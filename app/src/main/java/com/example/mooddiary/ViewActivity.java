@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -16,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.storage.FileDownloadTask;
-import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import java.io.File;
 
@@ -24,8 +22,6 @@ import java.io.File;
  * This is an activity where user views details of a mood event
  */
 public class ViewActivity extends AppCompatActivity {
-    //FirebaseStorage storage = FirebaseStorage.getInstance();
-    //StorageReference storageRef = storage.getReference();
 
     private final int VIEW_TO_ADD_EDIT_REQUEST = 5;
 
@@ -41,9 +37,7 @@ public class ViewActivity extends AppCompatActivity {
     private MoodEvent moodEvent;
     private MoodEvent editedMoodEvent;
     private ProgressBar viewDownloadingProgress;
-
     private int position;
-
     private boolean ifEdited = false;
     private boolean photoChangeFlag;
 
@@ -110,12 +104,9 @@ public class ViewActivity extends AppCompatActivity {
         viewEditButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Log.d("intent", "click edit");
                 Intent intent_edit = new Intent(ViewActivity.this, AddMoodEventActivity.class);
                 intent_edit.putExtra("mood_event_edit", editedMoodEvent);
-                //Log.d("intent", "put extra edit mood event");
                 startActivityForResult(intent_edit, VIEW_TO_ADD_EDIT_REQUEST);
-                //Log.d("intent", "start add success");
             }
         });
 
@@ -133,7 +124,6 @@ public class ViewActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.d("intent","enter view 1");
         switch (requestCode) {
             case VIEW_TO_ADD_EDIT_REQUEST:
                 if (resultCode == RESULT_OK) {
