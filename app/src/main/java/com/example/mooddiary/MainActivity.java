@@ -107,11 +107,23 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
+    /**
+     * This allows you to get back according the back botton
+     */
     @Override
     public void onBackPressed() {
         this.getSupportFragmentManager().popBackStack();
 
     }
+
+    /**
+     * This is Called when a key up event has occurred.
+     * @param keyCode The value in event.getKeyCode().
+     * @param event  Description of the key event.
+     * @return  If you handled the event, return true.
+     *          If you want to allow the event to be handled by the next receiver,
+     *          return false.
+     */
 
     @Override
     public boolean onKeyUp(int keyCode, KeyEvent event) {

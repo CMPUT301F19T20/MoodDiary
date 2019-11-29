@@ -65,6 +65,10 @@ public class FilterAdapter extends ArrayAdapter<MoodBean> {
         return view;
     }
 
+    /**
+     * This is to get selected item in filter
+     * @return return the selected mood
+     */
     public ArrayList<String> getSelectedItems() {
         ArrayList<String> selectedType = new ArrayList<>();
         for (int i = 0; i < selectedItems.length; i++) {
@@ -75,6 +79,11 @@ public class FilterAdapter extends ArrayAdapter<MoodBean> {
         return selectedType;
     }
 
+    /**
+     * This is to set select itmes
+     * @param selectedType selected mood
+     *
+     */
     public void setSelectedItems(ArrayList<String> selectedType) {
         for (MoodBean moodBean: dataList) {
             if (selectedType.contains(moodBean.getName())) {
