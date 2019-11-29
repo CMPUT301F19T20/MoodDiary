@@ -92,7 +92,7 @@ public class FriendMapFragment extends Fragment {
                                                 LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());
                                                 if (markPoint.latitude != 100 && markPoint.longitude != 200) {
                                                     friendMap.addMarker(new MarkerOptions().position(markPoint)
-                                                            .title(m.get(0).getUsername() + "\n" + m.get(0).getMood().getMood()).icon(
+                                                            .title(m.get(0).getUsername() + ": " + m.get(0).getMood().getMood()).icon(
                                                             BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
                                                     boundBuilder.include(markPoint);
                                                     if(username.equals(following.get(following.size()-1))) {
