@@ -22,11 +22,12 @@
     <color name="colorWhite">#ffffff</color>
     <color name="colorLightPink">#f7c3c3</color>
     <color name="colorDarkPink">#f17f75</color>
+    <color name="colorLightPurple">#e7bcf9</color>
     <color name="colorCreamWhite">#fffaf6</color>
 
     <!--filter color-->
     <color name="dividerLine">#f2b2b2</color>
-
+    <color name="darkpurple">#2A0364</color>
     <color name="black_trans80">#33000000</color>
     <color name="indicator_unselected">#4D000000</color>
     <color name="pure_black">#000000</color>

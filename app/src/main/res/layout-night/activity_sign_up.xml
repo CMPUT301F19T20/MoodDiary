@@ -130,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/login"
                 android:textSize="20sp"
-                android:textColor="#e7bcf9"
+                android:textColor="@color/colorLightPurple"
                 android:textAllCaps="false"
                 android:background="@android:color/transparent">
 

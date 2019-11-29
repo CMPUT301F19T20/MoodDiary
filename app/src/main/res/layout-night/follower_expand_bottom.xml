@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_follow_back"
             android:layout_marginStart="10dp"
-            android:tint="#e7bcf9"
+            android:tint="@color/colorLightPurple"
             android:layout_gravity="center_vertical"
             />
 

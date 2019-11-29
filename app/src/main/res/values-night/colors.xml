@@ -23,6 +23,7 @@
     <color name="colorLightPink">#141212</color>
     <color name="colorDarkPink">#0f0f4b</color>
     <color name="colorCreamWhite">#fffaf6</color>
+    <color name="colorLightPurple">#e7bcf9</color>
 
     <!--filter color-->
     <color name="dividerLine">#f2b2b2</color>
