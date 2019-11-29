@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.Toast;;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import com.example.mooddiary.Database;
 import com.example.mooddiary.LoginActivity;
 import com.example.mooddiary.R;
@@ -27,7 +26,6 @@ import java.util.regex.Pattern;
  */
 public class SendFragment extends Fragment {
 
-    private SendViewModel sendViewModel;
     private EditText sendRequestUsernameEdit;
     private Button sendSendRequestButton;
     /**
@@ -43,8 +41,6 @@ public class SendFragment extends Fragment {
      */
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        sendViewModel =
-                ViewModelProviders.of(this).get(SendViewModel.class);
         View root = inflater.inflate(R.layout.fragment_send, container, false);
 
         sendRequestUsernameEdit = root.findViewById(R.id.send_request_username_edit);

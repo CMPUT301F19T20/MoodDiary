@@ -7,7 +7,6 @@ import android.widget.Spinner;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
-import com.example.mooddiary.ui.home.HomeViewModel;
 import com.robotium.solo.Solo;
 
 import org.junit.Before;
