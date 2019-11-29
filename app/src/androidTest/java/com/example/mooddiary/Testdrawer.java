@@ -8,7 +8,6 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.mooddiary.ui.friendevent.FriendEventFragment;
-import com.example.mooddiary.ui.friendevent.FriendEventViewModel;
 import com.example.mooddiary.ui.friendmap.FriendMapFragment;
 import com.robotium.solo.Solo;
 
@@ -28,13 +27,16 @@ public class Testdrawer {
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+        Utils.saveSharedSetting(solo.getCurrentActivity().getApplicationContext(),"isGuide",true);
     }
 
     /**
      * Test the transform between activiyies in the slide menu and the right show of the user name
      */
     @Test
-    public void testToFriendMood(){
+    public void testToFriendMood() throws InterruptedException {
+        solo.sleep(2000);
+        System.out.println(Utils.readSharedSetting(solo.getCurrentActivity().getApplicationContext(), "isGuide", false));
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.login_username_edit));
         solo.enterText((EditText) solo.getView(R.id.login_username_edit),"tester");
