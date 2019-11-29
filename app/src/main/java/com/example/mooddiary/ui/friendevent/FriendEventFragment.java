@@ -73,18 +73,7 @@ public class FriendEventFragment extends Fragment {
                                     friendMoodList.add(moodList.getAllMoodList().get(0));
 
                                     if(username.equals(following.get(following.size()-1))) {
-                                        friendMoodList.sort(new Comparator<MoodEvent>() {
-                                            @Override
-                                            public int compare(MoodEvent o1, MoodEvent o2) {
-                                                if(o1.getNumericDate() > o2.getNumericDate()) {
-                                                    return -1;
-                                                } else if (o1.getNumericDate() < o2.getNumericDate()) {
-                                                    return 1;
-                                                } else {
-                                                    return 0;
-                                                }
-                                            }
-                                        });
+                                        MoodList.sortMoodList(friendMoodList);
                                         friendMoodAdapter.notifyDataSetChanged();
                                     }
                                 }
