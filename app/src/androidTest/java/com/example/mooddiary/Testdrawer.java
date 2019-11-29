@@ -27,7 +27,7 @@ public class Testdrawer {
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        Utils.saveSharedSetting(solo.getCurrentActivity().getApplicationContext(),"isGuide",true);
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isGuide",true);
     }
 
     /**
@@ -42,6 +42,8 @@ public class Testdrawer {
         solo.enterText((EditText) solo.getView(R.id.login_username_edit),"tester");
         solo.enterText((EditText) solo.getView(R.id.login_password_edit),"060199");
         solo.clickOnButton("Login");
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isGuide",true);
+        solo.sleep(5000);
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
         solo.clickOnImageButton(0);
         solo.waitForText("tester", 1, 2000);
