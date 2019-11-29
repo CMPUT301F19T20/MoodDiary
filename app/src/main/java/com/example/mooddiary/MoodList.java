@@ -2,8 +2,8 @@ package com.example.mooddiary;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
+
 /**
  * This is a class to manage a list of MoodEvent object
  */
@@ -217,15 +217,14 @@ public class MoodList implements Serializable {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
                 if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if (o1.getNumericDate() < o2.getNumericDate()) {
                     return -1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
             }
         });
-        Collections.reverse(allMoodList);
     }
 
     /**
@@ -236,15 +235,14 @@ public class MoodList implements Serializable {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
                 if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if (o1.getNumericDate() < o2.getNumericDate()) {
                     return -1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
             }
         });
-        Collections.reverse(angryList);
     }
 
     /**
@@ -255,15 +253,14 @@ public class MoodList implements Serializable {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
                 if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if (o1.getNumericDate() < o2.getNumericDate()) {
                     return -1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
             }
         });
-        Collections.reverse(happyList);
     }
 
     /**
@@ -274,15 +271,14 @@ public class MoodList implements Serializable {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
                 if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if (o1.getNumericDate() < o2.getNumericDate()) {
                     return -1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
             }
         });
-        Collections.reverse(sadList);
     }
 
     /**
@@ -293,15 +289,14 @@ public class MoodList implements Serializable {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
                 if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if (o1.getNumericDate() < o2.getNumericDate()) {
                     return -1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
             }
         });
-        Collections.reverse(mehList);
     }
 
     /**
@@ -312,15 +307,14 @@ public class MoodList implements Serializable {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
                 if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if (o1.getNumericDate() < o2.getNumericDate()) {
                     return -1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
             }
         });
-        Collections.reverse(contentList);
     }
 
     /**
@@ -331,15 +325,14 @@ public class MoodList implements Serializable {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
                 if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if (o1.getNumericDate() < o2.getNumericDate()) {
                     return -1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
             }
         });
-        Collections.reverse(stressedList);
     }
 
     /**
@@ -360,15 +353,14 @@ public class MoodList implements Serializable {
             @Override
             public int compare(MoodEvent o1, MoodEvent o2) {
                 if(o1.getNumericDate() > o2.getNumericDate()) {
-                    return 1;
-                } else if (o1.getNumericDate() < o2.getNumericDate()) {
                     return -1;
+                } else if (o1.getNumericDate() < o2.getNumericDate()) {
+                    return 1;
                 } else {
                     return 0;
                 }
             }
         });
-        Collections.reverse(moodListToSort);
         return moodListToSort;
     }
 
