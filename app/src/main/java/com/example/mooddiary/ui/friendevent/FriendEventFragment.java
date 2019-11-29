@@ -71,6 +71,7 @@ public class FriendEventFragment extends Fragment {
                                 MoodList moodList = documentSnapshot.toObject(MoodList.class);
                                 if(!moodList.getAllMoodList().isEmpty()) {
                                     friendMoodList.add(moodList.getAllMoodList().get(0));
+                                    friendMoodAdapter.notifyDataSetChanged();
 
                                     if(username.equals(following.get(following.size()-1))) {
                                         MoodList.sortMoodList(friendMoodList);
