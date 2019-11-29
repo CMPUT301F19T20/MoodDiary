@@ -107,7 +107,7 @@ public class AddMoodEventActivity extends AppCompatActivity implements View.OnCl
 
 
     /**
-     * This creates the view of Main add activity
+     * This creates the view of add activity
      * @param savedInstanceState
      *      If the activity is being re-initialized after previously being shut down
      *      then this Bundle contains the data it most recently supplied in.

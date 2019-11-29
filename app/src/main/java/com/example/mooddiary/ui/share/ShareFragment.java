@@ -220,28 +220,32 @@ public class ShareFragment extends Fragment {
                     if (!request.getConfirmed()) {
                         shareReceivedRequestList.add(request);
                     } else {
-                        shareFollowerList.add(request.getSender());
-                        HashMap<String, Object> followerData = new HashMap<>();
-                        followerData.put("FollowerList", shareFollowerList);
-                        Database.getUserFollowerList(LoginActivity.userName).set(followerData);
+                        if (!request.getDeclined()) {
+                            shareFollowerList.add(request.getSender());
+                            HashMap<String, Object> followerData = new HashMap<>();
+                            followerData.put("FollowerList", shareFollowerList);
+                            Database.getUserFollowerList(LoginActivity.userName).set(followerData);
 
-                        DocumentReference senderFollowRef = Database.getUserFollowList(request.getSender());
-                        senderFollowRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                                if (task.isSuccessful()) {
-                                    DocumentSnapshot document = task.getResult();
-                                    if (document != null) {
-                                        ArrayList<String> senderFollowList = (ArrayList<String>) document.get("FollowList");
-                                        senderFollowList.add(request.getReceiver());
-                                        HashMap<String, Object> senderFollowData = new HashMap<>();
-                                        senderFollowData.put("FollowList", senderFollowList);
-                                        Database.getUserFollowList(request.getSender()).set(senderFollowData);
+                            DocumentReference senderFollowRef = Database.getUserFollowList(request.getSender());
+                            senderFollowRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        DocumentSnapshot document = task.getResult();
+                                        if (document != null) {
+                                            ArrayList<String> senderFollowList = (ArrayList<String>) document.get("FollowList");
+                                            senderFollowList.add(request.getReceiver());
+                                            HashMap<String, Object> senderFollowData = new HashMap<>();
+                                            senderFollowData.put("FollowList", senderFollowList);
+                                            Database.getUserFollowList(request.getSender()).set(senderFollowData);
+                                        }
                                     }
                                 }
-                            }
-                        });
-                        Database.getRequest(request.getSender()+request.getReceiver()).delete();
+                            });
+                            Database.getRequest(request.getSender() + request.getReceiver()).delete();
+                        } else {
+                            Database.getRequest(request.getSender() + request.getReceiver()).delete();
+                        }
                     }
                     shareRequestAdapter.notifyDataSetChanged();
                     setDynamicHeight(shareRequestListView);

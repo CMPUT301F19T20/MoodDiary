@@ -56,7 +56,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     /**
-     * This initializes Confirm button
+     * This initializes Confirm button and login button
      */
     public void initButton() {
         confirmButton.setOnClickListener(new View.OnClickListener() {

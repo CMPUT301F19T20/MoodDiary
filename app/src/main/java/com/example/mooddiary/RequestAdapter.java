@@ -68,8 +68,10 @@ public class RequestAdapter extends ArrayAdapter<Request> {
         viewHolder.declineButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                request.setConfirmed(true);
+                request.setDeclined(true);
                 requestList.remove(request);
-                Database.getRequest(request.getSender()+request.getReceiver()).delete();
+                Database.getRequest(request.getSender()+request.getReceiver()).set(request);
                 notifyDataSetChanged();
             }
         });

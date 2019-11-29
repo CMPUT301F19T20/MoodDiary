@@ -16,6 +16,9 @@ import com.google.firebase.storage.FileDownloadTask;
 import com.google.firebase.storage.StorageReference;
 import java.io.File;
 
+/**
+ * This is an activity where user view mood events of his friends
+ */
 public class ViewFriendActivity extends AppCompatActivity {
 
     private TextView viewFriendDateText;
@@ -30,6 +33,12 @@ public class ViewFriendActivity extends AppCompatActivity {
     private MoodEvent moodEvent;
     private ProgressBar viewFriendDownloadingProgress;
 
+    /**
+     * This creates the view of view friend activity
+     * @param savedInstanceState
+     *      If the activity is being re-initialized after previously being shut down
+     *      then this Bundle contains the data it most recently supplied in.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

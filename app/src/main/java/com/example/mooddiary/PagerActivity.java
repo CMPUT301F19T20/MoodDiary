@@ -1,7 +1,6 @@
 package com.example.mooddiary;
 
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
