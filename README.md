@@ -10,6 +10,9 @@ project for CMPUT 301
 8. For tutorial coach mark page, We user the library written by huburt-Hu https://github.com/huburt-Hu/NewbieGuide
 9. All emotion/system icons are from https://www.easyicon.net/
 10. The diary image and friends image are created by the following these artists. 
+
    https://dribbble.com/shots/6092978-My-Notebook?utm_source=Clipboard_Shot&utm_campaign=LaisyWang0912&utm_content=My%20Notebook&utm_medium=Social_Share
+   
    https://dribbble.com/shots/7780031-Friends?utm_source=Clipboard_Shot&utm_campaign=Marina_Petrovskaya&utm_content=Friends&utm_medium=Social_Share
+   
    https://dribbble.com/shots/6651176-Vlog-Era?utm_source=Clipboard_Shot&utm_campaign=LaisyWang0912&utm_content=Vlog%20Era&utm_medium=Social_Share
