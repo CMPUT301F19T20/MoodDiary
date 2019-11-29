@@ -6,4 +6,10 @@ project for CMPUT 301
 4. After pressing back in MapsActivity, MapsActivity will be finished, and a blank Map Fragment will be shown. It will be improved to show Home Fragment after finishing MapsActivity later.
 5. In the AddActivity, if a user want to change date and time, date and time picker will be shown only when the user click on the words there. It will be improved later.
 6. When disconnect from the Internet, the local change will be lost
-7. Do not using UI testing for map,photo,night mood and logout features. Use manually testing for those features.
+7. Do not using UI testing for map,photo,night mood and logout features. Use manually testing for those features
+8. For tutorial coach mark page, We user the library written by huburt-Hu https://github.com/huburt-Hu/NewbieGuide
+9. All emotion/system icons are from https://www.easyicon.net/
+10. The diary image and friends image are created by the following these artists. 
+   https://dribbble.com/shots/6092978-My-Notebook?utm_source=Clipboard_Shot&utm_campaign=LaisyWang0912&utm_content=My%20Notebook&utm_medium=Social_Share
+   https://dribbble.com/shots/7780031-Friends?utm_source=Clipboard_Shot&utm_campaign=Marina_Petrovskaya&utm_content=Friends&utm_medium=Social_Share
+   https://dribbble.com/shots/6651176-Vlog-Era?utm_source=Clipboard_Shot&utm_campaign=LaisyWang0912&utm_content=Vlog%20Era&utm_medium=Social_Share
