@@ -6,3 +6,4 @@ project for CMPUT 301
 4. After pressing back in MapsActivity, MapsActivity will be finished, and a blank Map Fragment will be shown. It will be improved to show Home Fragment after finishing MapsActivity later.
 5. In the AddActivity, if a user want to change date and time, date and time picker will be shown only when the user click on the words there. It will be improved later.
 6. When disconnect from the Internet, the local change will be lost
+7. Do not using UI testing for map,photo,night mood and logout features. Use manually testing for those features.
