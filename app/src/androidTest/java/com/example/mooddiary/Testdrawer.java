@@ -8,10 +8,10 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.ActivityTestRule;
 
 import com.example.mooddiary.ui.friendevent.FriendEventFragment;
-import com.example.mooddiary.ui.friendevent.FriendEventViewModel;
 import com.example.mooddiary.ui.friendmap.FriendMapFragment;
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,18 +28,24 @@ public class Testdrawer {
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isTutorial",true);
+
     }
 
     /**
      * Test the transform between activiyies in the slide menu and the right show of the user name
      */
     @Test
-    public void testToFriendMood(){
+    public void testToFriendMood() throws InterruptedException {
+
+        System.out.println(Utils.readSharedSetting(solo.getCurrentActivity().getApplicationContext(), "isGuide", false));
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.login_username_edit));
         solo.enterText((EditText) solo.getView(R.id.login_username_edit),"tester");
         solo.enterText((EditText) solo.getView(R.id.login_password_edit),"060199");
         solo.clickOnButton("Login");
+
+
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
         solo.clickOnImageButton(0);
         solo.waitForText("tester", 1, 2000);
@@ -58,6 +64,11 @@ public class Testdrawer {
         solo.clickOnScreen(0,1200);
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
 
+
+    }
+    @After
+    public void tearDown(){
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isTutorial",false);
     }
 
 

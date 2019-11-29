@@ -19,7 +19,7 @@ import com.google.firebase.storage.StorageReference;
 import java.io.File;
 
 /**
- * This is an activity where user views details of a mood event
+ * This is an activity where user views details of a mood event from friend
  */
 public class ViewActivity extends AppCompatActivity {
 
@@ -42,7 +42,7 @@ public class ViewActivity extends AppCompatActivity {
     private boolean photoChangeFlag;
 
     /**
-     * This creates the view of details of a mood event.
+     * This creates the view of details of a mood event from friend.
      * @param savedInstanceState
      *      If the activity is being re-initialized after previously being shut down
      *      then this Bundle contains the data it most recently supplied in.

@@ -92,7 +92,7 @@ public class FriendMapFragment extends Fragment {
                                                 LatLng markPoint = new LatLng(m.get(0).getLatitude(),m.get(0).getLongitude());
                                                 if (markPoint.latitude != 100 && markPoint.longitude != 200) {
                                                     friendMap.addMarker(new MarkerOptions().position(markPoint)
-                                                            .title(m.get(0).getUsername() + "\n" + m.get(0).getMood().getMood()).icon(
+                                                            .title(m.get(0).getUsername() + ": " + m.get(0).getMood().getMood()).icon(
                                                             BitmapDescriptorFactory.fromResource(m.get(0).getMood().getMarker())));
                                                     boundBuilder.include(markPoint);
                                                     if(username.equals(following.get(following.size()-1))) {
@@ -115,30 +115,56 @@ public class FriendMapFragment extends Fragment {
         return root;
     }
 
+    /**
+     * Called when the activity will start interacting with the user.
+     * At this point your activity is at the top of its activity stack
+     * with user input going to it.
+     */
     @Override
     public void onResume() {
         super.onResume();
         friendMapMoodMapMap.onResume();
     }
 
+    /**
+     * Called when the activity loses foreground state,
+     * is no longer focusable or before transition to stopped/hidden or destroyed state.
+     * The activity is still visible to user, so it's recommended to keep it visually active and continue updating the UI.
+     * Implementations of this method must be very quick because the next activity will not be resumed until this method returns.
+     */
     @Override
     public void onPause() {
         super.onPause();
         friendMapMoodMapMap.onPause();
     }
 
+    /**
+     * The final call you receive before your activity is destroyed.
+     * This can happen either because the activity is finishing
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
         friendMapMoodMapMap.onDestroy();
     }
 
+    /**
+     * create views, bind data to lists, etc.
+     * This method also provides you with a Bundle containing the activity's previously frozen state,
+     * if there was one.
+     * @param outState
+     *  This is activities created with the attribute
+     */
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         friendMapMoodMapMap.onSaveInstanceState(outState);
     }
 
+    /**
+     * This is called when the overall system is running low on memory,
+     * and actively running processes should trim their memory usage.
+     */
     @Override
     public void onLowMemory() {
         super.onLowMemory();

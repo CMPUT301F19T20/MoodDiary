@@ -8,17 +8,20 @@ public class Request {
     private String sender;
     private String receiver;
     private boolean confirmed;
+    private boolean declined;
 
     public Request() {
         this.sender = "";
         this.receiver = "";
         this.confirmed = false;
+        this.declined = false;
     }
 
     public Request(String sender, String receiver) {
         this.sender = sender;
         this.receiver = receiver;
         this.confirmed = false;
+        this.declined = false;
     }
 
     public String getSender() {
@@ -32,6 +35,10 @@ public class Request {
     public boolean getConfirmed() {
         return confirmed;
     }
+
+    public boolean getDeclined() { return declined;}
+
+    public void setDeclined(boolean declined) { this.declined = declined; }
 
     public void setSender(String sender) {
         this.sender = sender;

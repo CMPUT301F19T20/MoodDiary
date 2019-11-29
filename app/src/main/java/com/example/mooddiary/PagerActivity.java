@@ -1,7 +1,6 @@
 package com.example.mooddiary;
 
 import android.view.View;
-
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +9,10 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager.widget.ViewPager;
+
+/**
+ * This activity is where the Guide pages is
+ */
 
 public class PagerActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -30,6 +33,11 @@ public class PagerActivity extends AppCompatActivity implements View.OnClickList
 
     // Whether to enter the guide page for the first time
     private boolean isFirstGuide;
+
+    /**
+     * Create the guide page view
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,10 @@ public class PagerActivity extends AppCompatActivity implements View.OnClickList
         startActivity(intent);
         overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
+
+    /**
+     * Though the guide process, update every pages' background/main image/the dot's change
+     */
 
     private void initMDViewPager() {
         mGuidePagerAdapter = new GuidePagerAdapter(getSupportFragmentManager());
@@ -126,6 +138,9 @@ public class PagerActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
+    /**
+     * initialize button/image
+     */
 
     private void initView() {
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -140,6 +155,12 @@ public class PagerActivity extends AppCompatActivity implements View.OnClickList
         btn_finish.setOnClickListener(this);
         mNextBtn.setOnClickListener(this);
     }
+
+
+    /**
+     * Gets the click status of each button
+     * @param v
+     */
 
     @Override
     public void onClick(View v) {

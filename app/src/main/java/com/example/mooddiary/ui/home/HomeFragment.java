@@ -31,6 +31,7 @@ import com.example.mooddiary.MoodBean;
 import com.example.mooddiary.MoodEvent;
 import com.example.mooddiary.MoodList;
 import com.example.mooddiary.R;
+import com.example.mooddiary.Utils;
 import com.example.mooddiary.ViewActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -158,11 +159,13 @@ public class HomeFragment extends Fragment {
                 showFilter(requireActivity());
             }
         });
+        boolean guideShown = Utils.readSharedSetting(getActivity(),"isTutorial",false);
+        if(!guideShown) {
 
-        NewbieGuide.with(this)
-                .setLabel("page")
-                //.anchor(anchor)
-                .setOnGuideChangedListener(new OnGuideChangedListener() {
+            NewbieGuide.with(this)
+                    .setLabel("page")
+                    //.anchor(anchor)
+                    .setOnGuideChangedListener(new OnGuideChangedListener() {
                     @Override
                     public void onShowed(Controller controller) {
                     }
@@ -244,6 +247,8 @@ public class HomeFragment extends Fragment {
                         .setEverywhereCancelable(false)
                 )
                 .show();//display
+
+    }
         return root;
     }
 
