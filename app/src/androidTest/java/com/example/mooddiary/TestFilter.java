@@ -9,6 +9,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -25,6 +26,7 @@ public class TestFilter {
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isTutorial",true);
     }
     public void Add() {
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
@@ -76,5 +78,9 @@ public class TestFilter {
         Add();
         testFilter();
         delete();
+    }
+    @After
+    public void tearDown(){
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isTutorial",false);
     }
 }

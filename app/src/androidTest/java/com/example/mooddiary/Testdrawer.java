@@ -11,6 +11,7 @@ import com.example.mooddiary.ui.friendevent.FriendEventFragment;
 import com.example.mooddiary.ui.friendmap.FriendMapFragment;
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,7 +28,8 @@ public class Testdrawer {
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
-        Utils.saveSharedSetting(solo.getCurrentActivity(),"isGuide",true);
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isTutorial",true);
+
     }
 
     /**
@@ -35,15 +37,15 @@ public class Testdrawer {
      */
     @Test
     public void testToFriendMood() throws InterruptedException {
-        solo.sleep(2000);
+
         System.out.println(Utils.readSharedSetting(solo.getCurrentActivity().getApplicationContext(), "isGuide", false));
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
         solo.clearEditText((EditText) solo.getView(R.id.login_username_edit));
         solo.enterText((EditText) solo.getView(R.id.login_username_edit),"tester");
         solo.enterText((EditText) solo.getView(R.id.login_password_edit),"060199");
         solo.clickOnButton("Login");
-        Utils.saveSharedSetting(solo.getCurrentActivity(),"isGuide",true);
-        solo.sleep(5000);
+
+
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
         solo.clickOnImageButton(0);
         solo.waitForText("tester", 1, 2000);
@@ -62,6 +64,11 @@ public class Testdrawer {
         solo.clickOnScreen(0,1200);
         solo.assertCurrentActivity("Wong Activity", MainActivity.class);
 
+
+    }
+    @After
+    public void tearDown(){
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isTutorial",false);
     }
 
 

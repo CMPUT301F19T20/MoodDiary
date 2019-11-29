@@ -8,6 +8,7 @@ import androidx.test.rule.ActivityTestRule;
 
 import com.robotium.solo.Solo;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,6 +27,7 @@ public class TestSignupActivity {
     @Before
     public void setUp() throws Exception {
         solo = new Solo(InstrumentationRegistry.getInstrumentation(), rule.getActivity());
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isTutorial",true);
     }
     /**
      * Gets the Activity
@@ -56,6 +58,10 @@ public class TestSignupActivity {
         solo.clickOnButton("Login");
         solo.assertCurrentActivity("Wong Activity", LoginActivity.class);
 
+    }
+    @After
+    public void tearDown(){
+        Utils.saveSharedSetting(solo.getCurrentActivity(),"isTutorial",false);
     }
 
 }
